@@ -49,7 +49,7 @@ class KalenderBaliAPI extends Controller
     public function searchHariRaya()
     {
         $tanggal_mulai = '2023-07-27';
-        $tanggal_selesai = '2023-07-30';
+        $tanggal_selesai = '2023-08-05';
         $tanggal_mulai = Carbon::parse($tanggal_mulai);
         $tanggal_selesai = Carbon::parse($tanggal_selesai);
 

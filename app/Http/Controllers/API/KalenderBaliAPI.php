@@ -486,7 +486,7 @@ class KalenderBaliAPI extends Controller
         // $tanggal_selesai = Carbon::parse($request->input('tanggal_selesai'));
 
         $tanggal_mulai = '2023-07-27';
-        $tanggal_selesai = '2023-08-06';
+        $tanggal_selesai = '2023-08-13';
         $tanggal_mulai = Carbon::parse($tanggal_mulai);
         $tanggal_selesai = Carbon::parse($tanggal_selesai);
         

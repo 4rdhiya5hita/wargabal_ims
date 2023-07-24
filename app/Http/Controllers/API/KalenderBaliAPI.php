@@ -51,7 +51,7 @@ class KalenderBaliAPI extends Controller
         $start = microtime(true);
 
         $tanggal_mulai = '2023-07-27';
-        $tanggal_selesai = '2023-08-26';
+        $tanggal_selesai = '2023-08-13';
         $cacheKey = 'processed-data-' . $tanggal_mulai . '-' . $tanggal_selesai;
 
         $tanggal_mulai = Carbon::parse($tanggal_mulai);

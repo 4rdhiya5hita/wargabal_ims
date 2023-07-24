@@ -48,14 +48,17 @@ class KalenderBaliAPI extends Controller
      **/
     public function searchHariRaya()
     {
+        $start = microtime(true);
+
         $tanggal_mulai = '2023-07-27';
-        $tanggal_selesai = '2023-07-30';
+        $tanggal_selesai = '2023-08-27';
+        $cacheKey = 'processed-data-' . $tanggal_mulai . '-' . $tanggal_selesai;
+
         $tanggal_mulai = Carbon::parse($tanggal_mulai);
         $tanggal_selesai = Carbon::parse($tanggal_selesai);
 
         $kalender = [];
 
-        $cacheKey = 'processed-data-' . $tanggal_mulai->toDateString();
         $minutes = 60; // Durasi penyimpanan cache dalam menit
 
         // Mengecek apakah hasil pemrosesan data sudah ada dalam cache
@@ -80,10 +83,16 @@ class KalenderBaliAPI extends Controller
             $tanggal_mulai->addDay();
         }
 
+        
+        $end = microtime(true);
+        $executionTime = $end - $start;
+        $executionTime = number_format($executionTime, 6);
+
         $response = [
             'message' => 'Success',
             'data' => [
                 'kalender' => $kalender,
+                'waktu eksekusi' => $executionTime,
             ]
         ];
 

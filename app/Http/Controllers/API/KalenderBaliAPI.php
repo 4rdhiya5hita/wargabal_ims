@@ -10,9 +10,11 @@ use App\Http\Controllers\PengalantakaController;
 use App\Http\Controllers\SaptaWaraController_07;
 use App\Http\Controllers\TriWaraController_03;
 use App\Http\Controllers\WukuController;
+use App\Jobs\PerhitunganKalender;
 use App\Models\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class KalenderBaliAPI extends Controller
@@ -35,16 +37,162 @@ class KalenderBaliAPI extends Controller
         ], 200);
     }
 
-    public function searchHariRaya(Request $request)
+    /**
+     * undocumented function summary
+     *
+     * Undocumented function long description
+     *
+     * @param Type $var Description
+     * @return type
+     * @throws conditon
+     **/
+    public function searchHariRaya()
+    {
+        $tanggal_mulai = '2023-07-27';
+        $tanggal_selesai = '2023-07-30';
+        $tanggal_mulai = Carbon::parse($tanggal_mulai);
+        $tanggal_selesai = Carbon::parse($tanggal_selesai);
+
+        $kalender = [];
+
+        $cacheKey = 'processed-data-' . $tanggal_mulai->toDateString();
+        $minutes = 60; // Durasi penyimpanan cache dalam menit
+
+        // Mengecek apakah hasil pemrosesan data sudah ada dalam cache
+        if (Cache::has($cacheKey)) {
+            $result = Cache::get($cacheKey);
+            // $end = microtime(true);
+            // $executionTime = $end - $start;
+            // $executionTime = number_format($executionTime, 6);
+
+            return response()->json([
+                'message' => 'Data has been retrieved from cache.',
+                'hari_raya' => $result,
+                // 'executionTime' => $executionTime
+            ]);
+        }
+
+        while ($tanggal_mulai <= $tanggal_selesai) {
+            $kalender[] = [
+                'tanggal' => $tanggal_mulai->toDateString(),
+                'hariRaya' => $this->getHariRaya($tanggal_mulai->toDateString()),
+            ];
+            $tanggal_mulai->addDay();
+        }
+
+        $response = [
+            'message' => 'Success',
+            'data' => [
+                'kalender' => $kalender,
+            ]
+        ];
+
+        return response()->json($response, 200);
+        // return view('dashboard.index', compact('kalender'));
+    }
+
+    private function getHariRaya($tanggal)
+    {
+        // dd($tanggal);
+        if ($tanggal >= '2000-01-01') {
+            $refTanggal = '2000-01-01';
+            $wuku = 10;
+            $angkaWuku = 70;
+            $tahunSaka = 1921;
+            $noSasih = 7;
+            $penanggal = 10;
+            $isPangelong = true;
+            $noNgunaratri = 46;
+            $isNgunaratri = false;
+        } elseif ($tanggal < '1992-01-01') {
+            $refTanggal = '1970-01-01';
+            $wuku = 5;
+            $angkaWuku = 33;
+            $tahunSaka = 1891;
+            $noSasih = 7;
+            $penanggal = 8;
+            $isPangelong = true;
+            $noNgunaratri = 50;
+            $isNgunaratri = false;
+        } else {
+            $refTanggal = '1992-01-01';
+            $wuku = 13;
+            $angkaWuku = 88;
+            $tahunSaka = 1913;
+            $noSasih = 7;
+            $penanggal = 11;
+            $isPangelong = true;
+            $noNgunaratri = 22;
+            $isNgunaratri = false;
+        }
+
+        // Panggil semua controller yang dibutuhkan
+        $wukuController = new WukuController();
+        $saptawaraWaraController = new SaptaWaraController_07();
+        $pancaWaraController = new PancaWaraController_05();
+        $triWaraController = new TriWaraController_03();
+        // $pengalantakaController = new PengalantakaController;
+        $hariSasihController = new HariSasihController;
+        $hariRayaController = new HariRayaController();
+
+        // Lakukan semua perhitungan hanya sekali
+        $hasilAngkaWuku = $wukuController->getNoWuku($tanggal, $angkaWuku, $refTanggal);
+        $hasilWuku = $wukuController->getWuku($hasilAngkaWuku);
+        $saptawara = $saptawaraWaraController->getSaptawara($tanggal);
+        $pancawara = $pancaWaraController->getPancawara($hasilAngkaWuku);
+        $triwara = $triWaraController->gettriwara($hasilAngkaWuku);
+
+        // $pengalantaka_dan_hariSasih = $pengalantakaController->getPengalantaka($tanggal, $refTanggal, $penanggal, $noNgunaratri);
+        // $hariSasih = $hariSasihController->getHariSasih($tanggal, $refTanggal, $penanggal, $noNgunaratri);
+        $pengalantaka_dan_hariSasih = $hariSasihController->getHariSasih($tanggal, $refTanggal, $penanggal, $noNgunaratri);
+        if ($tanggal > '2002-01-01' || $tanggal < '1992-01-01') {
+            if (strtotime($tanggal) < strtotime($refTanggal)) {
+                $no_sasih = $hariSasihController->getSasihBefore1992(
+                    $tanggal,
+                    $refTanggal,
+                    $penanggal,
+                    $noNgunaratri,
+                    $noSasih,
+                    $tahunSaka
+                );
+            } else {
+                $no_sasih = $hariSasihController->getSasihAfter2002(
+                    $tanggal,
+                    $refTanggal,
+                    $penanggal,
+                    $noNgunaratri,
+                    $noSasih,
+                    $tahunSaka
+                );
+            }
+        } else {
+            $no_sasih = $hariSasihController->getSasihBetween(
+                $tanggal,
+                $refTanggal,
+                $penanggal,
+                $noNgunaratri,
+                $noSasih,
+                $tahunSaka
+            );
+        }
+        $hariRaya = $hariRayaController->getHariRaya($tanggal, $pengalantaka_dan_hariSasih['penanggal_1'], $pengalantaka_dan_hariSasih['penanggal_2'], $pengalantaka_dan_hariSasih['pengalantaka'], $no_sasih['no_sasih'], $triwara, $pancawara, $saptawara, $hasilWuku);
+
+        return $hariRaya;
+    }
+
+    public function searchHariRayaAsli(Request $request)
     {
         // $tanggal = '2023-05-20';
         // $tanggal = Carbon::createFromFormat('Y-m-d', $request->input('tanggal'))->toDateString();
         // $tanggal = Carbon::createFromFormat('Y-m-d', $query)->toDateString();
         $tanggal = [];
-        // $tanggal_mulai = '2023-01-15';
-        // $tanggal_selesai = '2023-03-10';
-        $tanggal_mulai = Carbon::parse($request->input('tanggal_mulai'));
-        $tanggal_selesai = Carbon::parse($request->input('tanggal_selesai'));
+        $tanggal_mulai = '2023-08-27';
+        $tanggal_selesai = '2023-09-13';
+        $tanggal_mulai = Carbon::parse($tanggal_mulai);
+        $tanggal_selesai = Carbon::parse($tanggal_selesai);
+
+        // $tanggal_mulai = Carbon::parse($request->input('tanggal_mulai'));
+        // $tanggal_selesai = Carbon::parse($request->input('tanggal_selesai'));
 
         $tanggal = [];
 
@@ -100,22 +248,22 @@ class KalenderBaliAPI extends Controller
         $kalender = [];
 
         for ($i = 0; $i < count($tanggal); $i++) {
-            $hasilAngkaWuku = $wukuController->getNoWuku($tanggal[$i], $angkaWuku, $refTanggal);
+            $hasilAngkaWuku = $wukuController->getNoWuku($tang, $angkaWuku, $refTanggal);
             $hasilWuku = $wukuController->getWuku($hasilAngkaWuku);
-            $namaWuku = $wukuController->getNamaWuku($hasilWuku);
+            // $namaWuku = $wukuController->getNamaWuku($hasilWuku);
 
             $saptawara = $saptawaraWaraController->getSaptawara($tanggal[$i]);
-            $uripSaptawara = $saptawaraWaraController->getUripSaptaWara($saptawara);
+            // $uripSaptawara = $saptawaraWaraController->getUripSaptaWara($saptawara);
             $namaSaptawara = $saptawaraWaraController->getNamaSaptaWara($saptawara);
 
 
             $pancawara = $pancaWaraController->getPancawara($hasilAngkaWuku);
-            $uripPancawara = $pancaWaraController->getUripPancaWara($pancawara);
+            // $uripPancawara = $pancaWaraController->getUripPancaWara($pancawara);
             $namaPancawara = $pancaWaraController->getNamaPancaWara($pancawara);
 
 
             $triwara = $triWaraController->gettriwara($hasilAngkaWuku);
-            $namatriwara = $triWaraController->getNamatriwara($triwara);
+            $namaTriwara = $triWaraController->getNamatriwara($triwara);
 
             $pengalantaka = $pengalantakaController->getPengalantaka($tanggal[$i], $refTanggal, $penanggal, $noNgunaratri);
             $hariSasih = $hariSasihController->getHariSasih($tanggal[$i], $refTanggal, $penanggal, $noNgunaratri);
@@ -123,22 +271,38 @@ class KalenderBaliAPI extends Controller
             if ($tanggal[$i] > '2002-01-01' || $tanggal[$i] < '1992-01-01') {
                 if (strtotime($tanggal[$i]) < strtotime($refTanggal)) {
                     $no_sasih = $hariSasihController->getSasihBefore1992(
-                        $tanggal[$i], $refTanggal, $penanggal, $noNgunaratri, $noSasih, $tahunSaka
+                        $tanggal[$i],
+                        $refTanggal,
+                        $penanggal,
+                        $noNgunaratri,
+                        $noSasih,
+                        $tahunSaka
                     );
-                    
                 } else {
                     $no_sasih = $hariSasihController->getSasihAfter2002(
-                        $tanggal[$i], $refTanggal, $penanggal, $noNgunaratri, $noSasih, $tahunSaka
+                        $tanggal[$i],
+                        $refTanggal,
+                        $penanggal,
+                        $noNgunaratri,
+                        $noSasih,
+                        $tahunSaka
                     );
                 }
             } else {
                 $no_sasih = $hariSasihController->getSasihBetween(
-                    $tanggal[$i], $refTanggal, $penanggal, $noNgunaratri, $noSasih, $tahunSaka
+                    $tanggal[$i],
+                    $refTanggal,
+                    $penanggal,
+                    $noNgunaratri,
+                    $noSasih,
+                    $tahunSaka
                 );
             }
 
-            // dd($hariSasih);
-            $hariRaya = $hariRayaController->getHariRaya($tanggal[$i],$hariSasih[0],$hariSasih[1],$pengalantaka,$no_sasih[0],$triwara,$pancawara,$saptawara,$hasilWuku);
+            // dd($hariSasih);            
+            // dd($no_sasih['no_sasih']);
+            $hariRaya = $hariRayaController->getHariRaya($tanggal[$i], $hariSasih['penanggal_1'], $hariSasih['penanggal_2'], $pengalantaka, $no_sasih['no_sasih'], $triwara, $pancawara, $saptawara, $hasilWuku);
+
             // $hariRaya = $hariRayaController->getHariRaya($pancawara,$saptawara,$hasilWuku);
 
             // // Menyimpan $tanggal[$i] dan $hariRaya ke dalam array $kalender
@@ -152,16 +316,19 @@ class KalenderBaliAPI extends Controller
 
             array_push($kalender, [
                 'tanggal' => $tanggal[$i],
-                'hasilAngkaWuku' => $hasilAngkaWuku,    
-                'saptawara' => $saptawara,    
-                'namaSaptawara' => $namaSaptawara,    
-                'pancawara' => $pancawara,    
-                'namaPancawara' => $namaPancawara,    
-                'hariRaya' => $hariRaya,    
+                'hasilAngkaWuku' => $hasilAngkaWuku,
+                'triwara' => $triwara,
+                'namaTriwara' => $namaTriwara,
+                'saptawara' => $saptawara,
+                'namaSaptawara' => $namaSaptawara,
+                'pancawara' => $pancawara,
+                'namaPancawara' => $namaPancawara,
+                'pengalantaka' => $pengalantaka,
+                'hariRaya' => $hariRaya,
             ]);
         }
 
-        return response()->json([
+        $response = [
             'message' => 'Success',
             'data' => [
                 'kalender' => $kalender,
@@ -171,7 +338,17 @@ class KalenderBaliAPI extends Controller
                 // 'namaPancawara' => $namaPancawara,
                 // 'namaSaptawara' => $namaSaptawara
             ]
-        ], 200);
+        ];
+
+        dd($response);
+
+        return response()->json($response, 200);
+
+
+
+
+
+
 
         // return response()->json([
         //     'message' => 'Success',
@@ -264,16 +441,16 @@ class KalenderBaliAPI extends Controller
             $namaPancawara = $pancaWaraController->getNamaPancaWara($pancawara);
 
 
-            $hariRaya = $hariRayaController->getHariRaya($pancawara,$saptawara,$hasilWuku);
+            $hariRaya = $hariRayaController->getHariRaya($pancawara, $saptawara, $hasilWuku);
 
             array_push($kalender, [
                 'tanggal' => $tanggal[$i],
-                'hasilAngkaWuku' => $hasilAngkaWuku,    
+                'hasilAngkaWuku' => $hasilAngkaWuku,
                 // 'saptawara' => $saptawara,    
-                'namaSaptawara' => $namaSaptawara,    
+                'namaSaptawara' => $namaSaptawara,
                 // 'pancawara' => $pancawara,    
-                'namaPancawara' => $namaPancawara,    
-                'hariRaya' => $hariRaya,    
+                'namaPancawara' => $namaPancawara,
+                'hariRaya' => $hariRaya,
             ]);
         }
 
@@ -292,4 +469,140 @@ class KalenderBaliAPI extends Controller
         // ], 200);
 
     }
+
+    public function processData(Request $request)
+    {
+        // $start = microtime(true);
+        // $tanggal_mulai = Carbon::parse($request->input('tanggal_mulai'));
+        // $tanggal_selesai = Carbon::parse($request->input('tanggal_selesai'));
+
+        $tanggal_mulai = '2023-07-27';
+        $tanggal_selesai = '2023-08-06';
+        $tanggal_mulai = Carbon::parse($tanggal_mulai);
+        $tanggal_selesai = Carbon::parse($tanggal_selesai);
+        
+
+        $cacheKey = 'processed-data-' . $tanggal_mulai->toDateString();
+        $minutes = 60; // Durasi penyimpanan cache dalam menit (sesuaikan dengan kebutuhan)
+
+        // Mengecek apakah hasil pemrosesan data sudah ada dalam cache
+        if (Cache::has($cacheKey)) {
+            $result = Cache::get($cacheKey);
+            // $end = microtime(true);
+            // $executionTime = $end - $start;
+            // $executionTime = number_format($executionTime, 6);
+
+            return response()->json([
+                'message' => 'Data has been retrieved from cache.',
+                'hari_raya' => $result,
+                // 'executionTime' => $executionTime
+            ]);
+        }
+
+        $tanggal = [];
+
+        while ($tanggal_mulai <= $tanggal_selesai) {
+            $tanggal[] = $tanggal_mulai->toDateString();
+            $tanggal_mulai->addDay();
+        }
+
+        $chunks = array_chunk($tanggal, 4);
+
+        // Inisialisasi array untuk menyimpan ID job
+        $jobIds = [];
+        $kalender = [];
+
+        // Memasukkan job ke dalam antrian untuk setiap bagian data
+        foreach ($chunks as $chunk) {
+            $job = new PerhitunganKalender($chunk);
+            $response = $job->handle();
+            $jobIds[] = $this->dispatch($job);
+            array_push($kalender, $response);
+        }
+        
+        // $mergedJob = array_merge(...$kalender);
+        // dd($kalender);
+
+        // $end = microtime(true);
+        // $executionTime = $end - $start;
+        // $executionTime = number_format($executionTime, 6);
+
+        // Menyimpan hasil pemrosesan data dalam cache
+        Cache::put($cacheKey, $kalender, $minutes);
+
+        // dd('hasil akhir: ', $kalender);
+
+        // Mengembalikan response atau melakukan tindakan lainnya setelah memasukkan job ke dalam antrian
+        return response()->json([
+            'message' => 'Data processing job has been queued.',
+            'hari_raya' => $kalender,
+            // 'executionTime' => $executionTime
+        ]);
+    }
+
+    // public function processData(Request $request)
+    // {
+    //     $start = microtime(true);
+    //     $tanggal_mulai = '2023-08-27';
+    //     $tanggal_selesai = '2023-09-23';
+    //     $tanggal_mulai = Carbon::parse($tanggal_mulai);
+    //     $tanggal_selesai = Carbon::parse($tanggal_selesai);
+
+    //     // $cacheKey = 'processed-data-' . $tanggal_mulai->toDateString() . '-' . $tanggal_selesai->toDateString();
+    //     // $minutes = 60; // Durasi penyimpanan cache dalam menit (sesuaikan dengan kebutuhan)
+
+    //     // // Mengecek apakah hasil pemrosesan data sudah ada dalam cache
+    //     // if (Cache::has($cacheKey)) {
+    //     //     $result = Cache::get($cacheKey);
+    //     //     $end = microtime(true);
+    //     //     $executionTime = $end - $start;
+    //     //     $executionTime = number_format($executionTime, 6);
+
+    //     //     return response()->json([
+    //     //         'message' => 'Data has been retrieved from cache.',
+    //     //         'hari_raya' => $result,
+    //     //         'executionTime' => $executionTime
+    //     //     ]);
+    //     // }
+
+    //     $tanggal = [];
+
+    //     while ($tanggal_mulai <= $tanggal_selesai) {
+    //         $tanggal[] = $tanggal_mulai->toDateString();
+    //         $tanggal_mulai->addDay();
+    //     }
+
+    //     $chunks = array_chunk($tanggal, 4);
+
+    //     // Inisialisasi array untuk menyimpan ID job
+    //     $jobIds = [];
+    //     $kalender = [];
+
+    //     // Memasukkan job ke dalam antrian untuk setiap bagian data
+    //     foreach ($chunks as $chunk) {
+    //         $job = new PerhitunganKalender($chunk);
+    //         $jobIds[] = $this->dispatch($job);
+    //         array_push($kalender, $job);
+    //     }
+        
+    //     $mergedJob = array_merge(...$kalender);
+    //     dd($mergedJob);
+
+    //     $end = microtime(true);
+    //     $executionTime = $end - $start;
+    //     $executionTime = number_format($executionTime, 6);
+
+    //     // Menyimpan hasil pemrosesan data dalam cache
+    //     // Cache::put($cacheKey, $kalender, $minutes);
+
+    //     dd('hasil akhir: ', $kalender);
+
+    //     // Mengembalikan response atau melakukan tindakan lainnya setelah memasukkan job ke dalam antrian
+    //     return response()->json([
+    //         'message' => 'Data processing job has been queued.',
+    //         'job_ids' => $jobIds,
+    //         'hari_raya' => $kalender,
+    //         'executionTime' => $executionTime
+    //     ]);
+    // }
 }

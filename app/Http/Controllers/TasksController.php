@@ -85,4 +85,16 @@ class TasksController extends Controller
     {
         //
     }
+
+    public function getData()
+    {
+        $client = new Client();
+        $response = $client->get('http://localhost:8000/api/searchHariRaya'); // Ganti URL API dengan URL yang sesuai
+
+        $data = json_decode($response->getBody(), true);
+
+        // Lakukan operasi lain dengan data yang diterima dari API
+
+        return view('data', ['data' => $data]);
+    }
 }

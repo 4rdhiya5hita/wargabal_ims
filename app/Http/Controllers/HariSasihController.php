@@ -8,32 +8,48 @@ class HariSasihController extends Controller
 {
     public function getHariSasih($tanggal, $refTanggal, $refPenanggal, $refNgunaratri)
     {
-        $selisih = floor((strtotime($tanggal) - strtotime($refTanggal)) / (60 * 60 * 24));
+        $selisih = intval(date_diff(date_create($tanggal), date_create($refTanggal))->format('%a'));
         $jumlahNgunaratri = floor(($selisih + $refNgunaratri) / 63);
-        
-        if (($selisih + $refNgunaratri) % 63 === 0) {
+
+        // Jumlah berikut ini sering digunakan dalam pencarian Ngunaratri dan Pengalantaka
+        $carijumlahNgunaratriDanPenanggal = ($selisih + $refNgunaratri) % 63;
+
+        if ($carijumlahNgunaratriDanPenanggal === 0) {
             $jumlahNgunaratri--;
         }
         
-        $penanggal = (($refPenanggal + $selisih + $jumlahNgunaratri) % 15);
+        $jumlah = $refPenanggal + $selisih + $jumlahNgunaratri;
+        
+        // Cari Pengalantaka
+        if (floor(($jumlah - 1) / 15) % 2 === 0) {
+            $pengalantaka = 'Pangelong';
+        } else {
+            $pengalantaka = 'Penanggal';
+        }
+        
+        // Cari Penanggal 1
+        $penanggal = ($jumlah % 15);
         if ($penanggal === 0) {
             $penanggal = 15;
         } elseif ($penanggal < 0) {
             $penanggal += 15;
         }
         
-        $penanggal2 = '-';
-        if (($selisih + $refNgunaratri) % 63 === 0) {
+        // Cari Penanggal 2
+        $penanggal2 = 0;
+        if ($carijumlahNgunaratriDanPenanggal === 0) {
             $penanggal2 = $penanggal + 1;
-            if ($penanggal2 === 16) {
-                $penanggal2 = 1;
-            }
+        }
+        if ($penanggal2 === 16) {
+            $penanggal2 = 1;
         }
         
         return [
             'penanggal_1' => $penanggal,
             'penanggal_2' => $penanggal2,
+            'pengalantaka' => $pengalantaka,
         ];
+        
     }
 
 
@@ -73,12 +89,13 @@ class HariSasihController extends Controller
             if ($isNampih) {
                 $isNampih = false;
             } else {
-                if ($hasilTahun % 19 == 0 || $hasilTahun % 19 == 6 || $hasilTahun % 19 == 11) {
+                $hasilTahun = $hasilTahun % 19;
+                if ($hasilTahun == 0 || $hasilTahun == 6 || $hasilTahun == 11) {
                     if ($i2 == 12) {
                         $i2++;
                         $isNampih = true;
                     }
-                } elseif ($hasilTahun % 19 == 3 || $hasilTahun % 19 == 8 || $hasilTahun % 19 == 14 || $hasilTahun % 19 == 16) {
+                } elseif ($hasilTahun == 3 || $hasilTahun == 8 || $hasilTahun == 14 || $hasilTahun == 16) {
                     if ($i2 == 1) {
                         $i2++;
                         $isNampih = true;
@@ -134,12 +151,13 @@ class HariSasihController extends Controller
             if ($isNampih) {
                 $isNampih = false;
             } else {
-                if ($hasilTahun % 19 == 0 || $hasilTahun % 19 == 6 || $hasilTahun % 19 == 11) {
+                $hasilTahun = $hasilTahun % 19;
+                if ($hasilTahun == 0 || $hasilTahun == 6 || $hasilTahun == 11) {
                     if ($i2 == 12) {
                         $i2--;
                         $isNampih = true;
                     }
-                } elseif ($hasilTahun % 19 == 3 || $hasilTahun % 19 == 8 || $hasilTahun % 19 == 14 || $hasilTahun % 19 == 16) {
+                } elseif ($hasilTahun == 3 || $hasilTahun == 8 || $hasilTahun == 14 || $hasilTahun == 16) {
                     if ($i2 == 1) {
                         $i2--;
                         $isNampih = true;
@@ -193,33 +211,34 @@ class HariSasihController extends Controller
 
             if ($isNampih) {
                 $isNampih = false;
-            } else {
-                if ($hasilTahun % 19 == 2 || $hasilTahun % 19 == 10) {
+            } else {                
+                $hasilTahun = $hasilTahun % 19;
+                if ($hasilTahun == 2 || $hasilTahun == 10) {
                     if ($i2 == 12) {
                         $i2--;
                         $isNampih = true;
                     }
-                } elseif ($hasilTahun % 19 == 4) {
+                } elseif ($hasilTahun == 4) {
                     if ($i2 == 4) {
                         $i2--;
                         $isNampih = true;
                     }
-                } elseif ($hasilTahun % 19 == 7) {
+                } elseif ($hasilTahun == 7) {
                     if ($i2 == 2) {
                         $i2--;
                         $isNampih = true;
                     }
-                } elseif ($hasilTahun % 19 == 13) {
+                } elseif ($hasilTahun == 13) {
                     if ($i2 == 11) {
                         $i2--;
                         $isNampih = true;
                     }
-                } elseif ($hasilTahun % 19 == 15) {
+                } elseif ($hasilTahun == 15) {
                     if ($i2 == 3) {
                         $i2--;
                         $isNampih = true;
                     }
-                } elseif ($hasilTahun % 19 == 18) {
+                } elseif ($hasilTahun == 18) {
                     if ($i2 == 1) {
                         $i2--;
                         $isNampih = true;

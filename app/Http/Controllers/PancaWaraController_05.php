@@ -14,17 +14,24 @@ class PancaWaraController_05 extends Controller
 
     public function getUripPancaWara($pancaWara)
     {
-        if ($pancaWara == 1) {
-            $urip = 5;
-        } elseif ($pancaWara == 2) {
-            $urip = 9;
-        } elseif ($pancaWara == 3) {
-            $urip = 7;
-        } elseif ($pancaWara == 4) {
-            $urip = 4;
-        } elseif ($pancaWara == 5) {
-            $urip = 8;
+        switch ($pancaWara) {
+            case 1:
+                $urip = 5;
+                break;
+            case 2:
+                $urip = 9;
+                break;
+            case 3:
+                $urip = 7;
+                break;
+            case 4:
+                $urip = 4;
+                break;
+            case 5:
+                $urip = 8;
+                break;
         }
+        
         return $urip;
     }
 

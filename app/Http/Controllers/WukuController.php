@@ -9,11 +9,12 @@ class WukuController extends Controller
 {
     public function getNoWuku($tanggal, $pivotAngkaWuku, $refTanggal)
     {
-        $tanggal = Carbon::createFromFormat('Y-m-d', $tanggal);
-        $refTanggal = Carbon::createFromFormat('Y-m-d', $refTanggal);
-
-        $bedaHari = date_diff($tanggal, $refTanggal)->days;
+        $parsedRefTanggal = Carbon::createFromFormat('Y-m-d', $refTanggal);
+        $parsedTanggal = Carbon::createFromFormat('Y-m-d', $tanggal);
+        
+        $bedaHari = $parsedTanggal->diffInDays($parsedRefTanggal);
         $angkaWuku = ($pivotAngkaWuku + $bedaHari) % 210;
+        // dd($tanggal);
 
         if ($angkaWuku < 0) {
             $angkaWuku = 210 + $angkaWuku;

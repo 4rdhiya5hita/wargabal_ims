@@ -26,7 +26,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/tes', [KalenderBaliAPI::class, 'tes']);
     Route::get('/kalender', [KalenderBaliAPI::class, 'get']);
     Route::post('/searchTanggalHariRaya', [KalenderBaliAPI::class, 'searchTanggalHariRaya']);
-    Route::post('/searchHariRaya', [KalenderBaliAPI::class, 'searchHariRaya']);
+    Route::get('/searchHariRaya', [KalenderBaliAPI::class, 'searchHariRaya']);
+    Route::get('/processData', [KalenderBaliAPI::class, 'processData']);
 
     Route::get('/logout', [AuthController::class, 'logout']);
 });

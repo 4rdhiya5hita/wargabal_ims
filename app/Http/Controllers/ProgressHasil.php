@@ -22,8 +22,9 @@ class ProgressHasil extends Controller
      **/
     public function process_search_hari_raya(Request $request)
     {
-        $tanggal_mulai = '2023-07-27';
-        $tanggal_selesai = '2023-07-28';
+        $tanggal_mulai = $request->input('tanggal_mulai');
+        $tanggal_selesai = $request->input('tanggal_selesai');
+        // dd($tanggal_mulai, $tanggal_selesai);
 
         $url = 'https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchHariRayaAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai;
 
@@ -33,12 +34,13 @@ class ProgressHasil extends Controller
         // Memeriksa status code response untuk memastikan permintaan berhasil
         if ($response->successful()) {
             // Menampilkan hasil respons dari API
-            $responseData = $response->json();
-            dd($responseData); // Menggunakan dd() untuk debugging, bisa diganti dengan echo atau var_dump
+            $kalender = $response->json();
+            // dd($kalender);
+            return view('hari_raya.search_hari_raya', compact('kalender'));
         } else {
             echo "Gagal mengambil data dari API.";
         }
-        // return view('hari_raya.search_hari_raya', compact('kalender'));
+
     }
 
     public function getHasilProgress()

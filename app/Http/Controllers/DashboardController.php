@@ -15,6 +15,6 @@ class DashboardController extends Controller
 
     public function search_hari_raya()
     {
-        return view('hari_raya.search_hari_raya');
+        return view('hari_raya.index');
     }
 }

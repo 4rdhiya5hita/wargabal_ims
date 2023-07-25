@@ -69,7 +69,7 @@ class KalenderBaliAPI extends Controller
             $executionTime = number_format($executionTime, 6);
 
             return response()->json([
-                'message' => 'Data has been retrieved from cache.',
+                'message' => 'Data telah diambil dari cache',
                 'hari_raya' => $result,
                 'waktu eksekusi' => $executionTime
             ]);
@@ -93,7 +93,7 @@ class KalenderBaliAPI extends Controller
         $response = [
             'message' => 'Success',
             'data' => [
-                'hari_raya' => $kalender,
+                $kalender,
                 'waktu eksekusi' => $executionTime,
             ]
         ];

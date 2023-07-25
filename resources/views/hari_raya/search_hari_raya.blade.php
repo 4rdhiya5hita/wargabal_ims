@@ -27,7 +27,7 @@
                         <h5 class="mt-5">Pencarian Tanggal</h5>
                         <hr>
                         
-                        <form action="{{ route('search_hari_raya_API') }}" method="get" class="needs-validation" novalidate>
+                        <form action="{{ route('process_search_hari_raya') }}" method="get" class="needs-validation" novalidate>
                             @csrf
                             <div class="form-row">
                                 <div class="col-md-6 mb-3">

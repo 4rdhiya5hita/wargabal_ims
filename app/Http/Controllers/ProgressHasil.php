@@ -23,7 +23,7 @@ class ProgressHasil extends Controller
     {
         $client = new Client();
 
-        $responses = $client->post('https://wargabal-ims-4065061e96e3.herokuapp.com/searchHariRaya', [
+        $responses = $client->post('https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchHariRayaAPI', [
             'form_params' => [
                 'tanggal_mulai' => $request->input('tanggal_mulai'),
                 'tanggal_selesai' => $request->input('tanggal_selesai'),

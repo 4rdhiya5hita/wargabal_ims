@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\API\KalenderBaliAPI;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use GuzzleHttp\Client;
 
@@ -21,27 +22,30 @@ class ProgressHasil extends Controller
      **/
     public function process_search_hari_raya(Request $request)
     {
-        $client = new Client();
+        $tanggal_mulai = '2023-07-27';
+        $tanggal_selesai = '2023-07-28';
 
-        $responses = $client->post('https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchHariRayaAPI', [
-            'form_params' => [
-                'tanggal_mulai' => $request->input('tanggal_mulai'),
-                'tanggal_selesai' => $request->input('tanggal_selesai'),
-            ],
-        ]);
+        $url = 'https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchHariRayaAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai;
 
-        // Misalnya, jika respons yang Anda terima dari API eksternal adalah JSON, Anda bisa menguraikan JSON tersebut
-        $responseBody = $responses->getBody();
-        $kalender = json_decode($responseBody, true); // true untuk mendapatkan data sebagai array asosiatif
+        // Mengambil data dari API eksternal Alpha Vantage menggunakan metode get()
+        $response = Http::get($url);
 
-        return view('hari_raya.search_hari_raya', compact('kalender'));
+        // Memeriksa status code response untuk memastikan permintaan berhasil
+        if ($response->successful()) {
+            // Menampilkan hasil respons dari API
+            $responseData = $response->json();
+            dd($responseData); // Menggunakan dd() untuk debugging, bisa diganti dengan echo atau var_dump
+        } else {
+            echo "Gagal mengambil data dari API.";
+        }
+        // return view('hari_raya.search_hari_raya', compact('kalender'));
     }
 
     public function getHasilProgress()
     {
         return view('tasks.progressHasil');
     }
-    
+
     public function getProgress()
     {
         // $client = new Client();
@@ -57,8 +61,8 @@ class ProgressHasil extends Controller
 
             // Simulasikan proses pemrosesan berjalan
             while ($progress <= 100) {
-            //     $kalenderController = new KalenderBaliAPI;
-            //     $kalender = $kalenderController->searchHariRaya();
+                //     $kalenderController = new KalenderBaliAPI;
+                //     $kalender = $kalenderController->searchHariRaya();
                 echo "data: $progress\n\n";
                 // echo $kalender[$progress]; // Data yang akan dikirim ke klien
 

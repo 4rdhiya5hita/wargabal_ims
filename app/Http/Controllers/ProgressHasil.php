@@ -27,6 +27,7 @@ class ProgressHasil extends Controller
         // dd($tanggal_mulai, $tanggal_selesai);
 
         $url = 'https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchHariRayaAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai;
+        // $url = 'http://localhost:8000/api/searchHariRayaAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai;
 
         // Mengambil data dari API eksternal Alpha Vantage menggunakan metode get()
         $response = Http::get($url);
@@ -36,11 +37,12 @@ class ProgressHasil extends Controller
             // Menampilkan hasil respons dari API
             $kalender = $response->json();
             // dd($kalender);
-            return view('hari_raya.search_hari_raya', compact('kalender'));
         } else {
             echo "Gagal mengambil data dari API.";
         }
 
+        
+        return view('hari_raya.search_hari_raya', compact('kalender'));
     }
 
     public function getHasilProgress()

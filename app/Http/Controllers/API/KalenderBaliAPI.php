@@ -71,7 +71,7 @@ class KalenderBaliAPI extends Controller
             return response()->json([
                 'message' => 'Data telah diambil dari cache.',
                 'hari_raya' => $result,
-                'waktu eksekusi' => $executionTime
+                'waktu_eksekusi' => $executionTime
             ]);
         }
 
@@ -91,11 +91,9 @@ class KalenderBaliAPI extends Controller
         $executionTime = number_format($executionTime, 6);
 
         $response = [
-            'message' => 'Success',
-            'data' => [
-                'hari_raya' => $kalender,
-                'waktu eksekusi' => $executionTime,
-            ]
+            'message' => 'Sukses',
+            'hari_raya' => $kalender,
+            'waktu_eksekusi' => $executionTime,
         ];
 
         return response()->json($response, 200);
@@ -259,7 +257,7 @@ class KalenderBaliAPI extends Controller
         $kalender = [];
 
         for ($i = 0; $i < count($tanggal); $i++) {
-            $hasilAngkaWuku = $wukuController->getNoWuku($tang, $angkaWuku, $refTanggal);
+            $hasilAngkaWuku = $wukuController->getNoWuku($tanggal, $angkaWuku, $refTanggal);
             $hasilWuku = $wukuController->getWuku($hasilAngkaWuku);
             // $namaWuku = $wukuController->getNamaWuku($hasilWuku);
 
@@ -452,7 +450,7 @@ class KalenderBaliAPI extends Controller
             $namaPancawara = $pancaWaraController->getNamaPancaWara($pancawara);
 
 
-            $hariRaya = $hariRayaController->getHariRaya($pancawara, $saptawara, $hasilWuku);
+            $hariRaya = 1;
 
             array_push($kalender, [
                 'tanggal' => $tanggal[$i],

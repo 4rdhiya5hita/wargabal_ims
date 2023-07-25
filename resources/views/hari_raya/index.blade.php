@@ -24,7 +24,7 @@
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="mt-5">Pencarian Tanggal</h5>
+                        <h5>Pencarian Tanggal</h5>
                         <hr>
                         
                         <form action="{{ route('process_search_hari_raya') }}" method="get" class="needs-validation" novalidate>
@@ -45,7 +45,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button class="btn  btn-primary" type="submit">Submit form</button>
+                            <button class="btn  btn-primary" type="submit">Submit</button>
                         </form>
                     </div>
                 </div>

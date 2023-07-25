@@ -28,7 +28,8 @@
                     <div class="card-header">
                         <h5>Tabel Hari Raya</h5>
                         <span class="d-block m-t-5">Berikut hasil perhitungan kalender bali untuk mencari piodalan dari tanggal
-                        <i>{{ $kalender[0]['tanggal'] }} sampai {{ $kalender[count($kalender) - 1]['tanggal'] }}</i> </span>
+                        <i>{{ $kalender['hari_raya'][0]['tanggal'] }} sampai {{ $kalender['hari_raya'][count($kalender['hari_raya']) - 1]['tanggal'] }}</i> 
+                        dengan waktu eksekusi $kalender['waktu eksekusi'] detik</span>
                     </div>
                     <div class="card-body table-border-style">
                         <div class="table-responsive">
@@ -41,7 +42,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($kalender as $index => $item)
+                                    @foreach($kalender['hari_raya'] as $index => $item)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $item['tanggal'] }}</td>

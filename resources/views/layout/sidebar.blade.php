@@ -63,7 +63,7 @@
 					    <a href="form_elements.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Form</span></a>
 					</li>
 					<li class="nav-item">
-					    <a href="tbl_bootstrap.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-align-justify"></i></span><span class="pcoded-mtext">Tabel Hari Raya</span></a>
+					    <a href="{{ route('search_hari_raya') }}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-align-justify"></i></span><span class="pcoded-mtext">Tabel Hari Raya</span></a>
 					<!-- </li>
 					<li class="nav-item pcoded-menu-caption">
 					    <label>Chart & Maps</label>

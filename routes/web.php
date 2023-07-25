@@ -45,10 +45,12 @@ Route::get('/processData', [KalenderBaliAPI::class, 'processData']);
 Route::group(['middleware' => 'auth'], function() {
     Route::controller(DashboardController::class)->group(function () {
         Route::get('/dashboard', 'dashboard')->name('dashboard');
+        Route::get('/search_hari_raya', 'search_hari_raya')->name('search_hari_raya');
     });
     Route::controller(ProgressHasil::class)->group(function () {
         Route::get('/hasilProgress', [ProgressHasil::class, 'getHasilProgress']);
         Route::get('/progress', 'getProgress')->name('progress');
+        Route::get('/process_search_hari_raya', 'process_search_hari_raya')->name('process_search_hari_raya');
     });
 });
 

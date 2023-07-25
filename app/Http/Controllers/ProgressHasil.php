@@ -19,6 +19,24 @@ class ProgressHasil extends Controller
      * @return type
      * @throws conditon
      **/
+    public function process_search_hari_raya(Request $request)
+    {
+        $client = new Client();
+
+        $responses = $client->post('https://wargabal-ims-4065061e96e3.herokuapp.com/searchHariRaya', [
+            'form_params' => [
+                'tanggal_mulai' => $request->input('tanggal_mulai'),
+                'tanggal_selesai' => $request->input('tanggal_selesai'),
+            ],
+        ]);
+
+        // Misalnya, jika respons yang Anda terima dari API eksternal adalah JSON, Anda bisa menguraikan JSON tersebut
+        $responseBody = $responses->getBody();
+        $kalender = json_decode($responseBody, true); // true untuk mendapatkan data sebagai array asosiatif
+
+        return view('hari_raya.search_hari_raya', compact('kalender'));
+    }
+
     public function getHasilProgress()
     {
         return view('tasks.progressHasil');

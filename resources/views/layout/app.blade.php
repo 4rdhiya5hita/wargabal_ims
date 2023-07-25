@@ -34,7 +34,7 @@
 	</div>
 	<!-- [ Pre-loader ] End -->
 	<!-- [ navigation menu ] start -->
-    @include('layout.navbar')
+    @include('layout.sidebar')
 	<!-- [ navigation menu ] end -->
 	<!-- [ Header ] start -->
 	@include('layout.header')

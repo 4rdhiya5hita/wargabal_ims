@@ -46,32 +46,32 @@ class KalenderBaliAPI extends Controller
      * @return type
      * @throws conditon
      **/
-    public function searchHariRaya()
+    public function searchHariRayaAPI(Request $request)
     {
         $start = microtime(true);
 
-        $tanggal_mulai = '2023-07-27';
-        $tanggal_selesai = '2023-08-13';
+        $tanggal_mulai = Carbon::parse($request->input('tanggal_mulai'));
+        $tanggal_selesai = Carbon::parse($request->input('tanggal_selesai'));
         $cacheKey = 'processed-data-' . $tanggal_mulai . '-' . $tanggal_selesai;
+        // $tanggal_mulai = '2023-07-27';
+        // $tanggal_selesai = '2023-08-13';
 
-        $tanggal_mulai = Carbon::parse($tanggal_mulai);
-        $tanggal_selesai = Carbon::parse($tanggal_selesai);
+        // $tanggal_mulai = Carbon::parse($tanggal_mulai);
+        // $tanggal_selesai = Carbon::parse($tanggal_selesai);
 
         $kalender = [];
-
-        $minutes = 60; // Durasi penyimpanan cache dalam menit
 
         // Mengecek apakah hasil pemrosesan data sudah ada dalam cache
         if (Cache::has($cacheKey)) {
             $result = Cache::get($cacheKey);
-            // $end = microtime(true);
-            // $executionTime = $end - $start;
-            // $executionTime = number_format($executionTime, 6);
+            $end = microtime(true);
+            $executionTime = $end - $start;
+            $executionTime = number_format($executionTime, 6);
 
             return response()->json([
                 'message' => 'Data has been retrieved from cache.',
                 'hari_raya' => $result,
-                // 'executionTime' => $executionTime
+                'waktu eksekusi' => $executionTime
             ]);
         }
 
@@ -82,7 +82,9 @@ class KalenderBaliAPI extends Controller
             ];
             $tanggal_mulai->addDay();
         }
-
+        
+        $minutes = 60; // Durasi penyimpanan cache dalam menit
+        Cache::put($cacheKey, $kalender, $minutes); // Menyimpan hasil pemrosesan data dalam cache
         
         $end = microtime(true);
         $executionTime = $end - $start;
@@ -91,7 +93,7 @@ class KalenderBaliAPI extends Controller
         $response = [
             'message' => 'Success',
             'data' => [
-                'kalender' => $kalender,
+                'hari_raya' => $kalender,
                 'waktu eksekusi' => $executionTime,
             ]
         ];

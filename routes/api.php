@@ -23,11 +23,11 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::get('/tes', [KalenderBaliAPI::class, 'tes']);
-    Route::get('/kalender', [KalenderBaliAPI::class, 'get']);
-    Route::post('/searchTanggalHariRaya', [KalenderBaliAPI::class, 'searchTanggalHariRaya']);
-    Route::get('/searchHariRaya', [KalenderBaliAPI::class, 'searchHariRaya']);
-    Route::get('/processData', [KalenderBaliAPI::class, 'processData']);
+    Route::get('/tes', [KalenderBaliAPI::class, 'tesAPI']);
+    Route::get('/kalenderAPI', [KalenderBaliAPI::class, 'getAPI']);
+    Route::post('/searchTanggalHariRayaAPI', [KalenderBaliAPI::class, 'searchTanggalHariRayaAPI']);
+    Route::get('/searchHariRayaAPI', [KalenderBaliAPI::class, 'searchHariRayaAPI']);
+    Route::get('/processDataAPI', [KalenderBaliAPI::class, 'processDataAPI']);
 
     Route::get('/logout', [AuthController::class, 'logout']);
 });

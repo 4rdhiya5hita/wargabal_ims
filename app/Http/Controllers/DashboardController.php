@@ -10,9 +10,11 @@ class DashboardController extends Controller
 {
     public function dashboard()
     {
-        // // Buat klien GuzzleHt
-
-
         return view('dashboard.index');
+    }
+
+    public function search_hari_raya()
+    {
+        return view('hari_raya.search_hari_raya');
     }
 }

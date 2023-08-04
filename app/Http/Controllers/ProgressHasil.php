@@ -34,32 +34,9 @@ class ProgressHasil extends Controller
             // Menampilkan hasil respons dari API
             $kalender = $response->json();
             // dd($kalender);
-            $makna_piodalan = [];
-            // dd($kalender['hari_raya']);
 
-            // for ($i = 0; $i < count($kalender['hari_raya']); $i++) {
-                foreach ($kalender['hari_raya'] as $item) {
-                    foreach ($item['hariRaya'] as $hariRaya) {
-                        dd($item);
-                        if ($hariRaya !== '-') {
-                            $ambil_makna = Piodalan::where('piodalan', $hariRaya)->get(); // Assuming 'get()' is needed here
-                            if(isNull($ambil_makna)){
-                                if ($item['hariRaya'][1] !== '-') {
-                                    $ambil_makna = Piodalan::where('piodalan', $item['hariRaya'][1])->get();
-                                    $makna_piodalan[] = $ambil_makna;
-                                } else {
-                                    $makna_piodalan[] = '-';
-                                }
-                            }
-                            $makna_piodalan[] = $ambil_makna;
-                            // dd($makna_piodalan);
-                        }
-                    }
-                }
-            // }
-            dd($makna_piodalan);
-
-            return view('hari_raya.hari_raya', compact('kalender', 'makna_piodalan'));
+            return response()->json($kalender, 200);
+            // return view('hari_raya.hari_raya', compact('kalender', 'makna_piodalan'));
         } else {
             echo "Gagal mengambil data dari API.";
         }

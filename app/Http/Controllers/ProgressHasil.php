@@ -17,8 +17,8 @@ class ProgressHasil extends Controller
     {
         $tanggal_mulai = $request->input('tanggal_mulai');
         $tanggal_selesai = $request->input('tanggal_selesai');
-        // $makna = $request->input('makna');
-        // $pura = $request->input('pura');
+        $makna = $request->input('makna');
+        $pura = $request->input('pura');
         // dd($tanggal_mulai, $tanggal_selesai);
 
         $url = 'https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchHariRayaAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai;

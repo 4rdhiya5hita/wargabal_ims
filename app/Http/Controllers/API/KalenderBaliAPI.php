@@ -53,14 +53,14 @@ class KalenderBaliAPI extends Controller
     {
         $start = microtime(true);
 
-        // $tanggal_mulai = Carbon::parse($request->input('tanggal_mulai'));
-        // $tanggal_selesai = Carbon::parse($request->input('tanggal_selesai'));
-        // $makna = Carbon::parse($request->input('makna'));
-        // $pura = Carbon::parse($request->input('pura'));
-        $tanggal_mulai = '2023-07-28';
-        $tanggal_selesai = '2023-07-29';
-        $pura = 'yes';
-        $makna = 'yes';
+        $tanggal_mulai = Carbon::parse($request->input('tanggal_mulai'));
+        $tanggal_selesai = Carbon::parse($request->input('tanggal_selesai'));
+        $makna = Carbon::parse($request->input('makna'));
+        $pura = Carbon::parse($request->input('pura'));
+        // $tanggal_mulai = '2023-07-28';
+        // $tanggal_selesai = '2023-07-29';
+        // $pura = 'yes';
+        // $makna = 'yes';
         $cacheKey = 'processed-data-' . $tanggal_mulai . '-' . $tanggal_selesai;
 
         $tanggal_mulai = Carbon::parse($tanggal_mulai);

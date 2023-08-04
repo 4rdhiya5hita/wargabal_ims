@@ -55,8 +55,8 @@ class KalenderBaliAPI extends Controller
 
         $tanggal_mulai = Carbon::parse($request->input('tanggal_mulai'));
         $tanggal_selesai = Carbon::parse($request->input('tanggal_selesai'));
-        $makna = Carbon::parse($request->input('makna'));
-        $pura = Carbon::parse($request->input('pura'));
+        $makna = $request->has('makna');
+        $pura = $request->has('pura');
         // $tanggal_mulai = '2023-07-28';
         // $tanggal_selesai = '2023-07-29';
         // $pura = 'yes';

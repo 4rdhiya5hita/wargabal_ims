@@ -201,7 +201,9 @@ class KalenderBaliAPI extends Controller
         $piodalan = $namaSaptawara . ' ' . $namaPancawara . ' ' . $namaTriwara;
 
         $hariRayaLengkap = [];
+        // Perjikaan kalau parameter di urlnya ada masukkin &makna / &pura
         if ($makna || $pura) {
+            // Perjikaan kalau dalam satu hari, hari raya nya lebih dari satu, misal Kajeng Kliwon dan Sugian Bali
             if (is_array($hariRaya) && count($hariRaya) > 1) {
                 foreach ($hariRaya as $value) {
                     $data_piodalan = Piodalan::where('piodalan', $value)->get();
@@ -209,6 +211,7 @@ class KalenderBaliAPI extends Controller
                         $ambil_makna = $item->arti;
                         $ambil_pura = $item->pura;
                     }
+                    // Perjikaan kalau berdasarkan hari raya tidak ketemu makna/pura nya, maka dicari dengan piodalannya misalnya: Wraspati Umanis Dunggulan
                     if ($data_piodalan->isEmpty()) {
                         if ($piodalan !== '-') {
                             $data_piodalan = Piodalan::where('piodalan', $piodalan)->get();
@@ -221,6 +224,7 @@ class KalenderBaliAPI extends Controller
                             $ambil_pura = '-';
                         }
                     }
+                    // Perjikaan sesuai parameter urlnya
                     if ($makna && $pura) {
                         array_push($hariRayaLengkap, [$value, $ambil_makna, $ambil_pura]);
                     } elseif (!$pura) {
@@ -229,9 +233,11 @@ class KalenderBaliAPI extends Controller
                         array_push($hariRayaLengkap, [$value, $ambil_pura]);
                     }
                 }
+            // Perjikaan kalau tidak ada hari raya apapun pada hari itu
             } elseif ($hariRaya !== '-') {
                 $ambil_makna = '-';
                 $ambil_pura = '-';
+                // Perjikaan sesuai parameter urlnya
                 if ($makna && $pura) {
                     array_push($hariRayaLengkap, [$hariRaya, $ambil_makna, $ambil_pura]);
                 } elseif (!$pura) {
@@ -239,12 +245,14 @@ class KalenderBaliAPI extends Controller
                 } else {
                     array_push($hariRayaLengkap, [$hariRaya, $ambil_pura]);
                 }
+            // Perjikaan kalau dalam satu hari, hari raya nya hanya satu saja misal Hari Raya Saraswati saja, Galungan saja
             } else {
                 $data_piodalan = Piodalan::where('piodalan', $hariRaya)->get();
                 foreach ($data_piodalan as $item) {
                     $ambil_makna = $item->arti;
                     $ambil_pura = $item->pura;
                 }
+                // Perjikaan kalau berdasarkan hari raya tidak ketemu makna/pura nya, maka dicari dengan piodalannya misalnya: Wraspati Umanis Dunggulan
                 if ($data_piodalan->isEmpty()) {
                     if ($piodalan !== '-') {
                         $data_piodalan = Piodalan::where('piodalan', $piodalan)->get();
@@ -257,6 +265,7 @@ class KalenderBaliAPI extends Controller
                         $ambil_pura = '-';
                     }
                 }
+                // Perjikaan sesuai parameter urlnya
                 if ($makna && $pura) {
                     array_push($hariRayaLengkap, [$hariRaya, $ambil_makna, $ambil_pura]);
                 } elseif (!$pura) {
@@ -265,6 +274,10 @@ class KalenderBaliAPI extends Controller
                     array_push($hariRayaLengkap, [$hariRaya, $ambil_pura]);
                 }
             }
+        }
+        // Perjikaan kalau parameter di urlnya TIDAK ADA masukkin &makna / &pura
+        else {
+            array_push($hariRayaLengkap, $hariRaya);
         }
 
         // dd($hariRayaLengkap);

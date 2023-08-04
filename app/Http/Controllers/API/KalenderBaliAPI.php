@@ -235,7 +235,7 @@ class KalenderBaliAPI extends Controller
                 }
             }
             // Perjikaan kalau tidak ada hari raya apapun pada hari itu
-            elseif ($hariRaya !== '-') {
+            elseif ($hariRaya != '-') {
                 $data_piodalan = Piodalan::where('piodalan', $hariRaya)->get();
                 foreach ($data_piodalan as $item) {
                     $ambil_makna = $item->arti;

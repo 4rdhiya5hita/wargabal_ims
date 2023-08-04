@@ -3,24 +3,69 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\API\KalenderBaliAPI;
+use App\Models\Piodalan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use GuzzleHttp\Client;
 
+use function PHPUnit\Framework\isNull;
 
 class ProgressHasil extends Controller
 {
-    /**
-     * undocumented function summary
-     *
-     * Undocumented function long description
-     *
-     * @param Type $var Description
-     * @return type
-     * @throws conditon
-     **/
     public function process_search_hari_raya(Request $request)
+    {
+        $tanggal_mulai = $request->input('tanggal_mulai');
+        $tanggal_selesai = $request->input('tanggal_selesai');
+        // $makna = $request->input('makna');
+        // $pura = $request->input('pura');
+        // dd($tanggal_mulai, $tanggal_selesai);
+
+        $url = 'https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchHariRayaAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai;
+        $url_makna = 'https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchHariRayaAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai . '&makna';
+        $url_pura = 'https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchHariRayaAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai . '&pura';
+        $url_makna_pura = 'https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchHariRayaAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai . '&makna&pura';
+        // $url = 'http://localhost:8000/api/searchHariRayaAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai;
+
+        $response = Http::get($url);
+
+        // Memeriksa status code response untuk memastikan permintaan berhasil
+        if ($response->successful()) {
+            // Menampilkan hasil respons dari API
+            $kalender = $response->json();
+            // dd($kalender);
+            $makna_piodalan = [];
+            // dd($kalender['hari_raya']);
+
+            // for ($i = 0; $i < count($kalender['hari_raya']); $i++) {
+                foreach ($kalender['hari_raya'] as $item) {
+                    foreach ($item['hariRaya'] as $hariRaya) {
+                        dd($item);
+                        if ($hariRaya !== '-') {
+                            $ambil_makna = Piodalan::where('piodalan', $hariRaya)->get(); // Assuming 'get()' is needed here
+                            if(isNull($ambil_makna)){
+                                if ($item['hariRaya'][1] !== '-') {
+                                    $ambil_makna = Piodalan::where('piodalan', $item['hariRaya'][1])->get();
+                                    $makna_piodalan[] = $ambil_makna;
+                                } else {
+                                    $makna_piodalan[] = '-';
+                                }
+                            }
+                            $makna_piodalan[] = $ambil_makna;
+                            // dd($makna_piodalan);
+                        }
+                    }
+                }
+            // }
+            dd($makna_piodalan);
+
+            return view('hari_raya.hari_raya', compact('kalender', 'makna_piodalan'));
+        } else {
+            echo "Gagal mengambil data dari API.";
+        }
+    }
+
+    public function process_search_dewasa_ayu(Request $request)
     {
         $tanggal_mulai = $request->input('tanggal_mulai');
         $tanggal_selesai = $request->input('tanggal_selesai');
@@ -36,12 +81,10 @@ class ProgressHasil extends Controller
             // Menampilkan hasil respons dari API
             $kalender = $response->json();
             // dd($kalender);
-            return view('hari_raya.hari_raya', compact('kalender'));
+            return view('dewasa_ayu.dewasa_ayu', compact('kalender'));
         } else {
             echo "Gagal mengambil data dari API.";
         }
-
-        
     }
 
     public function getHasilProgress()

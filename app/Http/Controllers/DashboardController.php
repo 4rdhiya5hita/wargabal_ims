@@ -17,4 +17,9 @@ class DashboardController extends Controller
     {
         return view('hari_raya.index');
     }
+
+    public function search_dewasa_ayu()
+    {
+        return view('dewasa_ayu.index');
+    }
 }

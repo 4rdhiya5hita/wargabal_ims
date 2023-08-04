@@ -11,6 +11,7 @@ use App\Http\Controllers\SaptaWaraController_07;
 use App\Http\Controllers\TriWaraController_03;
 use App\Http\Controllers\WukuController;
 use App\Jobs\PerhitunganKalender;
+use App\Models\Piodalan;
 use App\Models\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -46,20 +47,22 @@ class KalenderBaliAPI extends Controller
      * @return type
      * @throws conditon
      **/
+
+
     public function searchHariRayaAPI(Request $request)
     {
         $start = microtime(true);
 
-        $tanggal_mulai = Carbon::parse($request->input('tanggal_mulai'));
-        $tanggal_selesai = Carbon::parse($request->input('tanggal_selesai'));
+        // $tanggal_mulai = Carbon::parse($request->input('tanggal_mulai'));
+        // $tanggal_selesai = Carbon::parse($request->input('tanggal_selesai'));
+        $tanggal_mulai = '2023-07-28';
+        $tanggal_selesai = '2023-07-29';
+        $pura = 'yes';
+        $makna = 'yes';
         $cacheKey = 'processed-data-' . $tanggal_mulai . '-' . $tanggal_selesai;
-        // $tanggal_mulai = '2023-07-27';
-        // $tanggal_selesai = '2023-08-13';
 
-        // $tanggal_mulai = Carbon::parse($tanggal_mulai);
-        // $tanggal_selesai = Carbon::parse($tanggal_selesai);
-
-        $kalender = [];
+        $tanggal_mulai = Carbon::parse($tanggal_mulai);
+        $tanggal_selesai = Carbon::parse($tanggal_selesai);
 
         // Mengecek apakah hasil pemrosesan data sudah ada dalam cache
         if (Cache::has($cacheKey)) {
@@ -68,31 +71,33 @@ class KalenderBaliAPI extends Controller
             $executionTime = $end - $start;
             $executionTime = number_format($executionTime, 6);
 
-            return response()->json([
-                'message' => 'Data telah diambil dari cache.',
-                'hari_raya' => $result,
-                'waktu_eksekusi' => $executionTime
-            ]);
+            $response = [
+                'message' => 'Sukses',
+                $result,
+                'waktu_eksekusi' => $executionTime,
+            ];
         }
+
+        $kalender = [];
 
         while ($tanggal_mulai <= $tanggal_selesai) {
             $kalender[] = [
                 'tanggal' => $tanggal_mulai->toDateString(),
-                'hariRaya' => $this->getHariRaya($tanggal_mulai->toDateString()),
+                'hariRaya' => $this->getHariRaya($tanggal_mulai->toDateString(), $makna, $pura),
             ];
             $tanggal_mulai->addDay();
         }
-        
+
         $minutes = 60; // Durasi penyimpanan cache dalam menit
         Cache::put($cacheKey, $kalender, $minutes); // Menyimpan hasil pemrosesan data dalam cache
-        
+
         $end = microtime(true);
         $executionTime = $end - $start;
         $executionTime = number_format($executionTime, 6);
 
         $response = [
             'message' => 'Sukses',
-            'hari_raya' => $kalender,
+            $kalender,
             'waktu_eksekusi' => $executionTime,
         ];
 
@@ -100,7 +105,7 @@ class KalenderBaliAPI extends Controller
         // return view('dashboard.index', compact('kalender'));
     }
 
-    private function getHariRaya($tanggal)
+    private function getHariRaya($tanggal, $makna, $pura)
     {
         // dd($tanggal);
         if ($tanggal >= '2000-01-01') {
@@ -151,6 +156,11 @@ class KalenderBaliAPI extends Controller
         $pancawara = $pancaWaraController->getPancawara($hasilAngkaWuku);
         $triwara = $triWaraController->gettriwara($hasilAngkaWuku);
 
+        // $namaWuku = $wukuController->getNamaWuku($hasilWuku);
+        $namaSaptawara = $saptawaraWaraController->getNamaSaptaWara($saptawara);
+        $namaPancawara = $pancaWaraController->getNamaPancaWara($pancawara);
+        $namaTriwara = $triWaraController->getNamatriwara($triwara);
+
         // $pengalantaka_dan_hariSasih = $pengalantakaController->getPengalantaka($tanggal, $refTanggal, $penanggal, $noNgunaratri);
         // $hariSasih = $hariSasihController->getHariSasih($tanggal, $refTanggal, $penanggal, $noNgunaratri);
         $pengalantaka_dan_hariSasih = $hariSasihController->getHariSasih($tanggal, $refTanggal, $penanggal, $noNgunaratri);
@@ -184,9 +194,79 @@ class KalenderBaliAPI extends Controller
                 $tahunSaka
             );
         }
+        // dd($namaWuku, $namaSaptawara, $namaPancawara, $namaTriwara);
         $hariRaya = $hariRayaController->getHariRaya($tanggal, $pengalantaka_dan_hariSasih['penanggal_1'], $pengalantaka_dan_hariSasih['penanggal_2'], $pengalantaka_dan_hariSasih['pengalantaka'], $no_sasih['no_sasih'], $triwara, $pancawara, $saptawara, $hasilWuku);
+        $piodalan = $namaSaptawara . ' ' . $namaPancawara . ' ' . $namaTriwara;
 
-        return $hariRaya;
+        $hariRayaLengkap = [];
+        if ($makna || $pura) {
+            if (is_array($hariRaya) && count($hariRaya) > 1) {
+                foreach ($hariRaya as $value) {
+                    $data_piodalan = Piodalan::where('piodalan', $value)->get();
+                    foreach ($data_piodalan as $item) {
+                        $ambil_makna = $item->arti;
+                        $ambil_pura = $item->pura;
+                    }
+                    if ($data_piodalan->isEmpty()) {
+                        if ($piodalan !== '-') {
+                            $data_piodalan = Piodalan::where('piodalan', $piodalan)->get();
+                            foreach ($data_piodalan as $item) {
+                                $ambil_makna = $item->arti;
+                                $ambil_pura = $item->pura;
+                            }
+                        } else {
+                            $ambil_makna = '-';
+                            $ambil_pura = '-';
+                        }
+                    }
+                    if ($makna && $pura) {
+                        array_push($hariRayaLengkap, [$value, $ambil_makna, $ambil_pura]);
+                    } elseif (!$pura) {
+                        array_push($hariRayaLengkap, [$value, $ambil_makna]);
+                    } else {
+                        array_push($hariRayaLengkap, [$value, $ambil_pura]);
+                    }
+                }
+            } elseif ($hariRaya !== '-') {
+                $ambil_makna = '-';
+                $ambil_pura = '-';
+                if ($makna && $pura) {
+                    array_push($hariRayaLengkap, [$hariRaya, $ambil_makna, $ambil_pura]);
+                } elseif (!$pura) {
+                    array_push($hariRayaLengkap, [$hariRaya, $ambil_makna]);
+                } else {
+                    array_push($hariRayaLengkap, [$hariRaya, $ambil_pura]);
+                }
+            } else {
+                $data_piodalan = Piodalan::where('piodalan', $hariRaya)->get();
+                foreach ($data_piodalan as $item) {
+                    $ambil_makna = $item->arti;
+                    $ambil_pura = $item->pura;
+                }
+                if ($data_piodalan->isEmpty()) {
+                    if ($piodalan !== '-') {
+                        $data_piodalan = Piodalan::where('piodalan', $piodalan)->get();
+                        foreach ($data_piodalan as $item) {
+                            $ambil_makna = $item->arti;
+                            $ambil_pura = $item->pura;
+                        }
+                    } else {
+                        $ambil_makna = '-';
+                        $ambil_pura = '-';
+                    }
+                }
+                if ($makna && $pura) {
+                    array_push($hariRayaLengkap, [$hariRaya, $ambil_makna, $ambil_pura]);
+                } elseif (!$pura) {
+                    array_push($hariRayaLengkap, [$hariRaya, $ambil_makna]);
+                } else {
+                    array_push($hariRayaLengkap, [$hariRaya, $ambil_pura]);
+                }
+            }
+        }
+
+        // dd($hariRayaLengkap);
+        return $hariRayaLengkap;
     }
 
     public function searchHariRayaAsli(Request $request)
@@ -263,16 +343,16 @@ class KalenderBaliAPI extends Controller
 
             $saptawara = $saptawaraWaraController->getSaptawara($tanggal[$i]);
             // $uripSaptawara = $saptawaraWaraController->getUripSaptaWara($saptawara);
-            $namaSaptawara = $saptawaraWaraController->getNamaSaptaWara($saptawara);
+            // $namaSaptawara = $saptawaraWaraController->getNamaSaptaWara($saptawara);
 
 
             $pancawara = $pancaWaraController->getPancawara($hasilAngkaWuku);
             // $uripPancawara = $pancaWaraController->getUripPancaWara($pancawara);
-            $namaPancawara = $pancaWaraController->getNamaPancaWara($pancawara);
+            // $namaPancawara = $pancaWaraController->getNamaPancaWara($pancawara);
 
 
             $triwara = $triWaraController->gettriwara($hasilAngkaWuku);
-            $namaTriwara = $triWaraController->getNamatriwara($triwara);
+            // $namaTriwara = $triWaraController->getNamatriwara($triwara);
 
             $pengalantaka = $pengalantakaController->getPengalantaka($tanggal[$i], $refTanggal, $penanggal, $noNgunaratri);
             $hariSasih = $hariSasihController->getHariSasih($tanggal[$i], $refTanggal, $penanggal, $noNgunaratri);
@@ -489,7 +569,7 @@ class KalenderBaliAPI extends Controller
         $tanggal_selesai = '2023-08-13';
         $tanggal_mulai = Carbon::parse($tanggal_mulai);
         $tanggal_selesai = Carbon::parse($tanggal_selesai);
-        
+
 
         $cacheKey = 'processed-data-' . $tanggal_mulai->toDateString();
         $minutes = 60; // Durasi penyimpanan cache dalam menit (sesuaikan dengan kebutuhan)
@@ -528,7 +608,7 @@ class KalenderBaliAPI extends Controller
             $jobIds[] = $this->dispatch($job);
             array_push($kalender, $response);
         }
-        
+
         // $mergedJob = array_merge(...$kalender);
         // dd($kalender);
 
@@ -593,7 +673,7 @@ class KalenderBaliAPI extends Controller
     //         $jobIds[] = $this->dispatch($job);
     //         array_push($kalender, $job);
     //     }
-        
+
     //     $mergedJob = array_merge(...$kalender);
     //     dd($mergedJob);
 

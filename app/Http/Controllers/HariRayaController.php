@@ -55,7 +55,7 @@ class HariRayaController extends Controller
 
         // wuku 12
         } elseif ($saptawara == 1 && $pancawara == 4 && $wuku == 12) {
-            $hari_raya[] = 'Ulihan';
+            $hari_raya[] = 'Hari Ulihan';
         } elseif ($saptawara == 2 && $pancawara == 5 && $wuku == 12) {
             $hari_raya[] = 'Hari Pemacekan Agung';
         } elseif ($saptawara == 6 && $pancawara == 4 && $wuku == 12) {

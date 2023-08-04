@@ -60,10 +60,14 @@
 					    <label>Form &amp; tabel</label>
 					</li>
 					<li class="nav-item">
-					    <a href="form_elements.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Form</span></a>
+					    <a href="form_elements.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-align-justify"></i></span><span class="pcoded-mtext">Form</span></a>
 					</li>
 					<li class="nav-item">
-					    <a href="{{ route('search_hari_raya') }}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-align-justify"></i></span><span class="pcoded-mtext">Tabel Hari Raya</span></a>
+					    <a href="{{ route('search_hari_raya') }}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Pencarian Hari Raya</span></a>
+					</li>
+					<li class="nav-item">
+					    <a href="{{ route('search_dewasa_ayu') }}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Pencarian Dewasa Ayu</span></a>
+					</li>
 					<!-- </li>
 					<li class="nav-item pcoded-menu-caption">
 					    <label>Chart & Maps</label>

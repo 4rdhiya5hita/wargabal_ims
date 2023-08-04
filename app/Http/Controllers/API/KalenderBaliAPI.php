@@ -233,20 +233,9 @@ class KalenderBaliAPI extends Controller
                         array_push($hariRayaLengkap, [$value, $ambil_pura]);
                     }
                 }
+            }
             // Perjikaan kalau tidak ada hari raya apapun pada hari itu
-            } elseif ($hariRaya !== '-') {
-                $ambil_makna = '-';
-                $ambil_pura = '-';
-                // Perjikaan sesuai parameter urlnya
-                if ($makna && $pura) {
-                    array_push($hariRayaLengkap, [$hariRaya, $ambil_makna, $ambil_pura]);
-                } elseif (!$pura) {
-                    array_push($hariRayaLengkap, [$hariRaya, $ambil_makna]);
-                } else {
-                    array_push($hariRayaLengkap, [$hariRaya, $ambil_pura]);
-                }
-            // Perjikaan kalau dalam satu hari, hari raya nya hanya satu saja misal Hari Raya Saraswati saja, Galungan saja
-            } else {
+            elseif ($hariRaya !== '-') {
                 $data_piodalan = Piodalan::where('piodalan', $hariRaya)->get();
                 foreach ($data_piodalan as $item) {
                     $ambil_makna = $item->arti;
@@ -265,6 +254,19 @@ class KalenderBaliAPI extends Controller
                         $ambil_pura = '-';
                     }
                 }
+                // Perjikaan sesuai parameter urlnya
+                if ($makna && $pura) {
+                    array_push($hariRayaLengkap, [$hariRaya, $ambil_makna, $ambil_pura]);
+                } elseif (!$pura) {
+                    array_push($hariRayaLengkap, [$hariRaya, $ambil_makna]);
+                } else {
+                    array_push($hariRayaLengkap, [$hariRaya, $ambil_pura]);
+                }    
+            } 
+            // Perjikaan kalau dalam satu hari, hari raya nya hanya satu saja misal Hari Raya Saraswati saja, Galungan saja
+            else {
+                $ambil_makna = '-';
+                $ambil_pura = '-';
                 // Perjikaan sesuai parameter urlnya
                 if ($makna && $pura) {
                     array_push($hariRayaLengkap, [$hariRaya, $ambil_makna, $ambil_pura]);

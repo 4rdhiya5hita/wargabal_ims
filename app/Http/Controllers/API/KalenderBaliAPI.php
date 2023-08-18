@@ -72,7 +72,8 @@ class KalenderBaliAPI extends Controller
         // $lengkap = $request->has('lengkap');
         // $get_ingkel = $request->has('ingkel');
         $get_jejepan = $request->has('jejepan');
-        dd($get_jejepan);
+        $jejepan_asli = $request->input('jejepan');
+        dd($jejepan_asli);
         // $get_lintang = $request->has('lintang');
         // $get_pancasudha = $request->has('pancasudha');
         // $get_pangarasan = $request->has('pangarasan');

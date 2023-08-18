@@ -100,7 +100,7 @@ class HariRayaController extends Controller
             $hari_raya[] = 'Kajeng Kliwon';
         } 
         
-        if (($hari_sasih_1 == 1 || $hari_sasih_2 == 2) && $pengalantaka == 'Penanggal' && $no_sasih=10) {
+        if (($hari_sasih_1 == 1 || $hari_sasih_2 == 2) && $pengalantaka == 'Penanggal' && $no_sasih == 10) {
             $hari_raya[] = 'Hari Raya Nyepi';
         } elseif (($hari_sasih_1 == 14 || $hari_sasih_2 == 14) && $pengalantaka == 'Pangelong' && $no_sasih == 7) {
             $hari_raya[] = 'Hari Raya Siwalatri';

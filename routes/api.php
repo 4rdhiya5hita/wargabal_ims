@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CalendarAPI;
 use App\Http\Controllers\API\KalenderBaliAPI;
+use App\Http\Controllers\DewasaAyuController;
 use App\Http\Controllers\TasksController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,3 +34,5 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/searchHariRayaAPI', [KalenderBaliAPI::class, 'searchHariRayaAPI']);
+Route::get('/searchDewasaAyuAPI', [DewasaAyuController::class, 'searchDewasaAyuAPI']);
+Route::get('/searchKalenderAPI', [KalenderBaliAPI::class, 'searchHariRayaAPI']);

@@ -17,16 +17,16 @@ class HariSasihController extends Controller
         if ($carijumlahNgunaratriDanPenanggal === 0) {
             $jumlahNgunaratri--;
         }
-        
+
         $jumlah = $refPenanggal + $selisih + $jumlahNgunaratri;
-        
+
         // Cari Pengalantaka
         if (floor(($jumlah - 1) / 15) % 2 === 0) {
             $pengalantaka = 'Pangelong';
         } else {
             $pengalantaka = 'Penanggal';
         }
-        
+
         // Cari Penanggal 1
         $penanggal = ($jumlah % 15);
         if ($penanggal === 0) {
@@ -34,7 +34,7 @@ class HariSasihController extends Controller
         } elseif ($penanggal < 0) {
             $penanggal += 15;
         }
-        
+
         // Cari Penanggal 2
         $penanggal2 = 0;
         if ($carijumlahNgunaratriDanPenanggal === 0) {
@@ -43,20 +43,19 @@ class HariSasihController extends Controller
         if ($penanggal2 === 16) {
             $penanggal2 = 1;
         }
-        
+
         return [
             'penanggal_1' => $penanggal,
             'penanggal_2' => $penanggal2,
             'pengalantaka' => $pengalantaka,
         ];
-        
     }
 
 
     public function getSasihBefore1992($tanggal, $refTanggal, $refPenanggal, $refNgunaratri, $refSasih, $refTahunSaka)
     {
         $isNampih = FALSE;
-        $selisih = strtotime($tanggal) - strtotime($refTanggal);
+        $selisih = (strtotime($tanggal) - strtotime($refTanggal)) / (60 * 60 * 24);
         $jumlahNgunaratri = floor(($selisih + $refNgunaratri) / 63);
 
         if (($selisih + $refNgunaratri) % 63 == 0) {
@@ -86,7 +85,7 @@ class HariSasihController extends Controller
                 $hasilTahun--;
             }
 
-            if ($isNampih) {
+            if ($isNampih === true) {
                 $isNampih = false;
             } else {
                 $hasilTahun = $hasilTahun % 19;
@@ -121,57 +120,63 @@ class HariSasihController extends Controller
 
     public function getSasihAfter2002($tanggal, $refTanggal, $refPenanggal, $refNgunaratri, $refSasih, $refTahunSaka)
     {
-        $isNampih = FALSE;
-        $selisih = strtotime($tanggal) - strtotime($refTanggal);
+        $selisih = (strtotime($tanggal) - strtotime($refTanggal)) / (60 * 60 * 24);
+        // dd($selisih, $refTanggal, $tanggal);
         $jumlahNgunaratri = floor(($selisih + $refNgunaratri) / 63);
 
-        if (($selisih + $refNgunaratri) % 63 == 0) {
+        if (($selisih + $refNgunaratri) % 63 === 0) {
             $jumlahNgunaratri--;
         }
 
+        // dd($selisih, $refPenanggal, $jumlahNgunaratri);
         $penambahanSasih = floor(($selisih + $refPenanggal + 14 + $jumlahNgunaratri) / 30);
         $hasilTahun = $refTahunSaka;
+        // dd($penambahanSasih);
 
         $i = 0;
         $i2 = $refSasih;
+        $isNampih = false;
 
         while ($i < $penambahanSasih) {
             $i++;
             $i2++;
             $i2 = $i2 % 12;
 
-            if ($i2 == 0) {
+            if ($i2 === 0) {
                 $i2 = 12;
             }
 
-            if ($i2 == 10) {
+            if ($i2 === 10) {
                 $hasilTahun++;
             }
 
-            if ($isNampih) {
+            if ($isNampih === true) {
                 $isNampih = false;
             } else {
-                $hasilTahun = $hasilTahun % 19;
-                if ($hasilTahun == 0 || $hasilTahun == 6 || $hasilTahun == 11) {
-                    if ($i2 == 12) {
+                if ($hasilTahun % 19 === 0 || $hasilTahun % 19 === 6 || $hasilTahun % 19 === 11) {
+                    if ($i2 === 12) {
                         $i2--;
                         $isNampih = true;
+                        // dd($i2, 'sana');
                     }
-                } elseif ($hasilTahun == 3 || $hasilTahun == 8 || $hasilTahun == 14 || $hasilTahun == 16) {
-                    if ($i2 == 1) {
+                } elseif ($hasilTahun % 19 === 3 || $hasilTahun % 19 === 8 || $hasilTahun % 19 === 14 || $hasilTahun % 19 === 16) {
+                    if ($i2 === 1) {
                         $i2--;
                         $isNampih = true;
+                        // dd($i2, 'sini');
                     }
                 }
             }
         }
+        // dd($i);
 
-        if ($i2 == 0) {
+        if ($i2 === 0) {
             $i2 = 12;
         }
 
         $no_sasih = $i2;
         $hasil_tahun = $hasilTahun;
+        // dd($no_sasih);
 
         return [
             'no_sasih' => $no_sasih,
@@ -183,7 +188,7 @@ class HariSasihController extends Controller
     public function getSasihBetween($tanggal, $refTanggal, $refPenanggal, $refNgunaratri, $refSasih, $refTahunSaka)
     {
         $isNampih = FALSE;
-        $selisih = strtotime($tanggal) - strtotime($refTanggal);
+        $selisih = (strtotime($tanggal) - strtotime($refTanggal)) / (60 * 60 * 24);
         $jumlahNgunaratri = floor(($selisih + $refNgunaratri) / 63);
 
         if (($selisih + $refNgunaratri) % 63 == 0) {
@@ -209,9 +214,9 @@ class HariSasihController extends Controller
                 $hasilTahun++;
             }
 
-            if ($isNampih) {
+            if ($isNampih === true) {
                 $isNampih = false;
-            } else {                
+            } else {
                 $hasilTahun = $hasilTahun % 19;
                 if ($hasilTahun == 2 || $hasilTahun == 10) {
                     if ($i2 == 12) {
@@ -258,6 +263,5 @@ class HariSasihController extends Controller
             'no_sasih' => $no_sasih,
             'hasil_tahun' => $hasil_tahun
         ];
-
     }
 }

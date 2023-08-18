@@ -43,6 +43,7 @@ Route::get('/searchTanggalHariRaya', [KalenderBaliAPI::class, 'searchTanggalHari
 Route::get('/searchHariRaya', [KalenderBaliAPI::class, 'searchHariRaya']);
 Route::get('/searchHariRayaAPI', [KalenderBaliAPI::class, 'searchHariRayaAPI']);
 Route::get('/searchDewasaAyuAPI', [DewasaAyuController::class, 'searchDewasaAyuAPI']);
+Route::get('/searchKalenderAPI', [KalenderBaliAPI::class, 'searchHariRayaAPI']);
 
 Route::get('/processData', [KalenderBaliAPI::class, 'processData']);
 // Route::get('/progress', [ProgressHasil::class, 'getProgress']);
@@ -59,6 +60,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/progress', 'getProgress')->name('progress');
         Route::get('/process_search_hari_raya', 'process_search_hari_raya')->name('process_search_hari_raya');
         Route::get('/process_search_dewasa_ayu', 'process_search_dewasa_ayu')->name('process_search_dewasa_ayu');
+        Route::get('/process_search_kalender', 'process_search_kalender')->name('process_search_kalender');
     });
 });
 

@@ -136,6 +136,7 @@ class ProgressHasil extends Controller
         }
         // $url = 'http://localhost:8000/api/searchKalenderAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai;
 
+        // dd($url);
         $response = Http::get($url);
 
         // Memeriksa status code response untuk memastikan permintaan berhasil

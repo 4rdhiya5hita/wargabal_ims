@@ -110,7 +110,7 @@ class ProgressHasil extends Controller
         }elseif($ingkel) {
             $url = 'https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchKalenderAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai . '&ingkel=ingkel';
         }elseif($jejepan) {
-            $url = 'http://localhost:8000/searchKalenderAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai . '&jejepan=jejepan';
+            $url = 'https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchKalenderAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai . '&jejepan=jejepan';
         }elseif($lintang) {
             $url = 'https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchKalenderAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai . '&lintang=lintang';
         }elseif($pancasudha) {

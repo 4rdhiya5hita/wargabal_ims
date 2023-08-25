@@ -67,43 +67,41 @@ class KalenderBaliAPI extends Controller
 
         $tanggal_mulai = Carbon::parse($request->input('tanggal_mulai'));
         $tanggal_selesai = Carbon::parse($request->input('tanggal_selesai'));
-        // $makna = $request->has('makna');
-        // $pura = $request->has('pura');
-        // $lengkap = $request->has('lengkap');
-        // $get_ingkel = $request->has('ingkel');
-        $get_jejepan = $request->has('jejepan');
-        $jejepan_asli = $request->input('jejepan');
-        dd($jejepan_asli);
-        // $get_lintang = $request->has('lintang');
-        // $get_pancasudha = $request->has('pancasudha');
-        // $get_pangarasan = $request->has('pangarasan');
-        // $get_rakam = $request->has('rakam');
-        // $get_watek_madya = $request->has('watek_madya');
-        // $get_watek_alit = $request->has('watek_alit');
-        // $get_neptu = $request->has('neptu');
-        // $get_ekajalarsi = $request->has('ekajalarsi');
-        // $get_zodiak = $request->has('zodiak');
-        // $get_pratiti = $request->has('pratiti'); 
+        $makna = $request->has('makna');
+        $pura = $request->has('pura');
+        // dd($jejepan_asli);
+        $lengkap = $request->input('lengkap');
+        $get_wuku = $request->input('wuku');
+        $get_ingkel = $request->input('ingkel');
+        $get_jejepan = $request->input('jejepan');
+        $get_lintang = $request->input('lintang');
+        $get_pancasudha = $request->input('pancasudha');
+        $get_pangarasan = $request->input('pangarasan');
+        $get_rakam = $request->input('rakam');
+        $get_watek_madya = $request->input('watek_madya');
+        $get_watek_alit = $request->input('watek_alit');
+        $get_neptu = $request->input('neptu');
+        $get_ekajalarsi = $request->input('ekajalarsi');
+        $get_zodiak = $request->input('zodiak');
+        $get_pratiti = $request->input('pratiti'); 
 
-        // $tanggal_mulai = '2023-01-20';
-        // $tanggal_selesai = '2023-01-21';
-        $pura = '';
-        $makna = '';
-        $lengkap = '';
-        $get_ingkel = true;
-        $get_jejepan = true;
-        $get_lintang = true;
-
-        $get_pancasudha = false;
-        $get_pangarasan = false;
-        $get_rakam = false;
-        $get_watek_madya = false;
-
-        $get_watek_alit = true;
-        $get_neptu = true;
-        $get_ekajalarsi = true;
-        $get_zodiak = true;
-        $get_pratiti = true;
+        // $tanggal_mulai = '1999-04-29';
+        // $tanggal_selesai = '1999-04-30';
+        // $pura = '';
+        // $makna = '';
+        // $lengkap = '';
+        // $get_ingkel = '';
+        // $get_jejepan = '';
+        // $get_lintang = '';
+        // $get_pancasudha = '';
+        // $get_pangarasan = '';
+        // $get_rakam = '';
+        // $get_watek_madya = '';
+        // $get_watek_alit = '';
+        // $get_neptu = '';
+        // $get_ekajalarsi = '';
+        // $get_zodiak = '';
+        // $get_pratiti = '';
 
         $cacheKey = 'processed-data-' . $tanggal_mulai . '-' . $tanggal_selesai;
 
@@ -129,11 +127,25 @@ class KalenderBaliAPI extends Controller
         while ($tanggal_mulai <= $tanggal_selesai) {
             $kalender[] = [
                 'tanggal' => $tanggal_mulai->toDateString(),
-                'kalender' => $this->getHariRaya($tanggal_mulai->toDateString(), $makna, $pura, $lengkap, 
-                                                                            $get_ingkel, $get_jejepan, $get_lintang, 
-                                                                            $get_pancasudha, $get_pangarasan, $get_rakam, 
-                                                                            $get_watek_madya, $get_watek_alit, $get_neptu, 
-                                                                            $get_ekajalarsi, $get_zodiak, $get_pratiti),
+                'kalender' => $this->getHariRaya(
+                    $tanggal_mulai->toDateString(),
+                    $makna,
+                    $pura,
+                    $lengkap,
+                    $get_wuku,
+                    $get_ingkel,
+                    $get_jejepan,
+                    $get_lintang,
+                    $get_pancasudha,
+                    $get_pangarasan,
+                    $get_rakam,
+                    $get_watek_madya,
+                    $get_watek_alit,
+                    $get_neptu,
+                    $get_ekajalarsi,
+                    $get_zodiak,
+                    $get_pratiti
+                ),
             ];
             $tanggal_mulai->addDay();
         }
@@ -155,12 +167,25 @@ class KalenderBaliAPI extends Controller
         // return view('dashboard.index', compact('kalender'));
     }
 
-    private function getHariRaya($tanggal, $makna, $pura, $lengkap, 
-                                $get_ingkel, $get_jejepan, $get_lintang, 
-                                $get_pancasudha, $get_pangarasan, $get_rakam, 
-                                $get_watek_madya, $get_watek_alit, $get_neptu, 
-                                $get_ekajalarsi, $get_zodiak, $get_pratiti)
-    {
+    private function getHariRaya(
+        $tanggal,
+        $makna,
+        $pura,
+        $lengkap,
+        $get_wuku,
+        $get_ingkel,
+        $get_jejepan,
+        $get_lintang,
+        $get_pancasudha,
+        $get_pangarasan,
+        $get_rakam,
+        $get_watek_madya,
+        $get_watek_alit,
+        $get_neptu,
+        $get_ekajalarsi,
+        $get_zodiak,
+        $get_pratiti
+    ) {
         // dd($get_jejepan);
         if ($tanggal >= '2000-01-01') {
             $refTanggal = '2000-01-01';
@@ -206,6 +231,7 @@ class KalenderBaliAPI extends Controller
         // Lakukan semua perhitungan hanya sekali
         $hasilAngkaWuku = $wukuController->getNoWuku($tanggal, $angkaWuku, $refTanggal);
         $hasilWuku = $wukuController->getWuku($hasilAngkaWuku);
+        $namaWuku = $wukuController->getNamaWuku($hasilWuku);
         $saptawara = $saptaWaraController->getSaptawara($tanggal);
         $pancawara = $pancaWaraController->getPancawara($hasilAngkaWuku);
         $triwara = $triWaraController->gettriwara($hasilAngkaWuku);
@@ -324,52 +350,13 @@ class KalenderBaliAPI extends Controller
         }
         // Perjikaan kalau parameter di urlnya ada &lengkap
         // fungsi: mencari detail setiap tanggal pada kalender
-        elseif ($lengkap) {
-            $urip_pancawara = $pancaWaraController->getUripPancaWara($pancawara);
-            $urip_saptawara = $saptaWaraController->getUripsaptawara($saptawara);
 
-            $ingkelController = new IngkelController();
-            $jejepanController = new JejepanController();
-            $lintangController = new LintangController();
-            $pancasudhaController = new PancaSudhaController();
-            $pangarasanController = new PangarasanController();
-            $rakamController = new RakamController();
-            $watek_madyaController = new WatekMadyaController();
-            $watek_alitController = new WatekAlitController();
-            $neptuController = new NeptuController();
-            $ekajalarsiController = new EkaJalaRsiController();
-            $zodiakController = new ZodiakController();
-            $pratitiController = new PratitiController();
+        if ($lengkap || $get_wuku || $get_ingkel || $get_jejepan || $get_lintang || $get_pancasudha || $get_pangarasan || $get_rakam || $get_watek_madya || $get_watek_alit || $get_neptu || $get_ekajalarsi || $get_zodiak || $get_pratiti) {
 
-            $ingkel = $ingkelController->Ingkel($hasilWuku);
-            $jejepan = $jejepanController->Jejepan($hasilAngkaWuku);
-            $lintang = $lintangController->Lintang($tanggal, $refTanggal);
-            $pancasudha = $pancasudhaController->Pancasudha($pancawara, $saptawara);
-            $pangarasan = $pangarasanController->Pangarasan($urip_pancawara, $urip_saptawara);
-            $rakam = $rakamController->Rakam($pancawara, $saptawara);
-            $watek_madya = $watek_madyaController->WatekMadya($urip_pancawara, $urip_saptawara);
-            $watek_alit = $watek_alitController->WatekAlit($urip_pancawara, $urip_saptawara);
-            $neptu = $neptuController->Neptu($urip_pancawara, $urip_saptawara);
-            $ekajalarsi = $ekajalarsiController->EkaJalaRsi($hasilWuku, $saptawara);
-            $zodiak = $zodiakController->Zodiak($tanggal);
-            // dd($pengalantaka_dan_hariSasih['pengalantaka'], $no_sasih['no_sasih'], $pengalantaka_dan_hariSasih['penanggal_1']);
-            $pratiti = $pratitiController->Pratiti($pengalantaka_dan_hariSasih['pengalantaka'], $no_sasih['no_sasih'], $pengalantaka_dan_hariSasih['penanggal_1']);
-
-            array_push($kalenderLengkap, [$ingkel, $jejepan, $lintang, $pancasudha, $pangarasan, $rakam, $watek_madya, $watek_alit, $neptu, $ekajalarsi, $zodiak, $pratiti]);
-        } 
-
-        elseif ($get_ingkel || $get_jejepan || $get_lintang || $get_pancasudha || $get_pangarasan || $get_rakam || $get_watek_madya || $get_watek_alit || $get_neptu || $get_ekajalarsi || $get_zodiak || $get_pratiti) {
-
-            $metode = [$get_ingkel, $get_jejepan, $get_lintang, $get_pancasudha, $get_pangarasan, $get_rakam, $get_watek_madya, $get_watek_alit, $get_neptu, $get_ekajalarsi, $get_zodiak, $get_pratiti];
-            
-            // Lakukan iterasi melalui pilihan metode yang dipilih
-            foreach ($metode as $value) {
-                dd($value);
-                if ($value) {
-                    if ($value == 'true') {
-
-                    }
-                }
+            if ($lengkap) {
+                $metode = ['wuku', 'ingkel', 'jejepan', 'lintang', 'pancasudha', 'pangarasan', 'rakam', 'watek_madya', 'watek_alit', 'neptu', 'ekajalarsi', 'zodiak', 'pratiti'];
+            } else {
+                $metode = [$get_wuku, $get_ingkel, $get_jejepan, $get_lintang, $get_pancasudha, $get_pangarasan, $get_rakam, $get_watek_madya, $get_watek_alit, $get_neptu, $get_ekajalarsi, $get_zodiak, $get_pratiti];
             }
 
             $urip_pancawara = $pancaWaraController->getUripPancaWara($pancawara);
@@ -388,26 +375,66 @@ class KalenderBaliAPI extends Controller
             $zodiakController = new ZodiakController();
             $pratitiController = new PratitiController();
 
-            $ingkel = $ingkelController->Ingkel($hasilWuku);
-            $jejepan = $jejepanController->Jejepan($hasilAngkaWuku);
-            $lintang = $lintangController->Lintang($tanggal, $refTanggal);
-            $pancasudha = $pancasudhaController->Pancasudha($pancawara, $saptawara);
-            $pangarasan = $pangarasanController->Pangarasan($urip_pancawara, $urip_saptawara);
-            $rakam = $rakamController->Rakam($pancawara, $saptawara);
-            $watek_madya = $watek_madyaController->WatekMadya($urip_pancawara, $urip_saptawara);
-            $watek_alit = $watek_alitController->WatekAlit($urip_pancawara, $urip_saptawara);
-            $neptu = $neptuController->Neptu($urip_pancawara, $urip_saptawara);
-            $ekajalarsi = $ekajalarsiController->EkaJalaRsi($hasilWuku, $saptawara);
-            $zodiak = $zodiakController->Zodiak($tanggal);
-            // dd($pengalantaka_dan_hariSasih['pengalantaka'], $no_sasih['no_sasih'], $pengalantaka_dan_hariSasih['penanggal_1']);
-            $pratiti = $pratitiController->Pratiti($pengalantaka_dan_hariSasih['pengalantaka'], $no_sasih['no_sasih'], $pengalantaka_dan_hariSasih['penanggal_1']);
-
-            array_push($kalenderLengkap, [$ingkel, $jejepan, $lintang, $pancasudha, $pangarasan, $rakam, $watek_madya, $watek_alit, $neptu, $ekajalarsi, $zodiak, $pratiti]);
+            // Lakukan iterasi melalui pilihan metode yang dipilih
+            foreach ($metode as $value) {
+                if ($value == 'wuku') {
+                    array_push($kalenderLengkap, ['wuku'=>$namaWuku]);
+                }
+                if ($value == 'ingkel') {
+                    $ingkel = $ingkelController->Ingkel($hasilWuku);
+                    array_push($kalenderLengkap, ['ingkel'=>$ingkel]);
+                }
+                if ($value == 'jejepan') {
+                    $jejepan = $jejepanController->Jejepan($hasilAngkaWuku);
+                    array_push($kalenderLengkap, ['jejepan'=>$jejepan]);
+                }
+                if ($value == 'lintang') {
+                    $lintang = $lintangController->Lintang($tanggal, $refTanggal);
+                    array_push($kalenderLengkap, ['lintang'=>$lintang]);
+                }
+                if ($value == 'pancasudha') {
+                    $pancasudha = $pancasudhaController->Pancasudha($pancawara, $saptawara);
+                    array_push($kalenderLengkap, ['pancasudha'=>$pancasudha]);
+                }
+                if ($value == 'pangarasan') {
+                    $pangarasan = $pangarasanController->Pangarasan($urip_pancawara, $urip_saptawara);
+                    array_push($kalenderLengkap, ['pangarasan'=>$pangarasan]);
+                }
+                if ($value == 'rakam') {
+                    $rakam = $rakamController->Rakam($pancawara, $saptawara);
+                    array_push($kalenderLengkap, ['rakam'=>$rakam]);
+                }
+                if ($value == 'watek_madya') {
+                    $watek_madya = $watek_madyaController->WatekMadya($urip_pancawara, $urip_saptawara);
+                    array_push($kalenderLengkap, ['watek_madya'=>$watek_madya]);
+                }
+                if ($value == 'watek_alit') {
+                    $watek_alit = $watek_alitController->WatekAlit($urip_pancawara, $urip_saptawara);
+                    array_push($kalenderLengkap, ['watek_alit'=>$watek_alit]);
+                }
+                if ($value == 'neptu') {
+                    $neptu = $neptuController->Neptu($urip_pancawara, $urip_saptawara);
+                    array_push($kalenderLengkap, ['neptu'=>$neptu]);
+                }
+                if ($value == 'ekajalarsi') {
+                    $ekajalarsi = $ekajalarsiController->EkaJalaRsi($hasilWuku, $saptawara);
+                    array_push($kalenderLengkap, ['ekajalarsi'=>$ekajalarsi]);
+                }
+                if ($value == 'zodiak') {
+                    $zodiak = $zodiakController->Zodiak($tanggal);
+                    array_push($kalenderLengkap, ['zodiak'=>$zodiak]);
+                }
+                if ($value == 'pratiti') {
+                    $pratiti = $pratitiController->Pratiti($pengalantaka_dan_hariSasih['pengalantaka'], $no_sasih['no_sasih'], $pengalantaka_dan_hariSasih['penanggal_1']);
+                    array_push($kalenderLengkap, ['pratiti'=>$pratiti]);
+                }
+            }
+            // array_push($kalenderLengkap, [$ingkel, $jejepan, $lintang, $pancasudha, $pangarasan, $rakam, $watek_madya, $watek_alit, $neptu, $ekajalarsi, $zodiak, $pratiti]);
         }
-        
+
         // Perjikaan kalau parameter di urlnya TIDAK ADA masukkin &makna / &pura
         else {
-            array_push($kalenderLengkap, $hariRaya);
+            array_push($kalenderLengkap, $hariRaya, $piodalan);
         }
 
 

@@ -10,10 +10,10 @@ class OtonanController extends Controller
     {
         $start = microtime(true);
 
-        $tanggal_lahir = '2002-03-01';
-        $tahun_dicari = '2023';
-        // $tanggal_lahir = $request->input('tanggal_lahir');
-        // $tahun_dicari = $request->input('tahun_dicari');
+        // $tanggal_lahir = '2002-03-01';
+        // $tahun_dicari = '2023';
+        $tanggal_lahir = $request->input('tanggal_lahir');
+        $tahun_dicari = $request->input('tahun_dicari');
 
         $selisih = floor((strtotime("$tahun_dicari-01-01") - strtotime($tanggal_lahir)) / (60 * 60 * 24));
         $bagi = ceil($selisih / 210);
@@ -32,6 +32,5 @@ class OtonanController extends Controller
         ];
 
         return response()->json($response, 200);
-
     }
 }

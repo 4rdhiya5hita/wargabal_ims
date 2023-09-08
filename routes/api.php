@@ -5,6 +5,7 @@ use App\Http\Controllers\API\CalendarAPI;
 use App\Http\Controllers\API\KalenderBaliAPI;
 use App\Http\Controllers\DewasaAyuController;
 use App\Http\Controllers\OtonanController;
+use App\Http\Controllers\ProgressHasil;
 use App\Http\Controllers\TasksController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -38,3 +39,9 @@ Route::get('/searchHariRayaAPI', [KalenderBaliAPI::class, 'searchHariRayaAPI']);
 Route::get('/searchDewasaAyuAPI', [DewasaAyuController::class, 'searchDewasaAyuAPI']);
 Route::get('/searchKalenderAPI', [KalenderBaliAPI::class, 'searchHariRayaAPI']);
 Route::get('/searchOtonanAPI', [OtonanController::class, 'searchOtonanAPI']);
+
+
+Route::get('/process_search_hari_raya', [ProgressHasil::class, 'process_search_hari_raya']);
+Route::get('/process_search_dewasa_ayu', [ProgressHasil::class, 'process_search_dewasa_ayu']);
+Route::get('/process_search_kalender', [ProgressHasil::class, 'process_search_kalender']);
+Route::get('/process_search_otonan', [ProgressHasil::class, 'process_search_otonan']);

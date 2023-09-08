@@ -22,4 +22,9 @@ class DashboardController extends Controller
     {
         return view('dewasa_ayu.index');
     }
+
+    public function buy_api() 
+    {
+        return view('buy_api.index');
+    }
 }

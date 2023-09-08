@@ -87,7 +87,7 @@
                                     </tr>
                                     <td>3.</td>
                                     <td>2023-07-17</td>
-                                    <td>Hari Raya Tilem</td>
+                                    <td>Tilem</td>
                                     </tr>
                                 </tbody>
                             </table>

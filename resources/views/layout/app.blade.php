@@ -16,12 +16,14 @@
     <meta name="description" content="" />
     <meta name="keywords" content="">
     <meta name="author" content="Phoenixcoded" />
+    
     <!-- Favicon icon -->
     <link rel="icon" href="{{ asset('../template/assets/images/favicon.ico')}}" type="image/x-icon">
-
+    
     <!-- vendor css -->
     <link rel="stylesheet" href="{{ asset('../template/assets/css/style.css')}}">
     
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script> 
     
 
 </head>

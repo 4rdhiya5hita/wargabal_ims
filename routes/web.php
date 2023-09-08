@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\CalendarAPI;
 use App\Http\Controllers\API\KalenderBaliAPI;
+use App\Http\Controllers\BillingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DewasaAyuController;
 use App\Http\Controllers\OtonanController;
@@ -22,15 +23,15 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/dash', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 Route::resource('tasks', 'TasksController');
 Route::get('/task', [TasksController::class, 'index'])->name('task');
@@ -51,12 +52,15 @@ Route::get('/processData', [KalenderBaliAPI::class, 'processData']);
 // Route::get('/progress', [ProgressHasil::class, 'getProgress']);
 // Route::get('/hasilProgress', [ProgressHasil::class, 'getHasilProgress']);
 
-Route::group(['middleware' => 'auth'], function() {
-    Route::controller(DashboardController::class)->group(function () {
-        Route::get('/dashboard', 'dashboard')->name('dashboard');
-        Route::get('/search_hari_raya', 'search_hari_raya')->name('search_hari_raya');
-        Route::get('/search_dewasa_ayu', 'search_dewasa_ayu')->name('search_dewasa_ayu');
-    });
+Route::controller(DashboardController::class)->group(function () {
+    Route::get('/', 'dashboard')->name('dashboard');
+    Route::get('/search_hari_raya', 'search_hari_raya')->name('search_hari_raya');
+    Route::get('/search_dewasa_ayu', 'search_dewasa_ayu')->name('search_dewasa_ayu');
+    Route::get('/buy_api', 'buy_api')->name('buy_api');
+});
+
+Route::group(['middleware' => 'auth'], function () {
+
     Route::controller(ProgressHasil::class)->group(function () {
         Route::get('/hasilProgress', [ProgressHasil::class, 'getHasilProgress']);
         Route::get('/progress', 'getProgress')->name('progress');
@@ -65,5 +69,11 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/process_search_kalender', 'process_search_kalender')->name('process_search_kalender');
         Route::get('/process_search_otonan', 'process_search_otonan')->name('process_search_otonan');
     });
-});
 
+    Route::controller(BillingController::class)->group(function () {
+        Route::get('/order_form', 'order_form')->name('order_form');
+        Route::get('/order_create', 'order_create')->name('order_create');
+        Route::get('/new_order_store', 'new_order_store')->name('new_order_store');
+        Route::get('/process_billing', 'process_billing')->name('process_billing');
+    });
+});

@@ -4,10 +4,15 @@
 				
 				<div class="">
 					<div class="main-menu-header">
-						<img class="img-radius" src="{{ asset('../template/assets/images/user/avatar-2.jpg')}}" alt="User-Profile-Image">
+						@if (Auth::check())
+						<img class="img-radius" src="{{ asset('../template/assets/images/user/avatar-1.jpg')}}" alt="User-Profile-Image">
 						<div class="user-details">
-							<div id="more-details">User <i class="fa fa-caret-down"></i></div>
+							<div id="more-details">{{ Auth::user()->name }} <i class="fa fa-caret-down"></i></div>
 						</div>
+						@else
+						<img class="img-radius" src="{{ asset('../template/assets/images/user/avatar-2.jpg')}}" alt="User-Profile-Image">
+						<div id="more-details">Guest <i class="fa fa-caret-down"></i></div>
+						@endif
 					</div>
 					<div class="collapse" id="nav-user-link">
 						<ul class="list-unstyled">
@@ -67,6 +72,9 @@
 					</li>
 					<li class="nav-item">
 					    <a href="{{ route('search_dewasa_ayu') }}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Pencarian Dewasa Ayu</span></a>
+					</li>
+					<li class="nav-item">
+					    <a href="{{ route('buy_api') }}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-pocket"></i></span><span class="pcoded-mtext">Beli API Kalender Bali</span></a>
 					</li>
 					<!-- </li>
 					<li class="nav-item pcoded-menu-caption">

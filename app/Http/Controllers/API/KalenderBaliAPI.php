@@ -314,6 +314,7 @@ class KalenderBaliAPI extends Controller
         if ($path == "/searchHariRayaAPI") {
             // Perjikaan kalau dalam satu hari, hari raya nya lebih dari satu, misal Kajeng Kliwon dan Sugian Bali
             if (is_array($hariRaya) && count($hariRaya) > 1) {
+                // dd('full');
                 foreach ($hariRaya as $value) {
                     $data_piodalan = Piodalan::where('piodalan', $value)->get();
                     foreach ($data_piodalan as $item) {
@@ -322,19 +323,21 @@ class KalenderBaliAPI extends Controller
                     }
                     // Perjikaan sesuai parameter urlnya
                     if ($makna && $pura) {
-                        array_push($kalenderLengkap, ['penamaan_hari_bali' => $piodalan, 'hari_raya' => $value, 'makna' => $ambil_makna, 'pura' => $ambil_pura]);
-                    } elseif (!$pura) {
-                        array_push($kalenderLengkap, ['penamaan_hari_bali' => $piodalan, 'hari_raya' => $value, 'makna' => $ambil_makna]);
+                        array_push($kalenderLengkap, ['penamaan_hari_bali' => $piodalan, 'hari_raya' => $hariRaya[0], 'makna' => $ambil_makna, 'pura' => $ambil_pura]);
+                    } elseif ($makna && !$pura) {
+                        array_push($kalenderLengkap, ['penamaan_hari_bali' => $piodalan, 'hari_raya' => $hariRaya[0], 'makna' => $ambil_makna]);
+                    } elseif ($pura && !$makna) {
+                        array_push($kalenderLengkap, ['penamaan_hari_bali' => $piodalan, 'hari_raya' => $hariRaya[0], 'pura' => $ambil_pura]);
                     } else {
-                        array_push($kalenderLengkap, ['penamaan_hari_bali' => $piodalan, 'hari_raya' => $value, 'pura' => $ambil_pura]);
+                        array_push($kalenderLengkap, ['penamaan_hari_bali' => $piodalan, 'hari_raya' => $hariRaya[0]]);
                     }
                 }
             }
             // // Perjikaan kalau tidak ada hari raya apapun pada hari itu
             // elseif (is_array($hariRaya) && count($hariRaya) == 1) {
             //     $data_piodalan = Piodalan::where('piodalan', $hariRaya)->get();
-            //     // dd($hariRaya);
-            //     // dd($data_piodalan);
+                // dd($hariRaya);
+                // dd($data_piodalan);
             //     foreach ($data_piodalan as $item) {
             //         $ambil_makna = $item->arti;
             //         $ambil_pura = $item->pura;
@@ -360,10 +363,12 @@ class KalenderBaliAPI extends Controller
                         // Perjikaan sesuai parameter urlnya
                         if ($makna && $pura) {
                             array_push($kalenderLengkap, ['penamaan_hari_bali' => $piodalan, 'hari_raya' => $hariRaya[0], 'makna' => $ambil_makna, 'pura' => $ambil_pura]);
-                        } elseif (!$pura) {
+                        } elseif ($makna && !$pura) {
                             array_push($kalenderLengkap, ['penamaan_hari_bali' => $piodalan, 'hari_raya' => $hariRaya[0], 'makna' => $ambil_makna]);
-                        } else {
+                        } elseif ($pura && !$makna) {
                             array_push($kalenderLengkap, ['penamaan_hari_bali' => $piodalan, 'hari_raya' => $hariRaya[0], 'pura' => $ambil_pura]);
+                        } else {
+                            array_push($kalenderLengkap, ['penamaan_hari_bali' => $piodalan, 'hari_raya' => $hariRaya[0]]);
                         }
                     }
                 }
@@ -382,10 +387,12 @@ class KalenderBaliAPI extends Controller
                         // Perjikaan sesuai parameter urlnya
                         if ($makna && $pura) {
                             array_push($kalenderLengkap, ['penamaan_hari_bali' => $piodalan, 'hari_raya' => $hariRaya[0], 'makna' => $ambil_makna, 'pura' => $ambil_pura]);
-                        } elseif (!$pura) {
+                        } elseif ($makna && !$pura) {
                             array_push($kalenderLengkap, ['penamaan_hari_bali' => $piodalan, 'hari_raya' => $hariRaya[0], 'makna' => $ambil_makna]);
-                        } else {
+                        } elseif ($pura && !$makna) {
                             array_push($kalenderLengkap, ['penamaan_hari_bali' => $piodalan, 'hari_raya' => $hariRaya[0], 'pura' => $ambil_pura]);
+                        } else {
+                            array_push($kalenderLengkap, ['penamaan_hari_bali' => $piodalan, 'hari_raya' => $hariRaya[0]]);
                         }
                     }
                 } else {

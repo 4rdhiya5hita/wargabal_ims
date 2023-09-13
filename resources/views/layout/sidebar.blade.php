@@ -62,11 +62,11 @@
 					    </ul>
 					</li> -->
 					<li class="nav-item pcoded-menu-caption">
-					    <label>Form &amp; tabel</label>
+					    <label>Fitur Kalender Bali</label>
 					</li>
-					<li class="nav-item">
+					<!-- <li class="nav-item">
 					    <a href="form_elements.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-align-justify"></i></span><span class="pcoded-mtext">Form</span></a>
-					</li>
+					</li> -->
 					<li class="nav-item">
 					    <a href="{{ route('search_hari_raya') }}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Pencarian Hari Raya</span></a>
 					</li>
@@ -89,13 +89,13 @@
 					<li class="nav-item pcoded-menu-caption">
 					    <label>Pages</label>
 					</li> -->
-					<li class="nav-item pcoded-hasmenu">
+					<!-- <li class="nav-item pcoded-hasmenu">
 					    <a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-lock"></i></span><span class="pcoded-mtext">Autentikasi</span></a>
 					    <ul class="pcoded-submenu">
 					        <li><a href="auth-signup.html" target="_blank">Sign up</a></li>
 					        <li><a href="auth-signin.html" target="_blank">Sign in</a></li>
 					    </ul>
-					</li>
+					</li> -->
 					<!-- <li class="nav-item"><a href="sample-page.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-sidebar"></i></span><span class="pcoded-mtext">Sample page</span></a></li> -->
 
 				</ul>

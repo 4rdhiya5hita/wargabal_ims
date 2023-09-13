@@ -311,7 +311,7 @@ class KalenderBaliAPI extends Controller
 
         $kalenderLengkap = [];
         // Perjikaan kalau parameter di urlnya ada masukkin &makna / &pura
-        if ($path == "/searchHariRayaAPI") {
+        if ($path == "/api/searchHariRayaAPI") {
             // Perjikaan kalau dalam satu hari, hari raya nya lebih dari satu, misal Kajeng Kliwon dan Sugian Bali
             if (is_array($hariRaya) && count($hariRaya) > 1) {
                 // dd('full');
@@ -403,7 +403,7 @@ class KalenderBaliAPI extends Controller
         // Perjikaan kalau parameter di urlnya ada &lengkap
         // fungsi: mencari detail setiap tanggal pada kalender
 
-        if ($path == '/searchKalenderAPI') {
+        if ($path == '/api/searchKalenderAPI') {
 
             if ($lengkap) {
                 $metode = ['wuku', 'ingkel', 'jejepan', 'lintang', 'pancasudha', 'pangarasan', 'rakam', 'watek_madya', 'watek_alit', 'neptu', 'ekajalarsi', 'zodiak', 'pratiti'];

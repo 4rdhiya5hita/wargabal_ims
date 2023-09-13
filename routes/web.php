@@ -43,10 +43,6 @@ Route::get('/searchTanggalHariRaya', [KalenderBaliAPI::class, 'searchTanggalHari
 
 // Uji Coba Lokal
 Route::get('/searchHariRaya', [KalenderBaliAPI::class, 'searchHariRaya']);
-Route::get('/searchHariRayaAPI', [KalenderBaliAPI::class, 'searchHariRayaAPI']);
-Route::get('/searchDewasaAyuAPI', [DewasaAyuController::class, 'searchDewasaAyuAPI']);
-Route::get('/searchKalenderAPI', [KalenderBaliAPI::class, 'searchHariRayaAPI']);
-Route::get('/searchOtonanAPI', [OtonanController::class, 'searchOtonanAPI']);
 
 Route::get('/processData', [KalenderBaliAPI::class, 'processData']);
 // Route::get('/progress', [ProgressHasil::class, 'getProgress']);

@@ -25,7 +25,7 @@
                         <span class="pcoded-micon"><i class="feather icon-calendar"></i></span><span class="pcoded-mtext"> Website informasi Kalender Bali</span></i>
                     </div>
                     <div class="card-body">
-                        <div id='calendar'></div>
+                        <div style="text-align: center; margin: 2px;" id='calendar'></div>
                     </div>
                 </div>
             </div>
@@ -33,9 +33,35 @@
             <div class="col-sm-6">
                 <div class="card">
                     <div class="card-header">
-
+                        <span class="pcoded-micon"><i class="feather icon-info"></i></span><span class="pcoded-mtext" id='tanggal'> Informasi Tanggal <b> {{$tanggal_now}} Hari Ini </b> </span></i>
                     </div>
                     <div class="card-body">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        Hari Raya
+                                    </div>
+                                    <div class="card-body" id='hari_raya'>
+                                        {{ $hari_raya_now }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        Penamaan Hari Bali
+                                    </div>
+                                    <div class="card-body" id='hari_bali'>
+                                        {{ $penamaan_hari_bali_now }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col" id='keterangan'></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -68,9 +94,9 @@
 
                 // Buat URL dengan tanggal awal dan akhir
                 var apiUrl = 'https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchHariRayaAPI' +
-                    '?tanggal_mulai=' + formattedStartDate + '&tanggal_selesai=' + formattedEndDate;
+                    '?tanggal_mulai=' + formattedStartDate + '&tanggal_selesai=' + formattedEndDate + '&makna&pura';
 
-                console.log(apiUrl);
+                // console.log(apiUrl);
 
                 // Ambil data dari API
                 fetch(apiUrl)
@@ -80,16 +106,19 @@
                     .then(function(data) {
                         // Parsing data respons API ke dalam format yang dapat digunakan oleh FullCalendar
                         var events = data.result.map(function(item) {
-                            console.log(item);
-                            if (!item.kalender[0]) {
+                            // console.log(item);
+                            if (!item.kalender[0] || !item.kalender[0].hari_raya) {
                                 return {
                                     null: null,
                                 };
                             } else {
-                                console.log('Ada data');
+                                // console.log('Ada data');
                                 return {
                                     id: item.tanggal,
-                                    title: item.kalender[0].penamaan_hari_bali,
+                                    title: item.kalender[0].hari_raya,
+                                    penamaan_hari_bali: item.kalender[0].penamaan_hari_bali,
+                                    makna: item.kalender[0].makna,
+                                    pura: item.kalender[0].pura,
                                     start: item.tanggal,
                                     end: item.tanggal,
                                 };
@@ -104,6 +133,28 @@
                         failureCallback(error);
                     });
             },
+
+            eventClick: function(info) {
+                var date = info.event.start;
+                var formattedDate = formatDateToYMD(date);
+
+                var title = info.event.title;
+                var hari_raya = document.getElementById('hari_raya');
+                var hari_bali = document.getElementById('hari_bali');
+                var keterangan = document.getElementById('keterangan');
+                var tanggal = document.getElementById('tanggal');
+
+                var penamaan_hari_bali = info.event.extendedProps.penamaan_hari_bali;
+                var makna = info.event.extendedProps.makna;
+                var pura = info.event.extendedProps.pura;
+                // console.log(info.event);
+
+                hari_raya.innerHTML = title;
+                hari_bali.innerHTML = penamaan_hari_bali;
+                keterangan.innerHTML = '<div class="card"><div class="card-header">Makna</div><div class="card-body">' + makna + '</div></div><div class="card"><div class="card-header">Pura</div><div class="card-body">' + pura + '</div></div>';
+                tanggal.innerHTML = '<span class="pcoded-micon"><i class="feather icon-info"></i></span><span class="pcoded-mtext"> Informasi Tanggal <b> ' + formattedDate + '</b></span></i>';
+                
+            }
         });
 
         calendar.render();

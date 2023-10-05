@@ -18059,14 +18059,13 @@ a.badge-light-dark.active, a.badge-light-dark:active, a.badge-light-dark:focus, 
 }
 
 /**====== Badges css end ======**/
-/**  =====================
-      Custom css start
-==========================  **/
+/**  ===================== Custom css start ==========================  **/
 body {
     font-family: "Open Sans";
     font-size: 14px;
     color: #373a3c;
     font-weight: 400;
+    /* background-image: url('../images/bg-bali-1.jpg'); */
     background: #4680ff;
     position: relative;
 }

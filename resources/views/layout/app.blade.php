@@ -27,7 +27,7 @@
     
 
 </head>
-<body class="">
+<body>
 	<!-- [ Pre-loader ] start -->
 	<div class="loader-bg">
 		<div class="loader-track">

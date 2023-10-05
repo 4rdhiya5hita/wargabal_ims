@@ -45,3 +45,7 @@ Route::get('/process_search_hari_raya', [ProgressHasil::class, 'process_search_h
 Route::get('/process_search_dewasa_ayu', [ProgressHasil::class, 'process_search_dewasa_ayu']);
 Route::get('/process_search_kalender', [ProgressHasil::class, 'process_search_kalender']);
 Route::get('/process_search_otonan', [ProgressHasil::class, 'process_search_otonan']);
+
+
+Route::post('/payment/create', 'App\Http\Controllers\PaymentController@create');
+Route::post('/payment/webhook', 'App\Http\Controllers\PaymentController@webhook');

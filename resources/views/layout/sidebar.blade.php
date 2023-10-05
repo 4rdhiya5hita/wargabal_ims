@@ -1,5 +1,5 @@
 <nav class="pcoded-navbar menu-light ">
-		<div class="navbar-wrapper  ">
+		<div class="navbar-wrapper ">
 			<div class="navbar-content scroll-div " >
 				
 				<div class="">
@@ -11,16 +11,17 @@
 						</div>
 						@else
 						<img class="img-radius" src="{{ asset('../template/assets/images/user/avatar-2.jpg')}}" alt="User-Profile-Image">
-						<div id="more-details">Guest <i class="fa fa-caret-down"></i></div>
+						<div id="more-details">Guest</div>
+						<!-- <div id="more-details">Guest <i class="fa fa-caret-down"></i></div> -->
 						@endif
 					</div>
-					<div class="collapse" id="nav-user-link">
+					<!-- <div class="collapse" id="nav-user-link">
 						<ul class="list-unstyled">
 							<li class="list-group-item"><a href="user-profile.html"><i class="feather icon-user m-r-5"></i>View Profile</a></li>
 							<li class="list-group-item"><a href="#!"><i class="feather icon-settings m-r-5"></i>Settings</a></li>
 							<li class="list-group-item"><a href="auth-normal-sign-in.html"><i class="feather icon-log-out m-r-5"></i>Logout</a></li>
 						</ul>
-					</div>
+					</div> -->
 				</div>
 				
 				<ul class="nav pcoded-inner-navbar ">

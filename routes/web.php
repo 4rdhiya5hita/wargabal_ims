@@ -56,8 +56,8 @@ Route::controller(DashboardController::class)->group(function () {
     Route::get('/', 'dashboard')->name('dashboard');
     Route::get('/search_hari_raya', 'search_hari_raya')->name('search_hari_raya');
     Route::get('/search_dewasa_ayu', 'search_dewasa_ayu')->name('search_dewasa_ayu');
-    Route::get('/buy_api', 'buy_api')->name('buy_api');
 });
+Route::get('/buy_api', [BillingController::class, 'buy_api'])->name('buy_api');
 
 Route::group(['middleware' => 'auth'], function () {
 

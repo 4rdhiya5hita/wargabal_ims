@@ -47,5 +47,5 @@ Route::get('/process_search_kalender', [ProgressHasil::class, 'process_search_ka
 Route::get('/process_search_otonan', [ProgressHasil::class, 'process_search_otonan']);
 
 
-Route::post('/payment/create', 'App\Http\Controllers\PaymentController@create');
+Route::get('/payment/create', 'App\Http\Controllers\PaymentController@create');
 Route::post('/payment/webhook', 'App\Http\Controllers\PaymentController@webhook');

@@ -16,8 +16,9 @@ class DashboardController extends Controller
         $data = json_decode($response->getBody()->getContents(), true);
         $tanggal_now = $data['result'][0]['tanggal'];
         $kalender = $data['result'][0]['kalender'];
+        // dd($kalender[0][0]);
 
-        if ($kalender) {
+        if ($kalender && $kalender[0][0] != "-") {
             $hari_raya_now = $kalender[0]['hari_raya'];
             $penamaan_hari_bali_now = $kalender[0]['penamaan_hari_bali'];
             $makna_now = $kalender[0]['makna'];
@@ -42,8 +43,4 @@ class DashboardController extends Controller
         return view('dewasa_ayu.index');
     }
 
-    public function buy_api() 
-    {
-        return view('buy_api.index');
-    }
 }

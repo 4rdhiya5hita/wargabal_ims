@@ -323,13 +323,13 @@ class KalenderBaliAPI extends Controller
                     }
                     // Perjikaan sesuai parameter urlnya
                     if ($makna && $pura) {
-                        array_push($kalenderLengkap, ['penamaan_hari_bali' => $piodalan, 'hari_raya' => $hariRaya[0], 'makna' => $ambil_makna, 'pura' => $ambil_pura]);
+                        array_push($kalenderLengkap, ['penamaan_hari_bali' => $piodalan, 'hari_raya' => $value, 'makna' => $ambil_makna, 'pura' => $ambil_pura]);
                     } elseif ($makna && !$pura) {
-                        array_push($kalenderLengkap, ['penamaan_hari_bali' => $piodalan, 'hari_raya' => $hariRaya[0], 'makna' => $ambil_makna]);
+                        array_push($kalenderLengkap, ['penamaan_hari_bali' => $piodalan, 'hari_raya' => $value, 'makna' => $ambil_makna]);
                     } elseif ($pura && !$makna) {
-                        array_push($kalenderLengkap, ['penamaan_hari_bali' => $piodalan, 'hari_raya' => $hariRaya[0], 'pura' => $ambil_pura]);
+                        array_push($kalenderLengkap, ['penamaan_hari_bali' => $piodalan, 'hari_raya' => $value, 'pura' => $ambil_pura]);
                     } else {
-                        array_push($kalenderLengkap, ['penamaan_hari_bali' => $piodalan, 'hari_raya' => $hariRaya[0]]);
+                        array_push($kalenderLengkap, ['penamaan_hari_bali' => $piodalan, 'hari_raya' => $value]);
                     }
                 }
             }

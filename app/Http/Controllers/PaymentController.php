@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Xendit\Configuration;
 use Xendit\Invoice\InvoiceApi;
@@ -13,12 +14,12 @@ class PaymentController extends Controller
         Configuration::setXenditKey('xnd_development_Ovbz2QoE1RVE5n5HWjBDj2I8u2sBhHovqNQySJt7094cXvttd0XtDYsYuj26gXh');
     }
 
-    public function create(Request $request) {
-
+    public function create(Request $request) { 
+        // dd($request->all());
         $params = [
             'external_id' => (string) Str::uuid(),
-            'description' => $request->description,
-            'amount' => $request->amount,
+            'description' => $request->input('description'),
+            'amount' => $request->input('amount'),
             'invoice_duration' => 172800,
             'currency' => 'IDR',
             'reminder_time' => 1,
@@ -37,17 +38,19 @@ class PaymentController extends Controller
         $createInvoice = $apiInstance->createInvoice($params);    
 
         // Save to database
-        // $invoice = new InvoiceApi();
-        // $invoice->checkout_link = $createInvoice['invoice_url'];
-        // $invoice->external_id = $params['external_id'];
-        // $invoice->status = 'pending';
-        // $invoice->save();
+        $invoice = new Payment();
+        $invoice->checkout_link = $createInvoice['invoice_url'];
+        $invoice->external_id = $params['external_id'];
+        $invoice->status = 'pending';
+        $invoice->save();
 
-        return response()->json([
-            'status' => 'success',
-            'description' => 'Invoice has been created',
-            'data' => $createInvoice
-        ]);
+        return redirect($createInvoice['invoice_url']);
+
+        // return response()->json([
+        //     'status' => 'success',
+        //     'description' => 'Invoice has been created',
+        //     'data' => $createInvoice
+        // ]);
     }
 
     public function webhook(Request $request) {
@@ -55,10 +58,17 @@ class PaymentController extends Controller
         $apiInstance = new InvoiceApi();
         $get_invoice = $apiInstance->getInvoiceById($request->id);
 
-        return response()->json([
-            'status' => $get_invoice['status'],
-            'description' => 'Invoice has been paid',
-            'data' => $get_invoice
-        ]);
+        // Update status to database
+        $invoice = Payment::where('external_id', $request->external_id)->first();
+        $invoice->status = Str::lower($get_invoice['status']);
+
+        $invoice->save();
+        // dd($invoice);
+
+        // return response()->json([
+        //     'status' => $get_invoice['status'],
+        //     'description' => 'Invoice has been paid',
+        //     'data' => $get_invoice
+        // ]);
     }
 }

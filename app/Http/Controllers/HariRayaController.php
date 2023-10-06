@@ -14,7 +14,7 @@ class HariRayaController extends Controller
         $pancawara = intval($pancawara);
         $saptawara = intval($saptawara);
         $wuku = intval($hasilWuku);
-        // dd($pancawara, $saptawara, $wuku);
+        
 
         $hari_raya = [];
         // wuku 1-3
@@ -159,6 +159,7 @@ class HariRayaController extends Controller
             $hari_raya[] = '-';
         }
 
+        // dd($hari_raya);
         return $hari_raya;
     }
 }

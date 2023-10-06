@@ -308,6 +308,7 @@ class KalenderBaliAPI extends Controller
         // dd($namaWuku, $namaSaptawara, $namaPancawara, $namaTriwara);
         $hariRaya = $hariRayaController->getHariRaya($tanggal, $pengalantaka_dan_hariSasih['penanggal_1'], $pengalantaka_dan_hariSasih['penanggal_2'], $pengalantaka_dan_hariSasih['pengalantaka'], $no_sasih['no_sasih'], $triwara, $pancawara, $saptawara, $hasilWuku);
         $piodalan = $namaSaptawara . ' ' . $namaPancawara . ' ' . $namaWuku;
+        // dd($hariRaya);
 
         $kalenderLengkap = [];
         // Perjikaan kalau parameter di urlnya ada masukkin &makna / &pura
@@ -317,6 +318,9 @@ class KalenderBaliAPI extends Controller
                 // dd('full');
                 foreach ($hariRaya as $value) {
                     $data_piodalan = Piodalan::where('piodalan', $value)->get();
+                    if ($data_piodalan->isEmpty()) {
+                        $data_piodalan = Piodalan::where('piodalan', $piodalan)->get();
+                    }
                     foreach ($data_piodalan as $item) {
                         $ambil_makna = $item->arti;
                         $ambil_pura = $item->pura;
@@ -357,6 +361,10 @@ class KalenderBaliAPI extends Controller
                 if ($hariRaya[0] != '-') {
                     // dd('yes');
                     $data_piodalan = Piodalan::where('piodalan', $hariRaya[0])->get();
+                    if ($data_piodalan->isEmpty()) {
+                        $data_piodalan = Piodalan::where('piodalan', $piodalan)->get();
+                    }
+                    // dd($data_piodalan);
                     foreach ($data_piodalan as $item) {
                         $ambil_makna = $item->arti;
                         $ambil_pura = $item->pura;
@@ -400,6 +408,7 @@ class KalenderBaliAPI extends Controller
                 }
             }
         }
+        // dd($kalenderLengkap);
         // Perjikaan kalau parameter di urlnya ada &lengkap
         // fungsi: mencari detail setiap tanggal pada kalender
 

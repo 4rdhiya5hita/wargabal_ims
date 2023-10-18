@@ -56,6 +56,9 @@ Route::controller(DashboardController::class)->group(function () {
     Route::get('/', 'dashboard')->name('dashboard');
     Route::get('/search_hari_raya', 'search_hari_raya')->name('search_hari_raya');
     Route::get('/search_dewasa_ayu', 'search_dewasa_ayu')->name('search_dewasa_ayu');
+    Route::get('/search_kalender', 'search_kalender')->name('search_kalender');
+    Route::get('/search_otonan', 'search_otonan')->name('search_otonan');
+    Route::get('/wargabal_ims', 'wargabal_ims')->name('wargabal_ims');
 });
 Route::get('/buy_api', [BillingController::class, 'buy_api'])->name('buy_api');
 

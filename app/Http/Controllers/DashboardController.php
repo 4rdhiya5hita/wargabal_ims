@@ -43,4 +43,19 @@ class DashboardController extends Controller
         return view('dewasa_ayu.index');
     }
 
+    public function search_otonan()
+    {
+        return view('otonan.index');
+    }
+
+    public function search_kalender()
+    {
+        return view('kalender.index');
+    }
+
+    public function wargabal_ims()
+    {
+        return view('wargabal_ims.index');
+    }
+
 }

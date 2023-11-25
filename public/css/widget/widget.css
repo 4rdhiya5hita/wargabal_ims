@@ -1,0 +1,396 @@
+/* main styles */
+@font-face {
+	font-family: 'Bogota';
+	src: url('../fonts/Bogota.ttf');
+}
+
+body {
+	margin:0;
+	padding:0;
+	background:#2b190c;
+	color:#fff;
+	font-family:tahoma,arial,sans-serif,Bogota;
+	font-size:10px;
+	text-align:center;
+	}
+form {
+	margin:0;
+	padding:0
+	}
+img {border:none;}
+a {color:#060606;text-decoration: none}
+a:hover {text-decoration: none}
+input {vertical-align:middle}
+.floatleft {float:left !important}
+.floatright {float:right !important}
+.clear {clear:both !important}
+.bold {font-weight:bold !important}
+.normal {font-weight:normal !important}
+.block {display:block !important}
+input.text,
+select,
+textarea {
+	font-family:arial,sans-serif;
+	color:#333;
+	font-size:8px;
+	vertical-align:middle;
+	}
+
+
+
+	
+	
+
+/* middle */
+#middleOnly {
+	float:left;
+	width:100%;
+	background:#fff;
+	padding:0 0px 0 0px;
+	}
+
+
+
+  
+/* center column */
+#center-column {
+	float:center;
+	width:600px;
+	background:url(../img/bg-center-column.jpg) no-repeat left top;
+	min-height:330px;
+	padding:5px 5px 0 5px;
+	}	
+
+/* footer */
+#footer {
+	float:left;
+	width:100%;
+	background:url(../img/bg-footer.gif) no-repeat;
+	height:35px;
+	}
+#footer p{padding:5px 5px 5px 5px;text-decoration:none;color:#5d6c77;font-size:8px;}
+#footer span{padding:5px 5px 5px 5px;}
+#footer a:hover{text-decoration:underline;color:#5d6c77;font-size:8px;}
+	
+
+	
+	
+/* bar with select */
+.navi-bar {
+	clear:both;
+	border-top:2px solid #f70;
+	border-bottom:0 solid #f70;
+	padding:5px 0 3px 5px;
+	margin:0 0 0px 0;
+	
+	}
+.navi-bar select {margin:0 2px;}
+
+/* link */
+.merah A:link {text-decoration: none;color: #CE1212;}
+.merah A:visited {text-decoration: none;color: #CE1212;}
+.merah A:active {text-decoration: none;color: #CE1212;}
+.merah A:hover {text-decoration: none;color: #CE1212;}
+
+.hitam A:link {text-decoration: none;color: #000;}
+.hitam A:visited {text-decoration: none;color: #000;}
+.hitam A:active {text-decoration: none;color: #000;}
+.hitam A:hover {text-decoration: none;color: #000;}
+
+
+/* table container */
+div.table {
+	float:right;
+	position:relative;
+	width:600px;
+	margin:0;
+	}
+
+table.kalenderCell {
+	border-bottom:0px solid #EEEBDD;
+	padding:0;
+	margin:0;
+	border:0px solid #EEEBDD;
+	width:100%;
+	height:100%;
+	}
+/* table styles */
+table.kalenderCell td,
+table.kalenderCell th {
+	text-align:center; 
+   background:transparent;
+	}	
+
+table.kalenderCell .merah {color:#CE1212; background:transparent;}
+table.kalenderCell .hitam {color:#000; background:transparent;}
+table.kalenderCell .orange {color:#f7387c; background:transparent;}
+
+table.kalenderCell .isitanggal {border:0px solid #EEEBDD; font-weight:normal; font-size:9px; background:transparent;}
+table.kalenderCell .kiri {text-align:left; background:transparent;}
+table.kalenderCell .kanan {text-align:right; background:transparent;}
+table.kalenderCell .tengah {text-align:center; font-family:Bogota; font-size:25px;font-weight:bold;background:transparent;}
+
+table.kalenderCell:hover {
+     background:#CCFFFF;
+}
+
+
+table.kalenderCellNow {
+	border-bottom:0px solid #EEEBDD;
+	padding:0;
+	margin:0;
+	border:0px solid #EEEBDD;
+	width:100%;
+	height:100%;
+  background:#FFFFCC;
+}
+
+table.kalenderCellNow td,
+table.kalenderCellNow th {
+	text-align:center; 
+	border:0px solid #EEEBDD;
+	
+	}	
+
+table.kalenderCellNow .merah {color:#CE1212;background:transparent;}
+table.kalenderCellNow .hitam {color:#000; background:transparent;}
+table.kalenderCellNow .orange {color:#f7387c; background:transparent;}
+
+table.kalenderCellNow .isitanggal {border:0px solid #EEEBDD;font-weight:normal; font-size:6px; background:transparent;}
+table.kalenderCellNow .kiri {text-align:left;background:transparent; }
+table.kalenderCellNow .kanan {text-align:right; background:transparent;}
+table.kalenderCellNow .tengah {text-align:center; font-size:10px;font-weight:normal;background:transparent;}
+
+table.kalenderCellNow:hover {
+     background:#CCFFFF;
+}
+
+
+table.kalenderCellDetail .judulDetail {border-bottom:0px solid #ffcc00; text-align:right;color:#ffcc00;font-weight:bold;font-size:14px;}
+
+table.kalenderCellDetail {
+	padding:0;
+	margin:-5px;
+	width:100%;
+	height:100%;
+	}
+table.kalenderCellDetail td,
+table.kalenderCellDetail th {
+	text-align:center; 
+   background:transparent;
+	}	
+table.kalenderCellDetail .merah {color:#CE1212; background:transparent;}
+table.kalenderCellDetail .hitam {color:#000; background:transparent;}
+table.kalenderCellDetail .orange {color:#f7387c; background:transparent;}
+table.kalenderCellDetail .isitanggal {border:0px solid #EEEBDD;font-weight:normal; font-size:8px; background:transparent;}
+table.kalenderCellDetail .kiri {text-align:left; background:transparent;}
+table.kalenderCellDetail .kanan {text-align:right; background:transparent;}
+table.kalenderCellDetail .bawah {text-align:center; background:transparent;}
+table.kalenderCellDetail .tengah {text-align:center; font-size:26px;font-weight:bold;background:transparent;}
+
+table.kalenderCellDetail .tebal {font-size:10px;}
+table.kalenderCellDetail .tanggal {font-size:10px;}
+
+
+table.kalender1 {
+	border-bottom:0px solid #EEEBDD;
+	padding:0;
+	margin:0;
+	border:0px solid #EEEBDD;
+	width:100%;
+	}
+/* table styles */
+table.kalender1 td,
+table.kalender1 th {
+	text-align:center;
+	}	
+
+
+table.kalender1 .judulSamping {border:0px solid #EEEBDD;text-align:center; font-family:Bogota; font-weight:bold;font-size:14px;}
+/* table.kalender1 .judulAtas {border:0px solid #EEEBDD;text-align:center;font-weight:normal;font-size:10px;} */
+table.kalender1 .judulAtas {border:0px; solid:#EEEBDD;text-align:center; font-weight:bold;font-size:10px;}
+
+/* table.kalender1 .judultipis {border:0px solid #EEEBDD;text-align:center;font-weight:normal;font-size:11px;}
+*/
+table.kalender1 .isi {border:0px solid #EEEBDD;text-align:center;font-weight:normal;}
+table.kalender1 .merah {color:#CE1212; }
+table.kalender1 .hitam {color:#000; }
+table.kalender1 .orange {color:#f7387c; }
+table.kalender1 .putih {color:#fff; }
+
+table.kalender1 .isitanggal {border:0px solid #EEEBDD;font-weight:normal; font-size:8px; background:#EEEBDD;}
+table.kalender1 .kiri {text-align:left; }
+table.kalender1 .kanan {text-align:right; }
+table.kalender1 .tengah {text-align:center; font-size:18px;font-weight:bold;}
+
+table.kalender1 .judul1 {border:0px solid #EEEBDD;text-align:center;color:#000;font-weight:bold;font-size:16px;padding-right:0px;}
+table.kalender1 .judul2 {border:0px solid #EEEBDD;text-align:center;color:#CE1212; font-weight:bold;font-size:16px;padding-right:0px;}
+
+table.kalender1 .footerCal {border:0px solid #EEEBDD; text-align:right;font-weight:normal;font-size:10px;padding-left:20px;}
+
+
+table.kalender1 .last {border-right:0px solid #EEEBDD;}
+
+
+table.kalender1 .model1 {font-weight:bold;color:#CE1212; background:#EEEBDD}
+table.kalender1 .model2 {font-weight:bold; background:#EEEBDD}
+
+table.kalender1 .model3 {padding-left:25px;}
+table.kalender1 .model4 {padding-left:35px;}
+
+	
+table.listing {
+	border-bottom:1px solid #EEEBDD;
+	width:599px;
+	padding:0;
+	margin:0;
+	border:1px solid #EEEBDD;
+	}
+table.listing th {
+	border-top:0 !important;
+	}
+table.listing th.full {border-left:0;border-right:0 !important;text-align:left;text-transform:uppercase;}
+div.table img.left {
+	position:absolute;
+	top:0;
+	left:0;
+	}
+div.table img.right {
+	position:absolute;
+	top:0;
+	right:1px;
+	}
+/* table styles */
+table.listing td,
+table.listing th {
+	border:1px solid #fff;
+	text-align:center;
+	}	
+	
+table.listing th {
+	background:#EEEBDD;
+	color:#fff;
+	padding:0px;
+	}
+table.listing td {
+	background:#EEEBDD;
+	color:#000;
+	padding:0px 0px 0px 0px;
+	}
+
+	
+	
+table.listing .bg td {
+	background:#EEEBDD;
+	}
+table.listing .white td {
+	background:#fff;
+	}	
+  
+table.listing .first {border-left:0px solid #EEEBDD;text-align:center;}
+table.listing .last {border-right:0px solid #EEEBDD;}
+
+table.listing th.first {background:#EEEBDD url(../img/bg-th-left.gif) no-repeat left top;border-left:0;}
+table.listing th.last {background:#EEEBDD url(../img/bg-th-right.gif) no-repeat right top;border-right:0;}
+
+table.listing .model1 {font-weight:bold;color:#CE1212; background:#EEEBDD}
+table.listing .model2 {font-weight:bold; background:#EEEBDD}
+table.listing .model3 {padding-left:25px;}
+table.listing .model4 {padding-left:35px;}
+table.listing .model5 {font-weight:bold;font-size:12px;color:#CE1212; background:#EEEBDD}
+
+
+
+/* table select */
+div.table .bawah {
+	float:right;
+	margin:1px 1px 0 0;
+	width:600px;
+	height:20px;
+	background:#EEEBDD url(../img/widget/bg-select.gif);
+	color:#fff;
+	}
+	
+div.table .atas {
+	float:right;
+	margin:2px 1px 0 2px;
+	width:600px;
+	height:70px;
+	background:#EEEBDD url(../img/widget/tbl-atas-widget.png);
+	color:#fff;
+	}
+
+div.table .tahun {
+	padding:10px 10px 10px 600px;
+	text-align:right; 
+	font-size:18px;
+	font-weight:bold;
+}
+
+
+div.table .select strong {
+	float:left;
+	padding:5px 0 0 5px;
+	}	
+div.table .select select {
+	float:right;
+	width:78px;
+	margin:2px 3px 0 0;
+	text-align:right;	
+	}
+	
+	
+/* right column buttons */
+.buttons {
+	clear:both;
+	text-align:center;
+	padding:30px 0 15px 0;
+	}
+.buttons input {margin:0 0 6px 0;}
+
+
+table.sisikanan td,
+table.sisikanan th {
+	text-align:left; 
+   background:transparent;
+	}	
+
+table.sisikanan .merah {color:#CE1212; background:transparent;}
+table.sisikanan .hitam {color:#000; background:transparent;}
+
+table.sisikanan .kiri {text-align:left; background:transparent;}
+table.sisikanan .kanan {text-align:right; background:transparent;}
+table.sisikanan .tengah {text-align:center;vertical-align:top; background:transparent;}
+
+table.kalenderCell:hover {
+     background:#b8b3a0;
+}
+
+
+div.tableFitur {
+	position:relative;
+	margin:0;
+}
+
+div.tableFitur .fiturAtas {
+	margin:2px 1px 0 2px;
+	width:100%;
+	height:55px;
+	background:#EEEBDD;
+	color:#fff;
+}
+
+div.tableFitur .fiturListing {
+	margin:2px 1px 0 2px;
+	width:100%;
+	height:100%;
+	background:#EEEBDD;
+	color:#fff;
+}
+
+table.kalenderCellFitur {
+	width:100%;
+	height:100%;
+}
+
+table.kalenderCellFitur td,

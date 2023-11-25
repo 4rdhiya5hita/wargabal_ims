@@ -1,0 +1,201 @@
+@font-face {
+    font-family: 'Bogota';
+    src: url('../fonts/Bogota.ttf');
+}
+
+.bg-all {
+    background-size: cover;
+    background-position: center;
+    background-color: #2b190c;
+    height: max-content;
+    width: 100%;
+    /* margin-bottom: 100px; */
+    position: relative;
+}
+
+.bg-landing {
+    background-image: url(/img/landing-page-bg.jpg);
+    background-size: cover;
+    background-position: center;
+    background-color: #2b190c;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.bg-landing2 {
+    background-image: url(/img/landing-page-bg2.jpg);
+    background-size: cover;
+    background-position: center;
+    background-color: #2b190c;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.landing-title1 {
+    font-family: 'Bogota';
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    margin-top: 20vh;
+    margin-bottom: 0;
+}
+
+.landing-title2 {
+    font-family: 'Bogota';
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    text-align: left;
+    margin-bottom: 1vh;
+}
+
+.landing-title3 {
+    font-family: 'Bogota';
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    text-align: left;
+    margin-top: 20vh;
+    margin-bottom: 0;
+}
+
+.landing-description {
+    font-family: 'Bogota';
+    font-size: 14px;
+    font-weight: 400;
+    color: #fff;
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 5vh;
+}
+
+
+.landing-text {
+    font-family: 'Bogota';
+    font-size: 16px;
+    font-weight: 400;
+    color: #fff;
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 5vh;
+}
+
+.landing-kiri {
+    font-family: 'Bogota';
+    font-size: 16px;
+    font-weight: 400;
+    color: #000;
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 5vh;
+}
+
+.landing-tengah {
+    font-family: 'Bogota';
+    font-size: 16px;
+    font-weight: 400;
+    color: #000;
+    margin-top: 0;
+    margin-bottom: 5vh;
+}
+
+.docs-text {
+    font-family: 'Bogota';
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+}
+
+.docs-description {
+    font-family: 'Bogota';
+    font-size: 14px;
+    font-weight: 400;
+    color: #fff;
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 2vh;
+}
+
+.landing-carousel {
+    font-family: 'Bogota';
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    margin-top: 10vh;
+    margin-bottom: 0;
+}
+
+.carousel-slide {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+}
+
+.carousel-container {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    border-radius: 10px;
+    overflow: hidden;
+    float: left;
+    position: absolute; /* Menetapkan posisi relatif untuk pengaturan absolut */
+    bottom: 2;
+}
+  
+.carousel-container-back {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    border-radius: 10px;
+    overflow: hidden;
+    float: right;
+    position: relative; /* Menetapkan posisi absolut */    
+    opacity: 0.7;
+    margin-top: 20vh;
+    bottom: 1;
+}
+
+.carousel-container-back-back {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    border-radius: 10px;
+    overflow: hidden;
+    float: center;
+    position: absolute; /* Menetapkan posisi absolut */    
+    opacity: 0.5;
+    margin-top: 30vh;
+    bottom: 0;
+}
+
+.carousel-back {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    background-color: #f0f0f0;
+}
+
+.carousel-back-back {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    background-color: #f0f0f0;
+}
+  

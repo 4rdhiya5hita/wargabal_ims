@@ -9,7 +9,9 @@ class SaptaWaraController_07 extends Controller
 public function getSaptawara($tanggal)
     {
         // dd($tanggal);
-        $tanggal = date('N', strtotime($tanggal)) + 1;
+        $tanggal = date('N', strtotime($tanggal)) + 1; 
+        // MENCARI HARI DALAM ANGKA
+        // contoh: 2020-01-01 = 4 (Kamis)
         if($tanggal == 8){
             $tanggal = 1;
         }

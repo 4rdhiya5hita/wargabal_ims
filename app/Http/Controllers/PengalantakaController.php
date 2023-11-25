@@ -10,6 +10,7 @@ class PengalantakaController extends Controller
     {
         $selisih = intval(date_diff(date_create($tanggal), date_create($refTanggal))->format('%a'));
         $jumlahNgunaratri = floor(($selisih + $refNgunaratri) / 63);
+        # floor berfungsi untuk membulatkan ke bawah
         
         if (($selisih + $refNgunaratri) % 63 === 0) {
             $jumlahNgunaratri--;

@@ -54,6 +54,9 @@ Route::get('/processData', [KalenderBaliAPI::class, 'processData']);
 
 Route::controller(DashboardController::class)->group(function () {
     Route::get('/', 'dashboard')->name('dashboard');
+    Route::get('/docs_kalender', 'docs_kalender')->name('docs_kalender');
+
+    Route::get('/dashboard', 'dashboard_calendar')->name('dashboard_calendar');
     Route::get('/search_hari_raya', 'search_hari_raya')->name('search_hari_raya');
     Route::get('/search_dewasa_ayu', 'search_dewasa_ayu')->name('search_dewasa_ayu');
     Route::get('/search_kalender', 'search_kalender')->name('search_kalender');

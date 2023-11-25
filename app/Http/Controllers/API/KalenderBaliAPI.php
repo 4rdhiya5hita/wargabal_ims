@@ -310,6 +310,10 @@ class KalenderBaliAPI extends Controller
         $piodalan = $namaSaptawara . ' ' . $namaPancawara . ' ' . $namaWuku;
         // dd($hariRaya);
 
+        // Mencari hari berdasarkan tanggal
+        $hariController = new HariAPI();
+        $hari = $hariController->getHari($tanggal);
+
         $kalenderLengkap = [];
         // Perjikaan kalau parameter di urlnya ada masukkin &makna / &pura
         if ($path == "/api/searchHariRayaAPI") {
@@ -336,6 +340,7 @@ class KalenderBaliAPI extends Controller
                         array_push($kalenderLengkap, ['penamaan_hari_bali' => $piodalan, 'hari_raya' => $value]);
                     }
                 }
+                // dd($kalenderLengkap);
             }
             // // Perjikaan kalau tidak ada hari raya apapun pada hari itu
             // elseif (is_array($hariRaya) && count($hariRaya) == 1) {
@@ -384,9 +389,11 @@ class KalenderBaliAPI extends Controller
                 elseif ($hariRaya[0] == '-' && $piodalan != '-') {
                     // dd('ok');
                     $data_piodalan = Piodalan::where('piodalan', $piodalan)->get();
+                    // dd($data_piodalan);
                     if ($data_piodalan->isEmpty()) {
-                        array_push($kalenderLengkap, ['-']);
+                        array_push($kalenderLengkap, '-');
                     } else {
+                    // if (!$data_piodalan->isEmpty()) {
                         // dd($data_piodalan);
                         foreach ($data_piodalan as $item) {
                             $ambil_makna = $item->arti;
@@ -404,9 +411,13 @@ class KalenderBaliAPI extends Controller
                         }
                     }
                 } else {
-                    array_push($kalenderLengkap, ['-']);
+                    // dd('no');
+                    array_push($kalenderLengkap, '-');
                 }
             }
+            // $kalenderLengkap = array_reduce($kalenderLengkap, function ($carry, $item) { // Menggabungkan array multidimensi menjadi satu array
+            //     return array_merge($carry, $item);
+            // }, []);
         }
         // dd($kalenderLengkap);
         // Perjikaan kalau parameter di urlnya ada &lengkap
@@ -415,7 +426,7 @@ class KalenderBaliAPI extends Controller
         if ($path == '/api/searchKalenderAPI') {
 
             if ($lengkap) {
-                $metode = ['wuku', 'ingkel', 'jejepan', 'lintang', 'pancasudha', 'pangarasan', 'rakam', 'watek_madya', 'watek_alit', 'neptu', 'ekajalarsi', 'zodiak', 'pratiti'];
+                $metode = ['wuku', 'ingkel', 'jejepan', 'lintang', 'pancasudha', 'pangarasan', 'rakam', 'watek_madya', 'watek_alit', 'neptu', 'ekajalarsi', 'zodiak', 'pratiti', $hari];
             } else {
                 $metode = [$get_wuku, $get_ingkel, $get_jejepan, $get_lintang, $get_pancasudha, $get_pangarasan, $get_rakam, $get_watek_madya, $get_watek_alit, $get_neptu, $get_ekajalarsi, $get_zodiak, $get_pratiti];
             }
@@ -497,8 +508,25 @@ class KalenderBaliAPI extends Controller
                         $pratiti = $pratitiController->Pratiti($pengalantaka_dan_hariSasih['pengalantaka'], $no_sasih['no_sasih'], $pengalantaka_dan_hariSasih['penanggal_1']);
                         array_push($kombinasi_array, ['pratiti' => $pratiti]);
                     }
+
+                    // Perjikaan kalau parameter di urlnya ada &hari
+                    if ($value == 'Sunday') {
+                        array_push($kombinasi_array, ['hari' => 'Minggu']);
+                    } elseif ($value == 'Saturday') {
+                        array_push($kombinasi_array, ['hari' => 'Sabtu']);
+                    } elseif ($value == 'Friday') {
+                        array_push($kombinasi_array, ['hari' => 'Jumat']);
+                    } elseif ($value == 'Thursday') {
+                        array_push($kombinasi_array, ['hari' => 'Kamis']);
+                    } elseif ($value == 'Wednesday') {
+                        array_push($kombinasi_array, ['hari' => 'Rabu']);
+                    } elseif ($value == 'Tuesday') {
+                        array_push($kombinasi_array, ['hari' => 'Selasa']);
+                    } elseif ($value == 'Monday') {
+                        array_push($kombinasi_array, ['hari' => 'Senin']);
+                    }
                 }
-                $kalenderLengkap = array_reduce($kombinasi_array, function ($carry, $item) {
+                $kalenderLengkap = array_reduce($kombinasi_array, function ($carry, $item) { // Menggabungkan array multidimensi menjadi satu array
                     return array_merge($carry, $item);
                 }, []);
                 // dd($kalenderLengkap);

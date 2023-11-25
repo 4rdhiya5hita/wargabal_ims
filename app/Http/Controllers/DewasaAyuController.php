@@ -29,24 +29,10 @@ class DewasaAyuController extends Controller
             return response()->json(['message' => 'Input tanggal_mulai dan tanggal_selesai tidak valid'], 400);
         }
 
-        // Mengecek apakah hasil pemrosesan data sudah ada dalam cache
-        if (Cache::has($cacheKey)) {
-            $result = Cache::get($cacheKey);
-            $end = microtime(true);
-            $executionTime = $end - $start;
-            $executionTime = number_format($executionTime, 6);
-
-            return response()->json([
-                'message' => 'Data telah diambil dari cache.',
-                'dewasaAyu' => $result,
-                'waktu_eksekusi' => $executionTime
-            ]);
-        }
-
         while ($tanggal_mulai <= $tanggal_selesai) {
             $dewasa_ayu[] = [
                 'tanggal' => $tanggal_mulai->toDateString(),
-                'data' => $this->getDewasaAyu($tanggal_mulai->toDateString(), $makna),
+                'kalender' => $this->getDewasaAyu($tanggal_mulai->toDateString(), $makna),
             ];
             $tanggal_mulai->addDay();
         }

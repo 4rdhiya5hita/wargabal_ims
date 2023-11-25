@@ -10,6 +10,16 @@ class DashboardController extends Controller
 {
     public function dashboard()
     {
+        return view('landing_page.widget');
+    }
+
+    public function docs_kalender()
+    {
+        return view('landing_page.docs_kalender');
+    }
+
+    public function dashboard_calendar()
+    {
         $start = date('Y-m-d');
         $client = new Client();
         $response = $client->request('GET', 'https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchHariRayaAPI?tanggal_mulai=' . $start . '&tanggal_selesai=' . $start . '&makna&pura');
@@ -30,7 +40,7 @@ class DashboardController extends Controller
             $pura_now = 'Tidak ada pura';
         }
 
-        return view('dashboard.index', compact('tanggal_now', 'hari_raya_now', 'penamaan_hari_bali_now', 'makna_now', 'pura_now'));
+        return view('dashboard.index_calendar', compact('tanggal_now', 'hari_raya_now', 'penamaan_hari_bali_now', 'makna_now', 'pura_now'));
     }
 
     public function search_hari_raya()

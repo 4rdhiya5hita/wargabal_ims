@@ -1,0 +1,1 @@
+#fade{display:none;background:#000;position:fixed;left:0;top:0;width:100%;height:100%;opacity:.65;z-index:9999}.popup_block{display:none;background:#ececec;height:230px;padding:5px;overflow:auto;border:5px solid #fff;float:left;font-size:1em;position:fixed;top:160px;left:50%;z-index:99999;text-decoration:none}*html #fade{position:absolute}*html .popup_block{position:absolute}

@@ -16,7 +16,8 @@ class OtonanController extends Controller
         $tahun_dicari = $request->input('tahun_dicari');
 
         $selisih = floor((strtotime("$tahun_dicari-01-01") - strtotime($tanggal_lahir)) / (60 * 60 * 24));
-        $bagi = ceil($selisih / 210);
+        #selisih untuk mengetahui berapa hari dari tanggal lahir sampai tahun yang dicari
+        $bagi = ceil($selisih / 210); # ceil untuk membulatkan keatas
         $tambah = $bagi * 210;
         $otonan = date('Y-m-d', strtotime("$tanggal_lahir + $tambah days"));
         $otonan2 = date('Y-m-d', strtotime("$otonan + 210 days"));

@@ -51,36 +51,36 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     
     Route::get('/logout', [AutentikasiAPI::class, 'logout']);
 });
-Route::post('/buatInvoice', 'PaymentController@create');
-Route::post('/buatWebhook', 'PaymentController@webhook');
+Route::post('/buatInvoice', [PaymentController::class, 'create']);
+Route::post('/buatWebhook', [PaymentController::class, 'webhook']);
 
-Route::get('/daftarServis', 'TransactionAPI@daftarServis');
+Route::get('/daftarServis', [TransactionAPI::class, 'daftarServis']);
 
-Route::get('/cariElemenKalenderBali', 'KalenderBaliAPI@cariElemenKalenderBali');
-Route::get('/cariAlaAyuningDewasa', 'AlaAyuningDewasaAPI@cariAlaAyuningDewasa');
-Route::get('/cariOtonan', 'OtonanAPI@cariOtonan');
-Route::get('/cariHariRaya', 'HariRayaAPI@cariHariRaya');
-Route::get('/cariPiodalan', 'PiodalanAPI@cariPiodalan');
-Route::get('/cariWarigaPersonal', 'WarigaPersonalAPI@cariWarigaPersonal');
+Route::get('/cariElemenKalenderBali', [KalenderBaliAPI::class, 'cariElemenKalenderBali']);
+Route::get('/cariAlaAyuningDewasa', [AlaAyuningDewasaAPI::class, 'cariAlaAyuningDewasa']);
+Route::get('/cariOtonan', [OtonanAPI::class, 'cariOtonan']);
+Route::get('/cariHariRaya', [HariRayaAPI::class, 'cariHariRaya']);
+Route::get('/cariPiodalan', [PiodalanAPI::class, 'cariPiodalan']);
+Route::get('/cariWarigaPersonal', [WarigaPersonalAPI::class, 'cariWarigaPersonal']);
 
-Route::post('/buatAcaraPiodalan', 'AcaraAPI@buatAcaraPiodalan');
-Route::get('/lihatAcaraPiodalan', 'AcaraAPI@lihatAcaraPiodalan');
-Route::get('/lihatAcaraPiodalan/{id}', 'AcaraAPI@lihatAcaraPiodalanById');
-Route::post('/ubahAcaraPiodalan', 'AcaraAPI@ubahAcaraPiodalan');
-Route::post('/hapusAcaraPiodalan', 'AcaraAPI@hapusAcaraPiodalan');
+Route::post('/buatAcaraPiodalan', [AcaraAPI::class, 'buatAcaraPiodalan']);
+Route::get('/lihatAcaraPiodalan', [AcaraAPI::class, 'lihatAcaraPiodalan']);
+Route::get('/lihatAcaraPiodalan/{id}', [AcaraAPI::class, 'lihatAcaraPiodalanById']);
+Route::post('/ubahAcaraPiodalan', [AcaraAPI::class, 'ubahAcaraPiodalan']);
+Route::post('/hapusAcaraPiodalan', [AcaraAPI::class, 'hapusAcaraPiodalan']);
 
-Route::post('/buatAcaraDetail', 'AcaraAPI@buatAcaraDetail');
-Route::get('/lihatAcaraDetail', 'AcaraAPI@lihatAcaraDetail');
-Route::get('/lihatAcaraDetail/{id}', 'AcaraAPI@lihatAcaraDetailById');
-Route::post('/ubahAcaraDetail', 'AcaraAPI@ubahAcaraDetail');
-Route::post('/hapusAcaraDetail', 'AcaraAPI@hapusAcaraDetail');
+Route::post('/buatAcaraDetail', [AcaraAPI::class, 'buatAcaraDetail']);
+Route::get('/lihatAcaraDetail', [AcaraAPI::class, 'lihatAcaraDetail']);
+Route::get('/lihatAcaraDetail/{id}', [AcaraAPI::class, 'lihatAcaraDetailById']);
+Route::post('/ubahAcaraDetail', [AcaraAPI::class, 'ubahAcaraDetail']);
+Route::post('/hapusAcaraDetail', [AcaraAPI::class, 'hapusAcaraDetail']);
 
-Route::get('/lihatPura', 'AcaraAPI@lihatPura');
-Route::get('/keteranganHariRaya', 'KeteranganAPI@keteranganHariRaya');
-Route::get('/keteranganAlaAyuningDewasa', 'KeteranganAPI@keteranganAlaAyuningDewasa');
+Route::get('/lihatPura', [AcaraAPI::class, 'lihatPura']);
+Route::get('/keteranganHariRaya', [KeteranganAPI::class, 'keteranganHariRaya']);
+Route::get('/keteranganAlaAyuningDewasa', [KeteranganAPI::class, 'keteranganAlaAyuningDewasa']);
 
-Route::get('/mengaturDewasa', 'MengaturDewasaAPI@mengaturDewasa');
-Route::get('/ramalanSifat', 'RamalanSifatAPI@ramalanSifat');
+Route::get('/mengaturDewasa', [MengaturDewasaAPI::class, 'mengaturDewasa']);
+Route::get('/ramalanSifat', [RamalanSifatAPI::class, 'ramalanSifat']);
 
 Route::post('/register', [AutentikasiAPI::class, 'register']);
 Route::post('/login', [AutentikasiAPI::class, 'login']);

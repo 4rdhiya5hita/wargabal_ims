@@ -2,29 +2,19 @@
 
 use App\Http\Controllers\API\AcaraAPI;
 use App\Http\Controllers\API\AutentikasiAPI;
-use App\Http\Controllers\API\CalendarAPI;
 use App\Http\Controllers\API\AlaAyuningDewasaAPI;
-use App\Http\Controllers\API\HariAPI;
 use App\Http\Controllers\API\HariRayaAPI;
 use App\Http\Controllers\API\KalenderBaliAPI;
 use App\Http\Controllers\API\KeteranganAPI;
 use App\Http\Controllers\API\OtonanAPI;
 use App\Http\Controllers\API\PiodalanAPI;
-use App\Http\Controllers\API\RerainanAPI;
 use App\Http\Controllers\API\searchHariRayaAPI;
 use App\Http\Controllers\API\TransactionAPI;
-use App\Http\Controllers\API\WewaranAPI;
-use App\Http\Controllers\AlaAyuningDewasaController;
 use App\Http\Controllers\API\MengaturDewasaAPI;
 use App\Http\Controllers\API\RamalanSifatAPI;
 use App\Http\Controllers\API\WarigaPersonalAPI;
-use App\Http\Controllers\OtonanController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProgressHasil;
-use App\Http\Controllers\TasksController;
-use App\Models\HariRaya;
-use App\Models\Paket;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*

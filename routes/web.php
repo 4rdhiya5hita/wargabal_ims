@@ -34,7 +34,7 @@ Route::get('/dash', function () {
 require __DIR__ . '/auth.php';
 
 Route::resource('tasks', 'TasksController');
-Route::get('/task', [TasksController::class, 'index'])->name('task');
+Route::get('/task', [TasksController::class, 'index'])->name('task' );
 Route::get('/get-data', [TasksController::class, 'getData'])->name('task-data');
 
 // Kode Program Salah

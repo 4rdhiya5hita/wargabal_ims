@@ -264,4 +264,24 @@ class HariSasihController extends Controller
             'hasil_tahun' => $hasil_tahun
         ];
     }
+
+    public function getNamaSasih($no_sasih)
+    {
+        $namaSasih = [
+            1 => 'kasa',
+            2 => 'karo',
+            3 => 'katiga',
+            4 => 'kapat',
+            5 => 'kalima',
+            6 => 'kanem',
+            7 => 'kapitu',
+            8 => 'kawulu',
+            9 => 'kasanga',
+            10 => 'kadasa',
+            11 => 'jiyestha',
+            12 => 'sadha',
+        ];
+
+        return $namaSasih[$no_sasih];
+    }
 }

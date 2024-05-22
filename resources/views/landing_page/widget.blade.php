@@ -42,8 +42,8 @@
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="fiturDewasaAyu" id="fiturDewasaAyu" value="option3">
-                        <label class="form-check-label" for="fiturDewasaAyu">
+                        <input class="form-check-input" type="checkbox" name="fiturAlaAyuningDewasa" id="fiturAlaAyuningDewasa" value="option3">
+                        <label class="form-check-label" for="fiturAlaAyuningDewasa">
                             Dewasa Ayu
                         </label>
                     </div>
@@ -131,21 +131,21 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4" id="fiturDewasaAyu">
+        <div class="col-md-4" id="fiturAlaAyuningDewasa">
             <div class="tableFitur">
                 <div class="fiturAtas">
                     <table class="kalender1">
                         <tr align="center">
                             <td>
                                 <div class="judul1">Dewasa Ayu</div>
-                                <div class="judul2" id="judul2DewasaAyu"></div>
+                                <div class="judul2" id="judul2AlaAyuningDewasa"></div>
                             </td>
                         </tr>
                     </table>
                 </div>
             </div>
             <div class="tableFitur">
-                <div class="fiturListing" cellpadding="0" cellspacing="0" id="hasilDewasaAyu">
+                <div class="fiturListing" cellpadding="0" cellspacing="0" id="hasilAlaAyuningDewasa">
                 </div>
             </div>
         </div>
@@ -497,20 +497,20 @@
         // hapus html elemen kalender yang lama
         $('#hasilKalenderBali').empty();
         $('#hasilHariRaya').empty();
-        $('#hasilDewasaAyu').empty();
+        $('#hasilAlaAyuningDewasa').empty();
         $('#judul2Kalender').empty();
         $('#judul2HariRaya').empty();
-        $('#judul2DewasaAyu').empty();
+        $('#judul2AlaAyuningDewasa').empty();
 
         // buat html elemen kalender yang baru
         var hasilKalenderBali = document.getElementById("hasilKalenderBali");
         var hasilHariRaya = document.getElementById("hasilHariRaya");
-        var hasilDewasaAyu = document.getElementById("hasilDewasaAyu");
+        var hasilAlaAyuningDewasa = document.getElementById("hasilAlaAyuningDewasa");
         var tanggalKalender = document.getElementById("judul2Kalender");
         var tanggalHariRaya = document.getElementById("judul2HariRaya");
-        var tanggalDewasaAyu = document.getElementById("judul2DewasaAyu");
+        var tanggalAlaAyuningDewasa = document.getElementById("judul2AlaAyuningDewasa");
         var htmlElemenKalender = "";
-        var htmlDewasaAyu = "";
+        var htmlAlaAyuningDewasa = "";
         var htmlHariRaya = "";
         var htmlTanggalKalender = "";
 
@@ -564,7 +564,7 @@
         // Buat URL baru dengan tanggal awal dan tanggal akhir yang sesuai
         var URLkalender = "http://localhost:8000/api/searchKalenderAPI?tanggal_mulai=" + tahun + "-" + bulan + "-" + tanggal + "&tanggal_selesai=" + tahun + "-" + bulan + "-" + tanggal + "&lengkap=lengkap";
         var URLhariRaya = "http://localhost:8000/api/searchHariRayaAPI?tanggal_mulai=" + tahun + "-" + bulan + "-" + tanggal + "&tanggal_selesai=" + tahun + "-" + bulan + "-" + tanggal + "&makna&pura";
-        var URLdewasaAyu = "http://localhost:8000/api/searchDewasaAyuAPI?tanggal_mulai=" + tahun + "-" + bulan + "-" + tanggal + "&tanggal_selesai=" + tahun + "-" + bulan + "-" + tanggal + "&keterangan";
+        var URLdewasaAyu = "http://localhost:8000/api/searchAlaAyuningDewasaAPI?tanggal_mulai=" + tahun + "-" + bulan + "-" + tanggal + "&tanggal_selesai=" + tahun + "-" + bulan + "-" + tanggal + "&keterangan";
         // console.log(URLhariRaya);
         // console.log(URLkalender);
         // console.log(URLdewasaAyu);
@@ -572,7 +572,7 @@
         htmlTanggalKalender += `${tanggal} ${data_bulan}`;
         tanggalKalender.innerHTML += htmlTanggalKalender;
         tanggalHariRaya.innerHTML += htmlTanggalKalender;
-        tanggalDewasaAyu.innerHTML += htmlTanggalKalender;
+        tanggalAlaAyuningDewasa.innerHTML += htmlTanggalKalender;
 
         // fetch api
         fetch(URLkalender)
@@ -669,7 +669,7 @@
                 var panjangObjek = data.result[0].kalender.length;
                 // console.log(panjangObjek);
 
-                htmlDewasaAyu += `
+                htmlAlaAyuningDewasa += `
                     <table class="kalenderCellFitur" style="padding: 5px">
                     <tr style="border-width: 0.5px">
                         <td class="px-2 landing-kiri">Dewasa Ayu</td>
@@ -680,7 +680,7 @@
 
                 // menampilkan data
                 for (var i = 0; i < panjangObjek; i++) {
-                    htmlDewasaAyu += `
+                    htmlAlaAyuningDewasa += `
                         <tr style="border-width: 0.5px">
                             <td class="px-2 landing-kiri">${data.result[0].kalender[i].dewasa_ayu}</td>
                             <td class="px-2 landing-kiri">:</td>
@@ -691,10 +691,10 @@
 
 
 
-                htmlDewasaAyu += `
+                htmlAlaAyuningDewasa += `
                     </table>
                     `;
-                hasilDewasaAyu.innerHTML += htmlDewasaAyu;
+                hasilAlaAyuningDewasa.innerHTML += htmlAlaAyuningDewasa;
             });
 
 

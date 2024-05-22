@@ -29,7 +29,7 @@
                         <h5>Tabel Hari Raya</h5>
                         <span class="d-block m-t-5">Berikut hasil perhitungan kalender bali untuk mencari piodalan dari tanggal
                         <i>{{ $kalender['hari_raya'][0]['tanggal'] }} sampai {{ $kalender['hari_raya'][count($kalender['hari_raya']) - 1]['tanggal'] }}</i> 
-                        dengan waktu eksekusi {{ $kalender['waktu_eksekusi'] }} detik</span>
+                        dengan waktu eksekusi {{ $kalender['execution_time'] }} detik</span>
                     </div>
                     <div class="card-body table-border-style">
                         <div class="table-responsive">

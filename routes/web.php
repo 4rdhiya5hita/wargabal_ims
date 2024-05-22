@@ -4,7 +4,7 @@ use App\Http\Controllers\API\CalendarAPI;
 use App\Http\Controllers\API\KalenderBaliAPI;
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DewasaAyuController;
+use App\Http\Controllers\AlaAyuningDewasaController;
 use App\Http\Controllers\OtonanController;
 use App\Http\Controllers\ProgressHasil;
 use App\Http\Controllers\TasksController;
@@ -44,7 +44,7 @@ Route::get('/searchTanggalHariRaya', [KalenderBaliAPI::class, 'searchTanggalHari
 // Uji Coba Lokal
 Route::get('/searchHariRaya', [KalenderBaliAPI::class, 'searchHariRaya']);
 Route::get('/searchHariRayaAPI', [KalenderBaliAPI::class, 'searchHariRayaAPI']);
-Route::get('/searchDewasaAyuAPI', [DewasaAyuController::class, 'searchDewasaAyuAPI']);
+Route::get('/searchAlaAyuningDewasaAPI', [AlaAyuningDewasaController::class, 'searchAlaAyuningDewasaAPI']);
 Route::get('/searchKalenderAPI', [KalenderBaliAPI::class, 'searchHariRayaAPI']);
 Route::get('/searchOtonanAPI', [OtonanController::class, 'searchOtonanAPI']);
 
@@ -53,7 +53,7 @@ Route::get('/processData', [KalenderBaliAPI::class, 'processData']);
 // Route::get('/hasilProgress', [ProgressHasil::class, 'getHasilProgress']);
 
 Route::controller(DashboardController::class)->group(function () {
-    Route::get('/', 'dashboard')->name('dashboard');
+    Route::get('/a', 'dashboard')->name('dashboard');
     Route::get('/docs_kalender', 'docs_kalender')->name('docs_kalender');
 
     Route::get('/dashboard', 'dashboard_calendar')->name('dashboard_calendar');

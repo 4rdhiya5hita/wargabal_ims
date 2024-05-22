@@ -58,11 +58,11 @@ class ProgressHasil extends Controller
         $keterangan = $request->has('keterangan');
 
         if ($keterangan) {
-            $url = 'https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchDewasaAyuAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai . '&keterangan';
+            $url = 'https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchAlaAyuningDewasaAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai . '&keterangan';
         } else {
-            $url = 'https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchDewasaAyuAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai;
+            $url = 'https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchAlaAyuningDewasaAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai;
         }
-        // $url = 'http://localhost:8000/api/searchDewasaAyuAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai;
+        // $url = 'http://localhost:8000/api/searchAlaAyuningDewasaAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai;
 
         $response = Http::get($url);
 
@@ -166,14 +166,35 @@ class ProgressHasil extends Controller
 
     public function process_search_otonan(Request $request)
     {
-        $tanggal_lahir = '2002-01-03';
-        $tahun_dicari = '2023';
-        // $tanggal_lahir = $request->input('tanggal_lahir');
-        // $tahun_dicari = $request->input('tahun_dicari');
+        // $tanggal_lahir = '2002-01-03';
+        // $tahun_dicari = '2023';
+        $tanggal_lahir = $request->input('tanggal_lahir');
+        $tahun_dicari = $request->input('tahun_dicari');
 
         $url = 'https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchOtonanAPI' . '?tanggal_lahir=' . $tanggal_lahir . 'tahun_dicari=' . $tahun_dicari;
         // $url = 'http://localhost:8000/api/searchOtonanAPI' . '?tanggal_lahir=' . $tanggal_lahir . 'tahun_dicari=' . $tahun_dicari;
-        // dd($url);
+        dd($url);
+
+        if (tanggal_lahir == null && tahun_dicari == null) {
+            return response()->json([
+                'message' => 'Data tanggal lahir dan tahun dicari tidak boleh kosong'
+            ], 404);
+        } else if (tahun_dicari == null) {
+            return response()->json([
+                'message' => 'Data tahun dicari tidak boleh kosong'
+            ], 404);
+        } else if (tanggal_lahir == null) {
+            return response()->json([
+                'message' => 'Data tanggal lahir tidak boleh kosong'
+            ], 404);
+        } 
+        
+        // parameter hanya boleh berupa tipe data date untuk tanggal lahir dan integer untuk tahun dicari
+        if (!strtotime($tanggal_lahir) || !is_int($tahun_dicari)) {
+            return response()->json([
+                'message' => 'Data tanggal lahir harus berupa data tanggal dan tahun dicari harus berupa integer'
+            ], 404);
+        }        
 
         $response = Http::get($url);
         if ($response->successful()) {

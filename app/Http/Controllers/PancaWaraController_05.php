@@ -40,7 +40,7 @@ class PancaWaraController_05 extends Controller
         if ($i == 1) {
             $nama = 'Umanis';
         } elseif ($i == 2) {
-            $nama = 'Pahing';
+            $nama = 'Paing';
         } elseif ($i == 3) {
             $nama = 'Pon';
         } elseif ($i == 4) {

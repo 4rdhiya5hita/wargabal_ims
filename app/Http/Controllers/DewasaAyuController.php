@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DewasaAyu;
+use App\Models\AlaAyuningDewasa;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 
-class DewasaAyuController extends Controller
+class AlaAyuningDewasaController extends Controller
 {
-    public function searchDewasaAyuAPI(Request $request)
+    public function searchAlaAyuningDewasaAPI(Request $request)
     {
         $start = microtime(true);
 
@@ -32,7 +32,7 @@ class DewasaAyuController extends Controller
         while ($tanggal_mulai <= $tanggal_selesai) {
             $dewasa_ayu[] = [
                 'tanggal' => $tanggal_mulai->toDateString(),
-                'kalender' => $this->getDewasaAyu($tanggal_mulai->toDateString(), $makna),
+                'kalender' => $this->getAlaAyuningDewasa($tanggal_mulai->toDateString(), $makna),
             ];
             $tanggal_mulai->addDay();
         }
@@ -45,8 +45,8 @@ class DewasaAyuController extends Controller
         $executionTime = number_format($executionTime, 6);
 
         $response = [
-            'message' => 'Sukses',
-            'result' => $dewasa_ayu,
+            'pesan' => 'Sukses',
+            'data' => $dewasa_ayu,
             'waktu_eksekusi' => $executionTime,
         ];
 
@@ -56,7 +56,7 @@ class DewasaAyuController extends Controller
         // return view('dashboard.index', compact('dewasa_ayu'));
     }
 
-    public function getDewasaAyu($tanggal, $makna)
+    public function getAlaAyuningDewasa($tanggal, $makna)
     {
         // // hariSasihController -> getHariSasih
         // $pengalantaka = $request->input('pengalantaka');
@@ -183,7 +183,7 @@ class DewasaAyuController extends Controller
         // 1. AgniAgungDoyanBasmi: Selasa Purnama dengan Asta Wara Brahma
         if (($saptawara === 3 && ($astawara === 6 || $purnama_tilem === 'Purnama'))) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Agni Agung Doyan Basmi', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Agni Agung Doyan Basmi',]);
@@ -194,7 +194,7 @@ class DewasaAyuController extends Controller
         // 2. Agni Agung Patra Limutan: Minggu dengan Asta Wara Brahma
         if ($saptawara === 1 && $astawara === 6) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Agni Agung Patra Limutan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Agni Agung Patra Limutan']);
@@ -204,7 +204,7 @@ class DewasaAyuController extends Controller
         // 3. Amerta Akasa: Anggara Purnama
         if ($saptawara === 3 && $purnama_tilem === 'Purnama') {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Akasa', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Akasa']);
@@ -216,7 +216,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 4 && $pancawara === 3 && $pengalantaka === 'Penanggal' && ($sasihDay1 === 10 || $sasihDay2 === 10))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Bumi', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Bumi']);
@@ -226,7 +226,7 @@ class DewasaAyuController extends Controller
         // 5. Amerta Bhuwana: Redite Purnama, Soma Purnama, dan Anggara Purnama
         if (($saptawara === 1 || $saptawara === 2 || $saptawara === 3) && $purnama_tilem === 'Purnama') {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Bhuwana', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Bhuwana']);
@@ -236,7 +236,7 @@ class DewasaAyuController extends Controller
         // 6. Amerta Dadi: Soma Beteng atau Purnama Kajeng
         if (($saptawara === 2 && $triwara === 2) || ($triwara === 3 && $purnama_tilem === 'Purnama')) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Dadi', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Dadi']);
@@ -254,7 +254,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 7) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 7)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Danta', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Danta']);
@@ -272,7 +272,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 4) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 4) || ($pengalantaka === 'Pangelong' && $sasihDay1 === 4) || ($pengalantaka === 'Pangelong' && $sasihDay2 === 4)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Dewa', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Dewa']);
@@ -282,7 +282,7 @@ class DewasaAyuController extends Controller
         // 9. Amerta Dewa Jaya
         if ($saptawara === 2 && (($pengalantaka === 'Penanggal' && ($sasihDay1 === 3 || $sasihDay2 === 3)) || ($pengalantaka === 'Penanggal' && ($sasihDay1 === 12 || $sasihDay2 === 12)))) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Dewa Jaya', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Dewa Jaya']);
@@ -292,7 +292,7 @@ class DewasaAyuController extends Controller
         // 10. Amerta Dewata
         if ($saptawara === 6 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 12) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 12))) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Dewata', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Dewata']);
@@ -311,7 +311,7 @@ class DewasaAyuController extends Controller
             )
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Gati', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Gati']);
@@ -333,7 +333,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 5 && $wuku === 13 && $pengalantaka === 'Penanggal' && ($sasihDay1 === 1 || $sasihDay2 === 1 || $sasihDay1 === 11 || $sasihDay2 === 11))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Kundalini', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Kundalini']);
@@ -343,7 +343,7 @@ class DewasaAyuController extends Controller
         // 13. Amerta Masa
         if ($saptawara === 6 && $purnama_tilem === 'Purnama') {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Masa', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Masa']);
@@ -353,7 +353,7 @@ class DewasaAyuController extends Controller
         // 14. Amerta Murti
         if ($saptawara === 4 && $pancawara === 5 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 12) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 12))) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Murti', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Murti']);
@@ -363,7 +363,7 @@ class DewasaAyuController extends Controller
         // 15. Amerta Pageh
         if ($saptawara === 7 && $purnama_tilem === 'Purnama') {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Pageh', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Pageh']);
@@ -373,7 +373,7 @@ class DewasaAyuController extends Controller
         // 16. Amerta Pepageran
         if ($saptawara === 7 && ($purnama_tilem === 'Purnama' || $astawara === 4)) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Pepageran', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Pepageran']);
@@ -383,7 +383,7 @@ class DewasaAyuController extends Controller
         // 17. Amerta Sari
         if ($saptawara === 4 && $purnama_tilem === 'Purnama') {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Sari', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Sari']);
@@ -393,7 +393,7 @@ class DewasaAyuController extends Controller
         // 18. Amerta Wija
         if ($saptawara === 5 && $purnama_tilem === 'Purnama') {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Wija', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Wija']);
@@ -409,7 +409,7 @@ class DewasaAyuController extends Controller
             (($no_sasih === 12) && (($pengalantaka === 'Pangelong' && $sasihDay1 === 1) || ($pengalantaka === 'Pangelong' && $sasihDay2 === 1)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Yoga', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Amerta Yoga']);
@@ -427,7 +427,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && $wuku === 18)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Asuajag Munggah', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Asuajag Munggah']);
@@ -445,7 +445,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && $wuku === 3)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Asuajag Turun', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Asuajag Turun']);
@@ -463,7 +463,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 6 && $wuku === 28)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Asuasa', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Asuasa']);
@@ -480,7 +480,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 11) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 11)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Ayu Bhadra', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Ayu Bhadra']);
@@ -490,7 +490,7 @@ class DewasaAyuController extends Controller
         // 24. Ayu Dana
         if ($saptawara === 6 && $purnama_tilem === 'Purnama') {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Ayu Dana', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Ayu Dana']);
@@ -508,7 +508,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 5) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 5)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Ayu Nulus', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Ayu Nulus']);
@@ -518,7 +518,7 @@ class DewasaAyuController extends Controller
         // 26. Babi Munggah
         if ($pancawara === 4 && $sadwara === 1) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Babi Munggah', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Babi Munggah']);
@@ -528,7 +528,7 @@ class DewasaAyuController extends Controller
         // 27. Babi Turun
         if ($pancawara === 4 && $sadwara === 4) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Babi Turun', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Babi Turun']);
@@ -543,7 +543,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 6 && $wuku === 13)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Banyu Milir', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Banyu Milir']);
@@ -561,7 +561,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 4 || $wuku === 8 || $wuku === 19))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Banyu Urug', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Banyu Urug']);
@@ -571,7 +571,7 @@ class DewasaAyuController extends Controller
         // 30. Bojog Munggah
         if ($pancawara === 5 && $sadwara === 5) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Bojog Munggah', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Bojog Munggah']);
@@ -581,7 +581,7 @@ class DewasaAyuController extends Controller
         // 31. Bojog Turun
         if ($pancawara === 5 && $sadwara === 2) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Bojog Turun', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Bojog Turun']);
@@ -591,7 +591,7 @@ class DewasaAyuController extends Controller
         // 32. Buda Gajah
         if ($saptawara === 4 && $pancawara === 4 && $purnama_tilem === 'Purnama') {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Buda Gajah', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Buda Gajah']);
@@ -601,7 +601,7 @@ class DewasaAyuController extends Controller
         // 33. Buda Ireng
         if ($saptawara === 4 && $pancawara === 4 && $purnama_tilem === 'Tilem') {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Buda Ireng', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Buda Ireng']);
@@ -611,7 +611,7 @@ class DewasaAyuController extends Controller
         // 34. Buda Suka
         if ($saptawara === 4 && $pancawara === 5 && $purnama_tilem === 'Tilem') {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Buda Suka', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Buda Suka']);
@@ -624,7 +624,7 @@ class DewasaAyuController extends Controller
             $wuku === 25 || $wuku === 27 || $wuku === 28 || $wuku === 30 || $wuku === 7
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Carik Walangati', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Carik Walangati']);
@@ -639,7 +639,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && $pancawara === 2)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Catur Laba', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Catur Laba']);
@@ -649,7 +649,7 @@ class DewasaAyuController extends Controller
         // 37. Cintamanik
         if ($saptawara === 4 && ($wuku % 2 === 1)) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Cintamanik', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Cintamanik']);
@@ -659,7 +659,7 @@ class DewasaAyuController extends Controller
         // 38. Corok Kodong
         if ($saptawara === 5 && $pancawara === 5 && $wuku === 13) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Corok Kodong', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Corok Kodong']);
@@ -676,7 +676,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($sasihDay1 === 6 || $sasihDay2 === 6))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'DagDig Karana', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'DagDig Karana']);
@@ -686,7 +686,7 @@ class DewasaAyuController extends Controller
         // 40. Dasa Amertha
         if ($saptawara === 6 && $pancawara === 2 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 10) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 10))) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dasa Amertha', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dasa Amertha']);
@@ -696,7 +696,7 @@ class DewasaAyuController extends Controller
         // 41. Dasa Guna
         if ($saptawara === 4 && ($purnama_tilem === 'Purnama' || $purnama_tilem === 'Tilem')) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dasa Guna', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dasa Guna']);
@@ -714,7 +714,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($sasihDay1 === 5 || $sasihDay2 === 5))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dauh Ayu', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dauh Ayu']);
@@ -724,7 +724,7 @@ class DewasaAyuController extends Controller
         // 43. Derman Bagia
         if ($saptawara === 2 && ($sasihDay1 === 2 || $sasihDay2 === 2 || $sasihDay1 === 3 || $sasihDay2 === 3 || $sasihDay1 === 5 || $sasihDay2 === 5 || $sasihDay1 === 12 || $sasihDay2 === 12)) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Derman Bagia', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Derman Bagia']);
@@ -742,7 +742,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 4) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 4)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dewa Ngelayang', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dewa Ngelayang']);
@@ -760,7 +760,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 10) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 10)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dewa Satata', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dewa Satata']);
@@ -770,7 +770,7 @@ class DewasaAyuController extends Controller
         // 46. Dewa Werdhi
         if ($saptawara === 6 && $pancawara === 4 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 10) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 10))) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dewa Werdhi', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dewa Werdhi']);
@@ -780,7 +780,7 @@ class DewasaAyuController extends Controller
         // 47. Dewa Mentas
         if ($saptawara === 5 && $pengalantaka === 'Penanggal' && ($sasihDay1 === 5 || $sasihDay2 === 5 || $sasihDay1 === 15 || $sasihDay2 === 15)) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dewa Mentas', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dewa Mentas']);
@@ -797,7 +797,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 5) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 5)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dewasa Ngelayang', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dewasa Ngelayang']);
@@ -815,7 +815,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 10) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 10)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dewasa Tanian', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dewasa Tanian']);
@@ -833,7 +833,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 6) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 6)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dina Carik', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dina Carik']);
@@ -850,7 +850,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 7) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 7)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dina Jaya', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dina Jaya']);
@@ -865,7 +865,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 3) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 3)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dina Mandi', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dina Mandi']);
@@ -875,7 +875,7 @@ class DewasaAyuController extends Controller
         // 53. Dirgahayu
         if ($saptawara === 3 && $pancawara === 3 && $dasawara === 1) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dirgahayu', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dirgahayu']);
@@ -885,7 +885,7 @@ class DewasaAyuController extends Controller
         // 54. DirghaYusa
         if ($saptawara === 4 && $pancawara === 3 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 10) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 10))) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dirgha Yusa', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Dirgha Yusa']);
@@ -900,7 +900,7 @@ class DewasaAyuController extends Controller
             ($pengalantaka === 'Pengelong' && ($sasihDay1 === 14 || $sasihDay2 === 14))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Gagak Anungsung Pati', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Gagak Anungsung Pati']);
@@ -919,7 +919,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && (($pengalantaka === 'Penanggal' && ($sasihDay1 === 1 || $sasihDay1 === 9)) || ($pengalantaka === 'Penanggal' && ($sasihDay2 === 1 || $sasihDay2 === 9))))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Geheng Manyinget', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Geheng Manyinget']);
@@ -933,7 +933,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 4 && $pancawara === 3 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 14) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 14)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Geni Agung', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Geni Agung']);
@@ -951,7 +951,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 6) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 6)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Geni Murub', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Geni Murub']);
@@ -964,7 +964,7 @@ class DewasaAyuController extends Controller
             (($pengalantaka === 'Pangelong' && ($sasihDay1 === 3 || $sasihDay1 === 4 || $sasihDay1 === 9 || $sasihDay1 === 13)) || ($pengalantaka === 'Pangelong' && ($sasihDay2 === 3 || $sasihDay2 === 4 || $sasihDay2 === 9 || $sasihDay2 === 13)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Geni Rawana', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Geni Rawana']);
@@ -982,7 +982,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 6) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 6)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Geni Rawana Jejepan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Geni Rawana Jejepan']);
@@ -994,7 +994,7 @@ class DewasaAyuController extends Controller
             (($saptawara === 3 && $pengalantaka === 'Penanggal' && ($sasihDay1 === 2 || $sasihDay1 === 4 || $sasihDay1 === 8 || $sasihDay1 === 11 || $sasihDay2 === 2 || $sasihDay2 === 4 || $sasihDay2 === 8 || $sasihDay2 === 11)) || ($saptawara === 3 && $pengalantaka === 'Penanggal' && ($sasihDay1 === 3 || $sasihDay1 === 4 || $sasihDay1 === 9 || $sasihDay1 === 13 || $sasihDay2 === 3 || $sasihDay2 === 4 || $sasihDay2 === 9 || $sasihDay2 === 13)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Geni Rawana Rangkep', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Geni Rawana Rangkep']);
@@ -1011,7 +1011,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && $wuku === 26)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Guntur Graha', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Guntur Graha']);
@@ -1021,7 +1021,7 @@ class DewasaAyuController extends Controller
         // 63. Ingkel Macan
         if ($saptawara === 5 && $pancawara === 3 && $wuku === 7) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Ingkel Macan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Ingkel Macan']);
@@ -1031,7 +1031,7 @@ class DewasaAyuController extends Controller
         // 64. Istri Payasan
         if ($saptawara === 2 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 8) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 8))) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Istri Payasan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Istri Payasan']);
@@ -1041,7 +1041,7 @@ class DewasaAyuController extends Controller
         // 65. Jiwa Manganti
         if (($saptawara === 2 && $wuku === 19) || ($saptawara === 5 && ($wuku === 2 || $wuku === 20)) || ($saptawara === 6 && ($wuku === 25 || $wuku === 7)) || ($saptawara === 7 && $wuku === 30)) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Jiwa Manganti', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Jiwa Manganti']);
@@ -1051,7 +1051,7 @@ class DewasaAyuController extends Controller
         // 66. Kajeng Kipkipan
         if ($saptawara === 4 && ($wuku === 6 || $wuku === 30)) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kajeng Kipkipan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kajeng Kipkipan']);
@@ -1061,7 +1061,7 @@ class DewasaAyuController extends Controller
         // 67. Kajeng Kliwon Enyitan
         if ($triwara === 3 && $pancawara === 5 && (($pengalantaka === 'Penanggal' && $sasihDay1 < 15 && $sasihDay1 > 7) || ($pengalantaka === 'Penanggal' && $sasihDay2 < 15 && $sasihDay2 > 7))) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kajeng Kliwon Enyitan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kajeng Kliwon Enyitan']);
@@ -1071,7 +1071,7 @@ class DewasaAyuController extends Controller
         // 68. Kajeng Lulunan
         if ($triwara === 3 && $astawara === 5 && $sangawara === 9) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kajeng Lulunan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kajeng Lulunan']);
@@ -1081,7 +1081,7 @@ class DewasaAyuController extends Controller
         // 69. Kajeng Rendetan
         if ($triwara === 3 && $pengalantaka === 'Penanggal' && ($saptawara === 1 || $saptawara === 4 || $saptawara === 7)) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kajeng Rendetan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kajeng Rendetan']);
@@ -1091,7 +1091,7 @@ class DewasaAyuController extends Controller
         // 70. Kajeng Susunan
         if ($triwara === 3 && $astawara === 3 && $sangawara === 9) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kajeng Susunan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kajeng Susunan']);
@@ -1101,7 +1101,7 @@ class DewasaAyuController extends Controller
         // 71. Kajeng Uwudan
         if ($triwara === 3 && $pengalantaka === 'Pangelong' && ($saptawara === 1 || $saptawara === 4 || $saptawara === 7)) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kajeng Uwudan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kajeng Uwudan']);
@@ -1111,7 +1111,7 @@ class DewasaAyuController extends Controller
         // 72. Kala Alap
         if ($saptawara === 2 && $wuku === 22) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Alap', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Alap']);
@@ -1121,7 +1121,7 @@ class DewasaAyuController extends Controller
         // 73. Kala Angin
         if ($saptawara === 1 && ($wuku === 17 || $wuku === 25 || $wuku === 28)) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Angin', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Angin']);
@@ -1131,7 +1131,7 @@ class DewasaAyuController extends Controller
         // 74. Kala Atat
         if (($saptawara === 1 && $wuku === 22) || ($saptawara === 3 && $wuku === 30) || ($saptawara === 4 && $wuku === 19)) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Atat', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Atat']);
@@ -1141,7 +1141,7 @@ class DewasaAyuController extends Controller
         // 75. Kala Awus
         if ($saptawara === 4 && $wuku === 28) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Awus', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Awus']);
@@ -1158,7 +1158,7 @@ class DewasaAyuController extends Controller
             $saptawara === 7 && $wuku === 7
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Bancaran', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Bancaran']);
@@ -1173,7 +1173,7 @@ class DewasaAyuController extends Controller
             $saptawara === 7 && $pancawara === 4
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Bangkung, Kala Nanggung', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Bangkung, Kala Nanggung']);
@@ -1183,7 +1183,7 @@ class DewasaAyuController extends Controller
         // 78. Kala Beser
         if ($sadwara === 1 && $astawara === 7) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Beser', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Beser']);
@@ -1199,7 +1199,7 @@ class DewasaAyuController extends Controller
             $saptawara === 7 && $wuku === 13
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Brahma', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Brahma']);
@@ -1209,7 +1209,7 @@ class DewasaAyuController extends Controller
         // 80. Kala Bregala
         if ($saptawara === 2 && $wuku === 2) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Bregala', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Bregala']);
@@ -1226,7 +1226,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && $astawara === 4)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Buingrau', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Buingrau']);
@@ -1236,7 +1236,7 @@ class DewasaAyuController extends Controller
         // 82. Kala Cakra
         if ($saptawara === 7 && $wuku === 23) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Cakra', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Cakra']);
@@ -1246,7 +1246,7 @@ class DewasaAyuController extends Controller
         // 83. Kala Capika
         if ($saptawara === 1 && $wuku === 18 && $pengalantaka === 'Penanggal' && ($sasihDay1 === 3 || $sasihDay2 === 3)) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Capika', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Capika']);
@@ -1261,7 +1261,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 9 || $wuku === 15 || $wuku === 1))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Caplokan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Caplokan']);
@@ -1271,7 +1271,7 @@ class DewasaAyuController extends Controller
         // 85. Kala Cepitan
         if ($saptawara === 2 && $pancawara === 2 && $wuku === 18) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Cepitan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Cepitan']);
@@ -1288,7 +1288,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 13 || $wuku === 15 || $wuku === 17))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Dangastra', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Dangastra']);
@@ -1307,7 +1307,7 @@ class DewasaAyuController extends Controller
                 $wuku === 29 || $wuku === 30))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Dangu', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Dangu']);
@@ -1317,7 +1317,7 @@ class DewasaAyuController extends Controller
         // 88. Kala Demit
         if ($saptawara === 7 && $wuku === 3) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Demit', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Demit']);
@@ -1327,7 +1327,7 @@ class DewasaAyuController extends Controller
         // 89. Kala Empas Munggah
         if ($pancawara === 4 && $sadwara === 3) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Empas Munggah', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Empas Munggah']);
@@ -1337,7 +1337,7 @@ class DewasaAyuController extends Controller
         // 90. Kala Empas Turun
         if ($pancawara === 4 && $sadwara === 6) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Empas Turun', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Empas Turun']);
@@ -1347,7 +1347,7 @@ class DewasaAyuController extends Controller
         // 91. Kala Gacokan
         if ($saptawara === 3 && $wuku === 19) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Gacokan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Gacokan']);
@@ -1357,7 +1357,7 @@ class DewasaAyuController extends Controller
         // 92. Kala Garuda
         if ($saptawara === 3 && $wuku === 2) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Garuda', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Garuda']);
@@ -1367,7 +1367,7 @@ class DewasaAyuController extends Controller
         // 93. Kala Geger
         if (($saptawara === 5 || $saptawara === 7) && $wuku === 7) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Geger', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Geger']);
@@ -1380,7 +1380,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 1 && $pancawara === 2)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Gotongan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Gotongan']);
@@ -1392,7 +1392,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && $wuku === 5)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Graha', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Graha']);
@@ -1402,7 +1402,7 @@ class DewasaAyuController extends Controller
         // 96. Kala Gumarang Munggah
         if ($pancawara === 3 && $sadwara === 3) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Gumarang Munggah', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Gumarang Munggah']);
@@ -1412,7 +1412,7 @@ class DewasaAyuController extends Controller
         // 97. Kala Gumarang Turun
         if ($pancawara === 3 && $sadwara === 6) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Gumarang Turun', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Gumarang Turun']);
@@ -1422,7 +1422,7 @@ class DewasaAyuController extends Controller
         // 98. Kala Guru
         if ($saptawara === 4 && $wuku === 2) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Guru', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Guru']);
@@ -1432,7 +1432,7 @@ class DewasaAyuController extends Controller
         // 99. Kala Ingsor
         if ($wuku === 4 || $wuku === 14 || $wuku === 24) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Ingsor', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Ingsor']);
@@ -1444,7 +1444,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 4 && $wuku === 30)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Isinan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Isinan']);
@@ -1454,7 +1454,7 @@ class DewasaAyuController extends Controller
         // 101. Kala Jangkut
         if ($triwara === 3 && $dwiwara === 2) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Jangkut', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Jangkut']);
@@ -1464,7 +1464,7 @@ class DewasaAyuController extends Controller
         // 102. Kala Jengkang
         if ($saptawara === 1 && $pancawara === 1 && $wuku === 3) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Jengkang', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Jengkang']);
@@ -1474,7 +1474,7 @@ class DewasaAyuController extends Controller
         // 103. Kala Jengking
         if ($sadwara === 3 && $astawara === 7) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Jengking', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Jengking']);
@@ -1491,7 +1491,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 16 || $wuku === 19 || $wuku === 27 || $wuku === 5 || $wuku === 11))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Katemu', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Katemu']);
@@ -1501,7 +1501,7 @@ class DewasaAyuController extends Controller
         // 105. Kala Keciran
         if ($saptawara === 4 && $wuku === 6) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Keciran', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Keciran']);
@@ -1513,7 +1513,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 5 && $wuku === 19)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Kilang-Kilung', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Kilang-Kilung']);
@@ -1523,7 +1523,7 @@ class DewasaAyuController extends Controller
         // 107. Kala Kingkingan
         if ($saptawara === 5 && $wuku === 17) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Kingkingan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Kingkingan']);
@@ -1533,7 +1533,7 @@ class DewasaAyuController extends Controller
         // 108. Kala Klingkung
         if ($saptawara === 3 && $wuku === 1) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Klingkung', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Klingkung']);
@@ -1543,7 +1543,7 @@ class DewasaAyuController extends Controller
         // 109. Kala Kutila Manik
         if ($triwara === 3 && $pancawara === 5) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Kutila Manik', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Kutila Manik']);
@@ -1553,7 +1553,7 @@ class DewasaAyuController extends Controller
         // 110. Kala Kutila
         if ($sadwara === 2 && $astawara === 6) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Kutila', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Kutila']);
@@ -1568,7 +1568,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 5 && ($wuku === 28 || $wuku === 29))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Luang', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Luang']);
@@ -1578,7 +1578,7 @@ class DewasaAyuController extends Controller
         // 112. Kala Lutung Megelut
         if (($saptawara === 1 && $wuku === 3) || ($saptawara === 4 && $wuku === 10)) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Lutung Megelut', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Lutung Megelut']);
@@ -1588,7 +1588,7 @@ class DewasaAyuController extends Controller
         // 113. Kala Lutung Megandong
         if ($saptawara === 5 && $pancawara === 5) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Lutung Megandong', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Lutung Megandong']);
@@ -1598,7 +1598,7 @@ class DewasaAyuController extends Controller
         // 114. Kala Macan
         if ($saptawara === 5 && $wuku === 19) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Macan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Macan']);
@@ -1608,7 +1608,7 @@ class DewasaAyuController extends Controller
         // 115. Kala Mangap
         if ($saptawara === 1 && $pancawara === 1) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Mangap', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Mangap']);
@@ -1618,7 +1618,7 @@ class DewasaAyuController extends Controller
         // 116. Kala Manguneb
         if ($saptawara === 5 && $pancawara === 14) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Manguneb', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Manguneb']);
@@ -1632,7 +1632,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 7 || $wuku === 24))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Matampak', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Matampak']);
@@ -1648,7 +1648,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 21))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Mereng', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Mereng']);
@@ -1658,7 +1658,7 @@ class DewasaAyuController extends Controller
         // 119. Kala Miled
         if ($saptawara === 2 && $pancawara === 16) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Miled', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Miled']);
@@ -1668,7 +1668,7 @@ class DewasaAyuController extends Controller
         // 120. Kala Mina
         if ($saptawara === 6 && ($wuku === 8 || $wuku === 14)) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Mina', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Mina']);
@@ -1685,7 +1685,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 14))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Mretyu', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Mretyu']);
@@ -1698,7 +1698,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 16))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Muas', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Muas']);
@@ -1708,7 +1708,7 @@ class DewasaAyuController extends Controller
         // 123. Kala Muncar
         if ($saptawara === 4 && ($wuku === 11)) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Muncar', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Muncar']);
@@ -1718,7 +1718,7 @@ class DewasaAyuController extends Controller
         // 124. Kala Muncrat
         if ($saptawara === 2 && $pancawara === 3 && $wuku === 18) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Muncrat', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Muncrat']);
@@ -1731,7 +1731,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 6 && ($wuku === 12 || $wuku === 30))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Ngadeg', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Ngadeg']);
@@ -1747,7 +1747,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 21))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Mereng', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Mereng']);
@@ -1757,7 +1757,7 @@ class DewasaAyuController extends Controller
         // 119. Kala Miled
         if ($saptawara === 2 && $pancawara === 16) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Miled', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Miled']);
@@ -1767,7 +1767,7 @@ class DewasaAyuController extends Controller
         // 120. Kala Mina
         if ($saptawara === 6 && ($wuku === 8 || $wuku === 14)) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Mina', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Mina']);
@@ -1784,7 +1784,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 14))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Mretyu', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Mretyu']);
@@ -1797,7 +1797,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 16))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Muas', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Muas']);
@@ -1807,7 +1807,7 @@ class DewasaAyuController extends Controller
         // 123. Kala Muncar
         if ($saptawara === 4 && ($wuku === 11)) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Muncar', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Muncar']);
@@ -1817,7 +1817,7 @@ class DewasaAyuController extends Controller
         // 124. Kala Muncrat
         if ($saptawara === 2 && $pancawara === 3 && $wuku === 18) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Muncrat', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Muncrat']);
@@ -1830,7 +1830,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 6 && ($wuku === 12 || $wuku === 30))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Ngadeg', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Ngadeg']);
@@ -1840,7 +1840,7 @@ class DewasaAyuController extends Controller
         // 126. Kala Ngamut
         if ($saptawara === 2 && $wuku === 18) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Ngamut', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Ngamut']);
@@ -1853,7 +1853,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 10))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Ngruda', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Ngruda']);
@@ -1863,7 +1863,7 @@ class DewasaAyuController extends Controller
         // 128. Kala Ngunya
         if ($saptawara === 1 && $wuku === 3) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Ngunya', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Ngunya']);
@@ -1873,7 +1873,7 @@ class DewasaAyuController extends Controller
         // 129. Kala Olih
         if ($saptawara === 4 && $wuku === 24) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Olih', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Olih']);
@@ -1883,7 +1883,7 @@ class DewasaAyuController extends Controller
         // 130. Kala Pacekan
         if ($saptawara === 3 && $wuku === 5) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Pacekan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Pacekan']);
@@ -1893,7 +1893,7 @@ class DewasaAyuController extends Controller
         // 131. Kala Pager
         if ($saptawara === 5 && $wuku === 7) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Pager', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Pager']);
@@ -1905,7 +1905,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 6 && $wuku === 30)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Panyeneng', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Panyeneng']);
@@ -1919,7 +1919,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 17))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Pati', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Pati']);
@@ -1929,7 +1929,7 @@ class DewasaAyuController extends Controller
         // 134. Kala Pati Jengkang
         if ($saptawara === 5 && $sadwara === 3) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Pati Jengkang', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Pati Jengkang']);
@@ -1942,7 +1942,7 @@ class DewasaAyuController extends Controller
             $saptawara === 7 && ($wuku === 3 || $wuku === 18)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Pegat', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Pegat']);
@@ -1956,7 +1956,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 5 && $wuku === 19)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Prawani', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Prawani']);
@@ -1966,7 +1966,7 @@ class DewasaAyuController extends Controller
         // 137. Kala Raja
         if ($saptawara === 5 && $wuku === 29) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Raja', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Raja']);
@@ -1979,7 +1979,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 6 && $wuku === 6)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Rau', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Rau']);
@@ -1989,7 +1989,7 @@ class DewasaAyuController extends Controller
         // 139. Kala Rebutan
         if ($saptawara === 2 && $wuku === 26) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Rebutan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Rebutan']);
@@ -2005,7 +2005,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 21 || $wuku === 23 || $wuku === 28 || $wuku === 29))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Rumpuh', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Rumpuh']);
@@ -2019,7 +2019,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 6 && $wuku === 30)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Sapuhau', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Sapuhau']);
@@ -2029,7 +2029,7 @@ class DewasaAyuController extends Controller
         // 142. Kala Sarang
         if ($wuku === 7 || $wuku === 17) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Sarang', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Sarang']);
@@ -2045,7 +2045,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 15 || $wuku === 17))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Siyung', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Siyung']);
@@ -2067,7 +2067,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 9 || $wuku === 3 || $wuku === 15 || $wuku === 21 || $wuku === 27))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Sor', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Sor']);
@@ -2082,7 +2082,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && $wuku === 6)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Sudangastra', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Sudangastra']);
@@ -2099,7 +2099,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 14 || $wuku === 15 || $wuku === 16 || $wuku === 17))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Sudukan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Sudukan']);
@@ -2109,7 +2109,7 @@ class DewasaAyuController extends Controller
         // 147. Kala Sungsang
         if ($wuku === 27) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Sungsang', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Sungsang']);
@@ -2119,7 +2119,7 @@ class DewasaAyuController extends Controller
         // 148. Kala Susulan
         if ($saptawara === 2 && $wuku === 11) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Susulan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Susulan']);
@@ -2133,7 +2133,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 11 || $wuku === 13 || $wuku === 14))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Suwung', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Suwung']);
@@ -2150,7 +2150,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 7 || $wuku === 15 || $wuku === 23))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Tampak', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Tampak']);
@@ -2169,7 +2169,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 3 || $wuku === 14 || $wuku === 15 || $wuku === 29))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Temah', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Temah']);
@@ -2182,7 +2182,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && $wuku === 2)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Timpang', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Timpang']);
@@ -2192,7 +2192,7 @@ class DewasaAyuController extends Controller
         // 153. Kala Tukaran
         if ($saptawara === 3 && ($wuku === 3 || $wuku === 8)) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Tukaran', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Tukaran']);
@@ -2202,7 +2202,7 @@ class DewasaAyuController extends Controller
         // 154. Kala Tumapel
         if ($wuku === 12 && ($saptawara === 3 || $saptawara === 4)) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Tumapel', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Tumapel']);
@@ -2212,7 +2212,7 @@ class DewasaAyuController extends Controller
         // 155. Kala Tumpar
         if (($saptawara === 3 && $wuku === 13) || ($saptawara === 4 && $wuku === 8)) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Tumpar', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Tumpar']);
@@ -2222,7 +2222,7 @@ class DewasaAyuController extends Controller
         // 156. Kala Upa
         if ($sadwara === 4 && $triwara === 1) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Upa', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Upa']);
@@ -2232,7 +2232,7 @@ class DewasaAyuController extends Controller
         // 157. Kala Was
         if ($saptawara === 2 && $wuku === 17) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Was', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Was']);
@@ -2242,7 +2242,7 @@ class DewasaAyuController extends Controller
         // 158. Kala Wikalpa
         if (($saptawara === 2 && ($wuku === 22 || $wuku === 25)) || ($saptawara === 6 && ($wuku === 27 || $wuku === 30))) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Wikalpa', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Wikalpa']);
@@ -2252,7 +2252,7 @@ class DewasaAyuController extends Controller
         // 159. Kala Wisesa
         if ($sadwara === 5 && $astawara === 3) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Wisesa', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Wisesa']);
@@ -2262,7 +2262,7 @@ class DewasaAyuController extends Controller
         // 160. Kala Wong
         if ($saptawara === 4 && $wuku === 20) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Wong', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kala Wong']);
@@ -2280,7 +2280,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 18 || $wuku === 26))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kaleburau', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kaleburau']);
@@ -2290,7 +2290,7 @@ class DewasaAyuController extends Controller
         // 162. Kamajaya
         if ($saptawara === 4 && (($pengalantaka === 'Penanggal' && ($sasihDay1 === 2 || $sasihDay1 === 3 || $sasihDay1 === 7)) || ($pengalantaka === 'Penanggal' && ($sasihDay2 === 2 || $sasihDay2 === 3 || $sasihDay2 === 7)))) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kamajaya', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Kamajaya']);
@@ -2304,7 +2304,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($purnama_tilem === 'Purnama' || $purnama_tilem === 'Tilem'))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Karna Sula', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Karna Sula']);
@@ -2321,7 +2321,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 5 || $wuku === 10))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Karnasula', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Karnasula']);
@@ -2339,7 +2339,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && $astawara === 4)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Lebur Awu', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Lebur Awu']);
@@ -2349,7 +2349,7 @@ class DewasaAyuController extends Controller
         // 166. Lutung Magandong
         if ($saptawara === 5 && ($wuku === 3 || $wuku === 8 || $wuku === 13 || $wuku === 18 || $wuku === 23 || $wuku === 28)) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Lutung Magandong', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Lutung Magandong']);
@@ -2367,7 +2367,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 6) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 6)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Macekan Agung', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Macekan Agung']);
@@ -2385,7 +2385,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 6) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 6)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Macekan Lanang', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Macekan Lanang']);
@@ -2402,7 +2402,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && (($pengalantaka === 'Pangelong' && $sasihDay1 === 13) || ($pengalantaka === 'Pangelong' && $sasihDay2 === 13)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Macekan Wadon', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Macekan Wadon']);
@@ -2412,7 +2412,7 @@ class DewasaAyuController extends Controller
         // 170. Merta Sula
         if ($saptawara === 5 && ($sasihDay1 === 7 || $sasihDay2 === 7)) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Merta Sula', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Merta Sula']);
@@ -2422,7 +2422,7 @@ class DewasaAyuController extends Controller
         // 171. Naga Naut
         if ($sasihDay1 === 'no_sasih' || $sasihDay2 === 'no_sasih') {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Naga Naut', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Naga Naut']);
@@ -2440,7 +2440,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($sasihDay1 === 6 || $sasihDay2 === 6 || $sasihDay1 === 15 || $sasihDay2 === 15))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Pamacekan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Pamacekan']);
@@ -2450,7 +2450,7 @@ class DewasaAyuController extends Controller
         // 173. Panca Amerta
         if ($saptawara === 4 && $pancawara === 2 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 5) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 5))) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Panca Amerta', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Panca Amerta']);
@@ -2460,7 +2460,7 @@ class DewasaAyuController extends Controller
         // 174. Panca Prawani
         if ($sasihDay1 === 4 || $sasihDay1 === 8 || $sasihDay1 === 12 || $sasihDay2 === 4 || $sasihDay2 === 8 || $sasihDay2 === 12) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Panca Prawani', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Panca Prawani']);
@@ -2470,7 +2470,7 @@ class DewasaAyuController extends Controller
         // 175. Panca Wedhi
         if ($saptawara === 2 && $pancawara === 2 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 5) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 5))) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Panca Werdhi', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Panca Werdhi']);
@@ -2480,7 +2480,7 @@ class DewasaAyuController extends Controller
         // 176. Pati Paten
         if ($saptawara === 6 && (($sasihDay1 === 10 || $sasihDay2 === 10) || $purnama_tilem === 'Tilem')) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Pati Paten', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Pati Paten']);
@@ -2490,7 +2490,7 @@ class DewasaAyuController extends Controller
         // 177. Patra Limutan
         if ($triwara === 3 && $purnama_tilem === 'Tilem') {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Patra Limutan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Patra Limutan']);
@@ -2528,7 +2528,7 @@ class DewasaAyuController extends Controller
             ))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Pepedan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Pepedan']);
@@ -2538,7 +2538,7 @@ class DewasaAyuController extends Controller
         // 179. Prabu Pendah
         if ($saptawara === 6 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 14) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 14))) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Prabu Pendah', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Prabu Pendah']);
@@ -2548,7 +2548,7 @@ class DewasaAyuController extends Controller
         // 180. Prangewa
         if ($saptawara === 3 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 1) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 1))) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Prangewa', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Prangewa']);
@@ -2558,7 +2558,7 @@ class DewasaAyuController extends Controller
         // 181. Purnama Danta
         if ($saptawara === 4 && $pancawara === 5 && $purnama_tilem === 'Purnama') {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Purnama Danta', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Purnama Danta']);
@@ -2568,7 +2568,7 @@ class DewasaAyuController extends Controller
         // 182. Purna Suka
         if ($saptawara === 6 && $pancawara === 1 && $purnama_tilem === 'Purnama') {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Purna Suka', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Purna Suka']);
@@ -2578,7 +2578,7 @@ class DewasaAyuController extends Controller
         // 183. Purwani
         if ($sasihDay1 === 14 || $sasihDay2 === 14) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Purwani', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Purwani']);
@@ -2594,7 +2594,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && $pancawara === 5)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Purwanin Dina', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Purwanin Dina']);
@@ -2604,7 +2604,7 @@ class DewasaAyuController extends Controller
         // 185. Rangda Tiga
         if ($wuku === 7 || $wuku === 8 || $wuku === 15 || $wuku === 16 || $wuku === 23 || $wuku === 24) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Rangda Tiga', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Rangda Tiga']);
@@ -2614,7 +2614,7 @@ class DewasaAyuController extends Controller
         // 186. Rarung Pagelangan
         if ($saptawara === 5 && ($sasihDay1 === 6 || $sasihDay2 === 6)) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Rarung Pagelangan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Rarung Pagelangan']);
@@ -2624,7 +2624,7 @@ class DewasaAyuController extends Controller
         // 187. Ratu Magelung
         if ($saptawara === 4 && $wuku === 23) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Ratu Magelung', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Ratu Magelung']);
@@ -2634,7 +2634,7 @@ class DewasaAyuController extends Controller
         // 188. Ratu Mangure
         if ($saptawara === 5 && $wuku === 20) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Ratu Mangure', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Ratu Mangure']);
@@ -2644,7 +2644,7 @@ class DewasaAyuController extends Controller
         // 189. Ratu Megambahan
         if ($saptawara === 7 && (($pengalantaka === 'Pangelong' && $sasihDay1 === 6) || ($pengalantaka === 'Pangelong' && $sasihDay2 === 6))) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Ratu Megambahan', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Ratu Megambahan']);
@@ -2654,7 +2654,7 @@ class DewasaAyuController extends Controller
         // 190. Ratu Nanyingal
         if ($saptawara === 5 && $wuku === 21) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Ratu Nanyingal', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Ratu Nanyingal']);
@@ -2664,7 +2664,7 @@ class DewasaAyuController extends Controller
         // 191. Ratu Ngemban Putra
         if ($saptawara === 6 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 5) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 5))) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Ratu Ngemban Putra', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Ratu Ngemban Putra']);
@@ -2674,7 +2674,7 @@ class DewasaAyuController extends Controller
         // 192. Rekatadala Ayudana
         if ($saptawara === 1 && ($sasihDay1 === 1 || $sasihDay1 === 6 || $sasihDay1 === 11 || $sasihDay1 === 2 || $sasihDay2 === 6 || $sasihDay2 === 11)) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Rekatadala Ayudana', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Rekatadala Ayudana']);
@@ -2684,7 +2684,7 @@ class DewasaAyuController extends Controller
         // 193. Salah Wadi
         if ($wuku === 1 || $wuku === 2 || $wuku === 6 || $wuku === 10 || $wuku === 11 || $wuku === 16 || $wuku === 19 || $wuku === 20 || $wuku === 24 || $wuku === 25 || $wuku === 27 || $wuku === 30) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Salah Wadi', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Salah Wadi']);
@@ -2695,7 +2695,7 @@ class DewasaAyuController extends Controller
         // 194. Sampar Wangke
         if ($saptawara === 2 && $sadwara === 2) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Sampar Wangke', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Sampar Wangke']);
@@ -2705,7 +2705,7 @@ class DewasaAyuController extends Controller
         // 195. Sampi Gumarang Munggah
         if ($pancawara === 3 && $sadwara === 4) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Sampi Gumarang Munggah', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Sampi Gumarang Munggah']);
@@ -2715,7 +2715,7 @@ class DewasaAyuController extends Controller
         // 196. Sampi Gumarang Turun
         if ($pancawara === 3 && $sadwara === 1) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Sampi Gumarang Turun', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Sampi Gumarang Turun']);
@@ -2725,7 +2725,7 @@ class DewasaAyuController extends Controller
         // 197. Sarik Agung
         if ($saptawara === 4 && ($wuku === 25 || $wuku === 4 || $wuku === 11 || $wuku === 18)) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Sarik Agung', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Sarik Agung']);
@@ -2737,7 +2737,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 5) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 5)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Sarik Ketah', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Sarik Ketah']);
@@ -2747,7 +2747,7 @@ class DewasaAyuController extends Controller
         // 199. Sedana Tiba
         if ($saptawara === 5 && $pancawara === 4 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 7) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 7))) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Sedana Tiba', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Sedana Tiba']);
@@ -2764,7 +2764,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($sasihDay1 === 5 || $sasihDay2 === 5 || $sasihDay1 === 15 || $sasihDay2 === 15))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Sedana Yoga', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Sedana Yoga']);
@@ -2777,7 +2777,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 1 && $pancawara === 5)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Semut Sadulur', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Semut Sadulur']);
@@ -2790,7 +2790,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 5 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 10) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 10)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Siwa Sampurna', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Siwa Sampurna']);
@@ -2803,7 +2803,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 1 || $wuku === 25))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Sri Bagia', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Sri Bagia']);
@@ -2820,7 +2820,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($sasihDay1 === 5 || $sasihDay2 === 5 || $sasihDay1 === 15 || $sasihDay2 === 15))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Sedana Yoga', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Sedana Yoga']);
@@ -2833,7 +2833,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 1 && $pancawara === 5)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Semut Sadulur', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Semut Sadulur']);
@@ -2846,7 +2846,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 5 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 10) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 10)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Siwa Sampurna', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Siwa Sampurna']);
@@ -2859,7 +2859,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 1 || $wuku === 25))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Sri Bagia', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Sri Bagia']);
@@ -2869,7 +2869,7 @@ class DewasaAyuController extends Controller
         // 204. Sri Murti
         if ($sadwara === 5 && $astawara === 1) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Sri Murti', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Sri Murti']);
@@ -2879,7 +2879,7 @@ class DewasaAyuController extends Controller
         // 205. Sri Tumpuk
         if ($astawara === 1) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Sri Tumpuk', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Sri Tumpuk']);
@@ -2891,7 +2891,7 @@ class DewasaAyuController extends Controller
             ($triwara === 3 && $pancawara === 1 && $sadwara === 6)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Srigati', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Srigati']);
@@ -2901,7 +2901,7 @@ class DewasaAyuController extends Controller
         // 207. Srigati Jenek
         if ($pancawara === 5 && $sadwara === 6) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Srigati Jenek', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Srigati Jenek']);
@@ -2911,7 +2911,7 @@ class DewasaAyuController extends Controller
         // 208. Srigati Munggah
         if ($pancawara === 1 && $sadwara === 3) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Srigati Munggah', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Srigati Munggah']);
@@ -2921,7 +2921,7 @@ class DewasaAyuController extends Controller
         // 209. Srigati Turun
         if ($pancawara === 1 && $sadwara === 6) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Srigati Turun', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Srigati Turun']);
@@ -2944,7 +2944,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && (($pengalantaka === 'Penanggal' && $sasihDay1 === 5) || ($pengalantaka === 'Penanggal' && $sasihDay2 === 5)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Subhacara', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Subhacara']);
@@ -2957,7 +2957,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 5 && $pancawara === 2 && $wuku === 4)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Swarga Menga', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Swarga Menga']);
@@ -2972,7 +2972,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 6 && ($wuku === 12 || $wuku === 13 || $wuku === 14 || $wuku === 15 || $wuku === 16))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Taliwangke', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Taliwangke']);
@@ -2989,7 +2989,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && ($wuku === 16 || $wuku === 21 || $wuku === 23 || $wuku === 29))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Titibuwuk', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Titibuwuk']);
@@ -3004,7 +3004,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 6 && ($wuku === 19 || $wuku === 22))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Tunut Masih', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Tunut Masih']);
@@ -3018,7 +3018,7 @@ class DewasaAyuController extends Controller
             ($saptawara === 7 && $wuku === 24)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Tutur Mandi', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Tutur Mandi']);
@@ -3028,7 +3028,7 @@ class DewasaAyuController extends Controller
         // 216. Uncal Balung
         if ($wuku === 12 || $wuku === 13 || (($wuku === 14 && $saptawara === 1) || ($wuku === 16 && $saptawara < 5))) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Uncal Balung', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Uncal Balung']);
@@ -3041,7 +3041,7 @@ class DewasaAyuController extends Controller
                 ($pengalantaka === 'Penanggal' && ($sasihDay2 === 1 || $sasihDay2 === 8 || $sasihDay2 === 6 || $sasihDay2 === 10)))
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Upadana Merta', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Upadana Merta']);
@@ -3054,7 +3054,7 @@ class DewasaAyuController extends Controller
             ($no_sasih === 1)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Werdi Suka', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Werdi Suka']);
@@ -3067,7 +3067,7 @@ class DewasaAyuController extends Controller
             ($no_sasih === 1)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Wisesa', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Wisesa']);
@@ -3080,7 +3080,7 @@ class DewasaAyuController extends Controller
             ($no_sasih === 1)
         ) {
             if($makna){
-                $keterangan = DewasaAyu::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
+                $keterangan = AlaAyuningDewasa::where('nama', end($dewasaAyu))->pluck('keterangan')->first();
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Wredhi Guna', 'keterangan' => $keterangan]);
             } else {
                 array_push($dewasaAyu, ['dewasa_ayu' => 'Wredhi Guna']);

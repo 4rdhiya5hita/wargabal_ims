@@ -30,12 +30,12 @@
                     <tr>
                         <td class="px-2 landing-kiri fw-bold">Url Utama</td>
                         <td class="px-2 landing-kiri"> </td>
-                        <td class="px-2 landing-kiri">https://kalenderbali.xyz/api/searchDewasaAyuAPI?tanggal_mulai={tahun}-{bulan}-{tanggal}&tanggal_selesai={tahun}-{bulan}-{tanggal}</td>
+                        <td class="px-2 landing-kiri">https://kalenderbali.xyz/api/searchAlaAyuningDewasaAPI?tanggal_mulai={tahun}-{bulan}-{tanggal}&tanggal_selesai={tahun}-{bulan}-{tanggal}</td>
                     </tr>
                     <tr>
                         <td class="px-2 landing-kiri fw-bold">Contoh Penggunaan</td>
                         <td class="px-2 landing-kiri"> </td>
-                        <td class="px-2 landing-kiri">https://kalenderbali.xyz/api/searchDewasaAyuAPI?tanggal_mulai=2023-11-01&tanggal_selesai=2023-11-30</td>
+                        <td class="px-2 landing-kiri">https://kalenderbali.xyz/api/searchAlaAyuningDewasaAPI?tanggal_mulai=2023-11-01&tanggal_selesai=2023-11-30</td>
                     </tr>
                     <tr>
                         <td class="px-2 landing-kiri fw-bold">Parameter tambahan</td>
@@ -57,7 +57,7 @@
                     <tr>
                         <td class="px-2 landing-kiri fw-bold">Url</td>
                         <td class="px-2 landing-kiri"> </td>
-                        <td class="px-2 landing-kiri fw-bold">http://localhost:8000/api/searchDewasaAyuAPI?tanggal_mulai=2023-11-01&tanggal_selesai=2023-11-02&keterangan</td>
+                        <td class="px-2 landing-kiri fw-bold">http://localhost:8000/api/searchAlaAyuningDewasaAPI?tanggal_mulai=2023-11-01&tanggal_selesai=2023-11-02&keterangan</td>
                     </tr>
                     <tr>
                         <td class="px-2 landing-kiri fw-bold">Parameter</td>
@@ -192,7 +192,7 @@
             ]
         }
     ],
-    "waktu_eksekusi": "0.060086"
+    "execution_time": "0.060086"
 }
                             </pre>
                         </td>

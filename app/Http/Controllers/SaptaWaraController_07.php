@@ -53,7 +53,7 @@ public function getSaptawara($tanggal)
     }
 
     public function getNamaSaptaWara($i)
-    {        
+    {
         if ($i == 8 or $i == 1) {
             $nama = 'Redite';
         } elseif ($i == 2) {
@@ -61,9 +61,9 @@ public function getSaptawara($tanggal)
         } elseif ($i == 3) {
             $nama = 'Anggara';
         } elseif ($i == 4) {
-            $nama = 'Budha';
+            $nama = 'Buda';
         } elseif ($i == 5) {
-            $nama = 'Wrespati';
+            $nama = 'Wraspati';
         } elseif ($i == 6) {
             $nama = 'Sukra';
         } elseif ($i == 7) {

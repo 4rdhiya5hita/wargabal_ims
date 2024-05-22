@@ -11,9 +11,9 @@ class PurnamaTilemController extends Controller
         $purnama_tilem = '-';
 
         if (($sasihDay1 === 15 && $pengalantaka === 'Penanggal') || ($sasihDay2 === 15 && $pengalantaka === 'Penanggal')) {
-            $purnama_tilem = 'Purnama';
+            $purnama_tilem = 0;
         } elseif (($sasihDay1 === 15 && $pengalantaka === 'Pangelong') || ($sasihDay2 === 15 && $pengalantaka === 'Pangelong')) {
-            $purnama_tilem = 'Tilem';
+            $purnama_tilem = 1;
         }
 
         return $purnama_tilem;

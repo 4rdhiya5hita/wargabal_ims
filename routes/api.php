@@ -1,5 +1,6 @@
 <?php
 
+namespace App\Http\Controllers\API;
 use App\Http\Controllers\api\AcaraAPI;
 use App\Http\Controllers\API\AutentikasiAPI;
 use App\Http\Controllers\API\CalendarAPI;

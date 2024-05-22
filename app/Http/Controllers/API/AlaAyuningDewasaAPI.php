@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\AstaWaraController_08;
 use App\Http\Controllers\CaturWaraController_04;

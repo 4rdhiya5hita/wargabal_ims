@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Models\Wuku;
 use App\Models\Zodiak;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class RamalanSifatAPI extends Controller
 {
@@ -53,7 +54,11 @@ class RamalanSifatAPI extends Controller
             ], 400);
         }
     
-        $ramalan_sifat = $this->getRamalanSifat($tanggal_lahir);
+        // $ramalan_sifat = $this->getRamalanSifat($tanggal_lahir);
+        // cache
+        $ramalan_sifat = Cache::remember('ramalan_sifat_' . $tanggal_lahir, now()->addDays(31), function () use ($tanggal_lahir) {
+            return $this->getRamalanSifat($tanggal_lahir);
+        });
 
         $end = microtime(true);
         $executionTime = $end - $start;

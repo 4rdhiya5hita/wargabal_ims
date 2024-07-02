@@ -16,6 +16,7 @@ use App\Models\Pura;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class PiodalanAPI extends Controller
 {
@@ -44,34 +45,36 @@ class PiodalanAPI extends Controller
         }
         list($tanggal_mulai, $tanggal_selesai) = $response;
 
-        $piodalan = [];
-        $hitung = 0;
+        $piodalan = Cache::remember('piodalan_' . $tanggal_mulai . '_' . $tanggal_selesai, now()->addDays(31), function () use ($tanggal_mulai, $tanggal_selesai) {
+            $piodalan_cache = [];
 
-        while ($tanggal_mulai <= $tanggal_selesai) {
-            $hasil_piodalan = $this->getPiodalan($tanggal_mulai->toDateString());
+            while ($tanggal_mulai <= $tanggal_selesai) {
+                $hasil_piodalan = $this->getPiodalan($tanggal_mulai->toDateString());
 
-            // Periksa apakah piodalan berisi informasi yang valid
-            if ($hasil_piodalan[0] != '-') {
-                $piodalan[] = [
-                    'tanggal' => $tanggal_mulai->toDateString(),
-                    'hari' => $hasil_piodalan[0]['hari'],
-                    'hari_raya' => $hasil_piodalan[0]['hari_raya'],
-                    'sasih' => $hasil_piodalan[0]['sasih'],
-                    'pura' => $hasil_piodalan[0]['pura'],
-                ];
-            } else {
-                $piodalan[] = [
-                    'tanggal' => $tanggal_mulai->toDateString(),
-                    'hari' => '-',
-                    'hari_raya' => '-',
-                    'sasih' => '-',
-                    'pura' => '-',
-                ];
+                // Periksa apakah piodalan berisi informasi yang valid
+                if ($hasil_piodalan[0] != '-') {
+                    $piodalan_cache[] = [
+                        'tanggal' => $tanggal_mulai->toDateString(),
+                        'hari' => $hasil_piodalan[0]['hari'],
+                        'hari_raya' => $hasil_piodalan[0]['hari_raya'],
+                        'sasih' => $hasil_piodalan[0]['sasih'],
+                        'pura' => $hasil_piodalan[0]['pura'],
+                    ];
+                } else {
+                    $piodalan_cache[] = [
+                        'tanggal' => $tanggal_mulai->toDateString(),
+                        'hari' => '-',
+                        'hari_raya' => '-',
+                        'sasih' => '-',
+                        'pura' => '-',
+                    ];
+                }
+
+                $tanggal_mulai->addDay();
             }
 
-            $tanggal_mulai->addDay();
-        }
-
+            return $piodalan_cache;
+        });
 
         $end = microtime(true);
         $executionTime = $end - $start;

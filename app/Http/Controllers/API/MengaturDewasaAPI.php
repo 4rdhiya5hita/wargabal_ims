@@ -23,6 +23,7 @@ use App\Models\DewasaAyu;
 use App\Models\TransactionDetail;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class MengaturDewasaAPI extends Controller
 {
@@ -54,7 +55,6 @@ class MengaturDewasaAPI extends Controller
 
 
         $kriteria = $request->input('kriteria');
-        $makna = $request->has('beserta_keterangan');
 
         // preg_match_all('/\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $kriteria, $matches);
         // $extractedVariables = $matches[0];
@@ -67,15 +67,20 @@ class MengaturDewasaAPI extends Controller
 
         // $variables = array_combine($extractedVariables, $extractedValues);
         $makna = $request->has('beserta_keterangan');
-        $ala_ayuning_dewasa = [];
 
-        while ($tanggal_mulai <= $tanggal_selesai) {
-            $ala_ayuning_dewasa[] = [
-                'tanggal' => $tanggal_mulai->toDateString(),
-                'ala_ayuning_dewasa' => $this->getAlaAyuningDewasa($tanggal_mulai->toDateString(), $makna, $kriteria),
-            ];
-            $tanggal_mulai->addDay();
-        }
+        $ala_ayuning_dewasa = Cache::remember('ala_ayuning_dewasa_' . $tanggal_mulai . '_' . $tanggal_selesai . '_' . $kriteria, now()->addDays(31), function () use ($tanggal_mulai, $tanggal_selesai, $makna, $kriteria) {
+            $ala_ayuning_dewasa_cache = [];
+
+            while ($tanggal_mulai <= $tanggal_selesai) {
+                $ala_ayuning_dewasa_cache[] = [
+                    'tanggal' => $tanggal_mulai->toDateString(),
+                    'ala_ayuning_dewasa' => $this->getAlaAyuningDewasa($tanggal_mulai->toDateString(), $makna, $kriteria),
+                ];
+                $tanggal_mulai->addDay();
+            }
+
+            return $ala_ayuning_dewasa_cache;
+        });
 
         $end = microtime(true);
         $executionTime = $end - $start;

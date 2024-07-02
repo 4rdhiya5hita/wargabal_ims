@@ -22,6 +22,7 @@ use App\Models\DewasaAyu;
 use App\Models\TransactionDetail;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class WarigaPersonalAPI extends Controller
 {
@@ -73,28 +74,36 @@ class WarigaPersonalAPI extends Controller
             ], 400);
         }
 
-        $tanggal_lahir_urip = $this->getTanggalLahirUrip($tanggal_lahir);
+        // $tanggal_lahir_urip = $this->getTanggalLahirUrip($tanggal_lahir);
+        // cache
+        $tanggal_lahir_urip = Cache::remember('tanggal_lahir_urip_' . $tanggal_lahir, now()->addDays(31), function () use ($tanggal_lahir) {
+            return $this->getTanggalLahirUrip($tanggal_lahir);
+        });
 
-        $wariga_personal = [];
-        while ($tanggal_mulai <= $tanggal_selesai) {
-            $wariga = $this->getWarigaPersonal($tanggal_mulai->toDateString(), $tanggal_lahir_urip);
-            if ($wariga == 'Guru') {
-                $keterangan = 'Guru (hari baik) diwakili oleh angka 1';
-            } elseif ($wariga == 'Ratu') {
-                $keterangan = 'Ratu (hari baik) diwakili oleh angka 2';
-            } elseif ($wariga == 'Lara') {
-                $keterangan = 'Lara (hari buruk) diwakili oleh angka 3';
-            } elseif ($wariga == 'Pati') {
-                $keterangan = 'Pati (hari buruk) diwakili oleh angka 4';
+        $wariga_personal = Cache::remember('wariga_personal_' . $tanggal_lahir . '_' . $tanggal_mulai . '_' . $tanggal_selesai, now()->addDays(31), function () use ($tanggal_mulai, $tanggal_selesai, $tanggal_lahir_urip) {
+            $wariga_personal_cache = [];
+            while ($tanggal_mulai <= $tanggal_selesai) {
+                $wariga = $this->getWarigaPersonal($tanggal_mulai->toDateString(), $tanggal_lahir_urip);
+                if ($wariga == 'Guru') {
+                    $keterangan = 'Guru (hari baik) diwakili oleh angka 1';
+                } elseif ($wariga == 'Ratu') {
+                    $keterangan = 'Ratu (hari baik) diwakili oleh angka 2';
+                } elseif ($wariga == 'Lara') {
+                    $keterangan = 'Lara (hari buruk) diwakili oleh angka 3';
+                } elseif ($wariga == 'Pati') {
+                    $keterangan = 'Pati (hari buruk) diwakili oleh angka 4';
+                }
+                
+                $wariga_personal_cache[] = [
+                    'tanggal' => $tanggal_mulai->toDateString(),
+                    'wariga' => $wariga,
+                    'keterangan' => $keterangan
+                ];
+                $tanggal_mulai->addDay();
             }
-            
-            $wariga_personal[] = [
-                'tanggal' => $tanggal_mulai->toDateString(),
-                'wariga' => $wariga,
-                'keterangan' => $keterangan
-            ];
-            $tanggal_mulai->addDay();
-        }
+
+            return $wariga_personal_cache;
+        });
 
         $hasil_wariga_personal = [
             'tanggal_lahir' => $tanggal_lahir,

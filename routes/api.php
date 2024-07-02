@@ -6,6 +6,7 @@ use App\Http\Controllers\API\AlaAyuningDewasaAPI;
 use App\Http\Controllers\API\HariRayaAPI;
 use App\Http\Controllers\API\KalenderBaliAPI;
 use App\Http\Controllers\API\KeteranganAPI;
+use App\Http\Controllers\API\LogRequestAPI;
 use App\Http\Controllers\API\OtonanAPI;
 use App\Http\Controllers\API\PiodalanAPI;
 use App\Http\Controllers\API\searchHariRayaAPI;
@@ -41,6 +42,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     
     Route::get('/logout', [AutentikasiAPI::class, 'logout']);
 });
+Route::get('/logRequestAPI', [LogRequestAPI::class, 'lihatLog']);
+Route::get('/logRequestAPIByUser', [LogRequestAPI::class, 'lihatLogByUser']);
+
 Route::post('/buatInvoice', [PaymentController::class, 'create']);
 Route::post('/buatWebhook', [PaymentController::class, 'webhook']);
 
@@ -68,6 +72,14 @@ Route::post('/hapusAcaraDetail', [AcaraAPI::class, 'hapusAcaraDetail']);
 Route::get('/lihatPura', [AcaraAPI::class, 'lihatPura']);
 Route::get('/keteranganHariRaya', [KeteranganAPI::class, 'keteranganHariRaya']);
 Route::get('/keteranganAlaAyuningDewasa', [KeteranganAPI::class, 'keteranganAlaAyuningDewasa']);
+Route::get('/keteranganEkaJalaSri', [KeteranganAPI::class, 'keteranganEkaJalaSri']);
+Route::get('/keteranganPancaSudha', [KeteranganAPI::class, 'keteranganPancaSudha']);
+Route::get('/keteranganPangarasan', [KeteranganAPI::class, 'keteranganPangarasan']);
+Route::get('/keteranganPratiti', [KeteranganAPI::class, 'keteranganPratiti']);
+Route::get('/keteranganZodiak', [KeteranganAPI::class, 'keteranganZodiak']);
+Route::get('/keteranganWuku', [KeteranganAPI::class, 'keteranganWuku']);
+Route::get('/keteranganPancawara', [KeteranganAPI::class, 'keteranganPancawara']);
+Route::get('/keteranganSaptawara', [KeteranganAPI::class, 'keteranganSaptawara']);
 
 Route::get('/mengaturDewasa', [MengaturDewasaAPI::class, 'mengaturDewasa']);
 Route::get('/ramalanSifat', [RamalanSifatAPI::class, 'ramalanSifat']);

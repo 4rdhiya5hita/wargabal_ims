@@ -22,6 +22,7 @@ use App\Models\AlaAyuningDewasa;
 use App\Models\TransactionDetail;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class AlaAyuningDewasaAPI extends Controller
 {
@@ -51,16 +52,21 @@ class AlaAyuningDewasaAPI extends Controller
         list($tanggal_mulai, $tanggal_selesai) = $response;
 
         $makna = $request->has('beserta_keterangan');
-        $ala_ayuning_dewasa = [];
 
-        while ($tanggal_mulai <= $tanggal_selesai) {
-            $ala_ayuning_dewasa[] = [
-                'tanggal' => $tanggal_mulai->toDateString(),
-                'ala_ayuning_dewasa' => $this->getAlaAyuningDewasa($tanggal_mulai->toDateString(), $makna),
-            ];
-            $tanggal_mulai->addDay();
-        }
+        $ala_ayuning_dewasa = Cache::remember('ala_ayuning_dewasa_' . $tanggal_mulai . '_' . $tanggal_selesai, now()->addDays(31), function () use ($tanggal_mulai, $tanggal_selesai, $makna) {
+            $ala_ayuning_dewasa_cache = [];
 
+            while ($tanggal_mulai <= $tanggal_selesai) {
+                $ala_ayuning_dewasa_cache[] = [
+                    'tanggal' => $tanggal_mulai->toDateString(),
+                    'ala_ayuning_dewasa' => $this->getAlaAyuningDewasa($tanggal_mulai->toDateString(), $makna),
+                ];
+                $tanggal_mulai->addDay();
+            }
+
+            return $ala_ayuning_dewasa_cache;
+        });
+        
         $end = microtime(true);
         $executionTime = $end - $start;
         $executionTime = number_format($executionTime, 6);

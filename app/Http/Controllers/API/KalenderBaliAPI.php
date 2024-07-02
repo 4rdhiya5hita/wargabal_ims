@@ -30,11 +30,20 @@ use App\Http\Controllers\WatekMadyaController;
 use App\Http\Controllers\WukuController;
 use App\Http\Controllers\ZodiakController;
 use App\Models\User;
+use App\Services\ApiService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class KalenderBaliAPI extends Controller
 {
+    protected $apiService;
+
+    public function __construct(ApiService $apiService)
+    {
+        $this->apiService = $apiService;
+    }
+
     public function cariElemenKalenderBali(Request $request)
     {
         $api_key = $request->header('x-api-key');
@@ -92,18 +101,23 @@ class KalenderBaliAPI extends Controller
             }
         }
 
-        $kalender = [];
+        // cache data
+        $kalender = Cache::remember('kalender_' . $tanggal_mulai . '_' . $tanggal_selesai , now()->addDays(31), function () use ($tanggal_mulai, $tanggal_selesai, $filter) {
+            $kalender_cache = [];
 
-        while ($tanggal_mulai <= $tanggal_selesai) {
-            $kalender[] = [
-                'tanggal' => $tanggal_mulai->toDateString(),
-                'kalender' => $this->getHariRaya(
-                    $tanggal_mulai->toDateString(),
-                    $filter
-                ),
-            ];
-            $tanggal_mulai->addDay();
-        }
+            while ($tanggal_mulai <= $tanggal_selesai) {
+                $kalender_cache[] = [
+                    'tanggal' => $tanggal_mulai->toDateString(),
+                    'kalender' => $this->getHariRaya(
+                        $tanggal_mulai->toDateString(),
+                        $filter
+                    ),
+                ];
+                $tanggal_mulai->addDay();
+            }
+
+            return $kalender_cache;
+        });
 
         $end = microtime(true);
         $executionTime = $end - $start;

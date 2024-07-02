@@ -15,6 +15,7 @@ use App\Models\HariRaya;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class HariRayaAPI extends Controller
 {
@@ -44,18 +45,23 @@ class HariRayaAPI extends Controller
         list($tanggal_mulai, $tanggal_selesai) = $response;
 
         $beserta_keterangan = $request->has('beserta_keterangan');
-        $hari_raya = [];
 
-        while ($tanggal_mulai <= $tanggal_selesai) {
-            $hari_raya[] = [
-                'tanggal' => $tanggal_mulai->toDateString(),
-                'hari_raya' => $this->getHariRaya(
-                    $tanggal_mulai->toDateString(),
-                    $beserta_keterangan
-                ),
-            ];
-            $tanggal_mulai->addDay();
-        }
+        $hari_raya = Cache::remember('hari_raya_' . $tanggal_mulai . '_' . $tanggal_selesai , now()->addDays(31), function () use ($tanggal_mulai, $tanggal_selesai, $beserta_keterangan) {
+            $hari_raya_cache = [];
+
+            while ($tanggal_mulai <= $tanggal_selesai) {
+                $hari_raya_cache[] = [
+                    'tanggal' => $tanggal_mulai->toDateString(),
+                    'hari_raya' => $this->getHariRaya(
+                        $tanggal_mulai->toDateString(),
+                        $beserta_keterangan
+                    ),
+                ];
+                $tanggal_mulai->addDay();
+            }
+
+            return $hari_raya_cache;
+        });
 
         $end = microtime(true);
         $executionTime = $end - $start;

@@ -29,7 +29,7 @@ class SangaWaraController_09 extends Controller
         if ($i === 1) {
             $nama = 'Dangu';
         } elseif ($i === 2) {
-            $nama = 'Jagur';
+            $nama = 'Jangur';
         } elseif ($i === 3) {
             $nama = 'Gigis';
         } elseif ($i === 4) {

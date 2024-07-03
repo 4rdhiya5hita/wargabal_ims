@@ -31,7 +31,7 @@ class SadWaraController_06 extends Controller
         } elseif ($i == 5) {
             $nama = 'Was';
         } elseif ($i == 6) {
-            $nama = 'Mahulu';
+            $nama = 'Maulu';
         }
 
         return $nama;

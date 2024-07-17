@@ -91,7 +91,7 @@ class searchHariRayaAPI extends Controller
             $filterArray = array_unique($filterArray);
 
             if ($filterArray) {
-                $allowed_values = ['wuku', 'ingkel', 'jejepan', 'lintang', 'pancasudha', 'pangarasan', 'rakam', 'watek_madya', 'watek_alit', 'neptu', 'ekajalarsi', 'zodiak', 'pratiti'];
+                $allowed_values = ['wuku', 'ingkel', 'jejepan', 'lintang', 'panca_sudha', 'pangarasan', 'rakam', 'watek_madya', 'watek_alit', 'neptu', 'ekajalarsi', 'zodiak', 'pratiti'];
             
                 $filter = array_unique($filterArray);
                 // cek apakah terdapat nilai filter yang sama dengan daftar nilai yang diperbolehkan
@@ -111,7 +111,7 @@ class searchHariRayaAPI extends Controller
         // $get_ingkel = $request->input('ingkel');
         // $get_jejepan = $request->input('jejepan');
         // $get_lintang = $request->input('lintang');
-        // $get_pancasudha = $request->input('pancasudha');
+        // $get_panca_sudha = $request->input('panca_sudha');
         // $get_pangarasan = $request->input('pangarasan');
         // $get_rakam = $request->input('rakam');
         // $get_watek_madya = $request->input('watek_madya');
@@ -136,7 +136,7 @@ class searchHariRayaAPI extends Controller
         // $get_ingkel = '';
         // $get_jejepan = '';
         // $get_lintang = '';
-        // $get_pancasudha = '';
+        // $get_panca_sudha = '';
         // $get_pangarasan = '';
         // $get_rakam = '';
         // $get_watek_madya = '';
@@ -425,7 +425,7 @@ class searchHariRayaAPI extends Controller
                 $metode = array_values($filter);
                 // dd($metode);
             } else {
-                $metode = ['wuku', 'ingkel', 'jejepan', 'lintang', 'pancasudha', 'pangarasan', 'rakam', 'watek_madya', 'watek_alit', 'neptu', 'ekajalarsi', 'zodiak', 'pratiti', $hari];
+                $metode = ['wuku', 'ingkel', 'jejepan', 'lintang', 'panca_sudha', 'pangarasan', 'rakam', 'watek_madya', 'watek_alit', 'neptu', 'ekajalarsi', 'zodiak', 'pratiti', $hari];
             }
             
             $filteredArray = array_filter($metode);
@@ -442,7 +442,7 @@ class searchHariRayaAPI extends Controller
                 $ingkelController = new IngkelController();
                 $jejepanController = new JejepanController();
                 $lintangController = new LintangController();
-                $pancasudhaController = new PancaSudhaController();
+                $panca_sudhaController = new PancaSudhaController();
                 $pangarasanController = new PangarasanController();
                 $rakamController = new RakamController();
                 $watek_madyaController = new WatekMadyaController();
@@ -469,9 +469,9 @@ class searchHariRayaAPI extends Controller
                         $lintang = $lintangController->Lintang($tanggal, $refTanggal);
                         array_push($kombinasi_array, ['lintang' => $lintang]);
                     }
-                    if ($value == 'pancasudha') {
-                        $pancasudha = $pancasudhaController->Pancasudha($pancawara, $saptawara);
-                        array_push($kombinasi_array, ['pancasudha' => $pancasudha]);
+                    if ($value == 'panca_sudha') {
+                        $panca_sudha = $panca_sudhaController->PancaSudha($pancawara, $saptawara);
+                        array_push($kombinasi_array, ['panca_sudha' => $panca_sudha]);
                     }
                     if ($value == 'pangarasan') {
                         $pangarasan = $pangarasanController->Pangarasan($urip_pancawara, $urip_saptawara);
@@ -528,7 +528,7 @@ class searchHariRayaAPI extends Controller
                     return array_merge($carry, $item);
                 }, []);
                 // dd($kalenderLengkap);
-                // array_push($kalenderLengkap, [$ingkel, $jejepan, $lintang, $pancasudha, $pangarasan, $rakam, $watek_madya, $watek_alit, $neptu, $ekajalarsi, $zodiak, $pratiti]);
+                // array_push($kalenderLengkap, [$ingkel, $jejepan, $lintang, $panca_sudha, $pangarasan, $rakam, $watek_madya, $watek_alit, $neptu, $ekajalarsi, $zodiak, $pratiti]);
             }
         }
 

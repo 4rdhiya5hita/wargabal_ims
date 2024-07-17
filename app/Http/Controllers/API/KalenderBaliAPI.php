@@ -86,7 +86,7 @@ class KalenderBaliAPI extends Controller
             $filterArray = array_unique($filterArray);
             
             if ($filterArray) {
-                $allowed_values = ['wewaran', 'wuku', 'ingkel', 'jejepan', 'lintang', 'pancasudha', 'pangarasan', 'rakam', 'watek_madya', 'watek_alit', 'neptu', 'ekajalarsi', 'zodiak', 'pratiti'];
+                $allowed_values = ['wewaran', 'wuku', 'ingkel', 'jejepan', 'lintang', 'panca_sudha', 'pangarasan', 'rakam', 'watek_madya', 'watek_alit', 'neptu', 'ekajalarsi', 'zodiak', 'pratiti'];
 
                 $filter = array_unique($filterArray);
                 // cek apakah terdapat nilai filter yang sama dengan daftar nilai yang diperbolehkan
@@ -103,7 +103,7 @@ class KalenderBaliAPI extends Controller
 
         // cache data
         $kalender = Cache::remember('kalender_' . $tanggal_mulai . '_' . $tanggal_selesai , now()->addDays(31), function () use ($tanggal_mulai, $tanggal_selesai, $filter) {
-            $kalender_cache = [];
+            $kalender_cache = [];            
 
             while ($tanggal_mulai <= $tanggal_selesai) {
                 $kalender_cache[] = [
@@ -253,7 +253,7 @@ class KalenderBaliAPI extends Controller
         if ($filter) {
             $metode = array_values($filter);
         } else {
-            $metode = ['wewaran', 'wuku', 'ingkel', 'jejepan', 'lintang', 'pancasudha', 'pangarasan', 'rakam', 'watek_madya', 'watek_alit', 'neptu', 'ekajalarsi', 'zodiak', 'pratiti'];
+            $metode = ['wewaran', 'wuku', 'ingkel', 'jejepan', 'lintang', 'panca_sudha', 'pangarasan', 'rakam', 'watek_madya', 'watek_alit', 'neptu', 'ekajalarsi', 'zodiak', 'pratiti'];
         }
 
         $filteredArray = array_filter($metode);
@@ -270,7 +270,7 @@ class KalenderBaliAPI extends Controller
             $ingkelController = new IngkelController();
             $jejepanController = new JejepanController();
             $lintangController = new LintangController();
-            $pancasudhaController = new PancaSudhaController();
+            $panca_sudhaController = new PancaSudhaController();
             $pangarasanController = new PangarasanController();
             $rakamController = new RakamController();
             $watek_madyaController = new WatekMadyaController();
@@ -315,9 +315,9 @@ class KalenderBaliAPI extends Controller
                     $lintang = $lintangController->Lintang($tanggal, $refTanggal);
                     array_push($kombinasi_array, ['lintang' => $lintang]);
                 }
-                if ($value == 'pancasudha') {
-                    $pancasudha = $pancasudhaController->Pancasudha($pancawara, $saptawara);
-                    array_push($kombinasi_array, ['pancasudha' => $pancasudha]);
+                if ($value == 'panca_sudha') {
+                    $panca_sudha = $panca_sudhaController->PancaSudha($pancawara, $saptawara);
+                    array_push($kombinasi_array, ['panca_sudha' => $panca_sudha]);
                 }
                 if ($value == 'pangarasan') {
                     $pangarasan = $pangarasanController->Pangarasan($urip_pancawara, $urip_saptawara);

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEkaJalaRsisTable extends Migration
+class CreateListKeterangansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateEkaJalaRsisTable extends Migration
      */
     public function up()
     {
-        Schema::create('eka_jala_rsis', function (Blueprint $table) {
+        Schema::create('list_keterangans', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ class CreateEkaJalaRsisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('eka_jala_rsis');
+        Schema::dropIfExists('list_keterangans');
     }
 }

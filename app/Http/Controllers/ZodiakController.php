@@ -14,75 +14,75 @@ class ZodiakController extends Controller
 
         if ($bln == 1) {
             if ($tgl <= 20) {
-                $zodiak = 'CAPRICORN';
+                $zodiak = 'Capricorn';
             } else {
-                $zodiak = 'AQUARIUS';
+                $zodiak = 'Aquarius';
             }
         } elseif ($bln == 2) {
             if ($tgl <= 19) {
-                $zodiak = 'AQUARIUS';
+                $zodiak = 'Aquarius';
             } else {
-                $zodiak = 'PISCES';
+                $zodiak = 'Pisces';
             }
         } elseif ($bln == 3) {
             if ($tgl <= 20) {
-                $zodiak = 'PISCES';
+                $zodiak = 'Pisces';
             } else {
-                $zodiak = 'ARIES';
+                $zodiak = 'Aries';
             }
         } elseif ($bln == 4) {
             if ($tgl <= 19) {
-                $zodiak = 'ARIES';
+                $zodiak = 'Aries';
             } else {
-                $zodiak = 'TAURUS';
+                $zodiak = 'Taurus';
             }
         } elseif ($bln == 5) {
             if ($tgl <= 20) {
-                $zodiak = 'TAURUS';
+                $zodiak = 'Taurus';
             } else {
-                $zodiak = 'GEMINI';
+                $zodiak = 'Gemini';
             }
         } elseif ($bln == 6) {
             if ($tgl <= 20) {
-                $zodiak = 'GEMINI';
+                $zodiak = 'Gemini';
             } else {
-                $zodiak = 'CANCER';
+                $zodiak = 'Cancer';
             }
         } elseif ($bln == 7) {
             if ($tgl <= 21) {
-                $zodiak = 'CANCER';
+                $zodiak = 'Cancer';
             } else {
-                $zodiak = 'LEO';
+                $zodiak = 'Leo';
             }
         } elseif ($bln == 8) {
             if ($tgl <= 21) {
-                $zodiak = 'LEO';
+                $zodiak = 'Leo';
             } else {
-                $zodiak = 'VIRGO';
+                $zodiak = 'Virgo';
             }
         } elseif ($bln == 9) {
             if ($tgl <= 21) {
-                $zodiak = 'VIRGO';
+                $zodiak = 'Virgo';
             } else {
-                $zodiak = 'LIBRA';
+                $zodiak = 'Libra';
             }
         } elseif ($bln == 10) {
             if ($tgl <= 21) {
-                $zodiak = 'LIBRA';
+                $zodiak = 'Libra';
             } else {
-                $zodiak = 'SCORPIO';
+                $zodiak = 'Scorpio';
             }
         } elseif ($bln == 11) {
             if ($tgl <= 20) {
-                $zodiak = 'SCORPIO';
+                $zodiak = 'Scorpio';
             } else {
-                $zodiak = 'SAGITARIUS';
+                $zodiak = 'Sagitarius';
             }
         } elseif ($bln == 12) {
             if ($tgl <= 21) {
-                $zodiak = 'SAGITARIUS';
+                $zodiak = 'Sagitarius';
             } else {
-                $zodiak = 'CAPRICORN';
+                $zodiak = 'Capricorn';
             }
         }
 

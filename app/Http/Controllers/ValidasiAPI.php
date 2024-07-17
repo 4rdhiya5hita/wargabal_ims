@@ -53,7 +53,6 @@ class ValidasiAPI extends Controller
                         $apiStatus->hit_user = $apiStatus->hit_user + 1;
                         $apiStatus->save();
                     }
-
                 }
             }
         }

@@ -109,8 +109,8 @@ class ProgressHasil extends Controller
         if ($request->has('lintang')) {
             $parameter[] = 'lintang=lintang';
         }
-        if ($request->has('pancasudha')) {
-            $parameter[] = 'pancasudha=pancasudha';
+        if ($request->has('panca_sudha')) {
+            $parameter[] = 'panca_sudha=panca_sudha';
         }
         if ($request->has('pangarasan')) {
             $parameter[] = 'pangarasan=pangarasan';
@@ -256,7 +256,7 @@ class ProgressHasil extends Controller
         // $ingkel = $request->has('ingkel');
         // $jejepan = $request->has('jejepan');
         // $lintang = $request->has('lintang');
-        // $pancasudha = $request->has('pancasudha');
+        // $panca_sudha = $request->has('panca_sudha');
         // $pangarasan = $request->has('pangarasan');
         // $rakam = $request->has('rakam');
         // $watek_madya = $request->has('watek_madya');
@@ -274,8 +274,8 @@ class ProgressHasil extends Controller
         //     $url = 'https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchKalenderAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai . '&jejepan=jejepan';
         // } elseif ($lintang) {
         //     $url = 'https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchKalenderAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai . '&lintang=lintang';
-        // } elseif ($pancasudha) {
-        //     $url = 'https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchKalenderAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai . '&pancasudha=pancasudha';
+        // } elseif ($panca_sudha) {
+        //     $url = 'https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchKalenderAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai . '&panca_sudha=panca_sudha';
         // } elseif ($pangarasan) {
         //     $url = 'https://wargabal-ims-4065061e96e3.herokuapp.com/api/searchKalenderAPI' . '?tanggal_mulai=' . $tanggal_mulai . '&tanggal_selesai=' . $tanggal_selesai . '&pangarasan=pangarasan';
         // } elseif ($rakam) {

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class PancaSudhaController extends Controller
 {
-    public function Pancasudha($pancawara, $saptawara)
+    public function PancaSudha($pancawara, $saptawara)
     {
         $h_pancasuda = '';
 

@@ -12,483 +12,483 @@ class EkaJalaRsiController extends Controller
 
         if ($no_wuku == 1) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'SUKA PINANGGIH';
+                $ekajalarsi = 'Suka Pinanggih';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'BUAT SUKA';
+                $ekajalarsi = 'Buat Suka';
         } elseif ($saptawara == 3) {
-                $ekajalarsi = 'MANGGIH SUKA';
+                $ekajalarsi = 'Manggih Suka';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'BUAT SUKA';
+                $ekajalarsi = 'Buat Suka';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'SUKA PINANGGIH';
+                $ekajalarsi = 'Suka Pinanggih';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'SUKA PINANGGIH';
+                $ekajalarsi = 'Suka Pinanggih';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'MANGGIH SUKA';
+                $ekajalarsi = 'Manggih Suka';
             }
         } elseif ($no_wuku == 2) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'KAMARANAN';
+                $ekajalarsi = 'Kamaranan';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'BUAT SUKA';
+                $ekajalarsi = 'Buat Suka';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'KINASIHANIN JANA';
+                $ekajalarsi = 'Kinasihanin Jana';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'WERDHI PUTRA';
+                $ekajalarsi = 'Werdhi Putra';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'SUKA RAHAYU';
+                $ekajalarsi = 'Suka Rahayu';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'SUKA PINANGGIH';
+                $ekajalarsi = 'Suka Pinanggih';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'SIDHA KASOBAGIAN';
+                $ekajalarsi = 'Sidha Kasobagian';
             }
         } elseif ($no_wuku == 3) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'KINASIHANIN JANA';
+                $ekajalarsi = 'Kinasihanin Jana';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'BUAT SUKA';
+                $ekajalarsi = 'Buat Suka';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'KINASIHANIN JANA';
+                $ekajalarsi = 'Kinasihanin Jana';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'RAHAYU';
+                $ekajalarsi = 'Rahayu';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'BUAT SEBET';
+                $ekajalarsi = 'Buat Sebet';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'BUAT ASTAWA';
+                $ekajalarsi = 'Buat Astawa';
             }
         } elseif ($no_wuku == 4) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'LANGGENG KAYOHANAN';
+                $ekajalarsi = 'Langgeng Kayohanan';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'WERDHI PUTRA';
+                $ekajalarsi = 'Werdhi Putra';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'MANGGIH SUKA';
+                $ekajalarsi = 'Manggih Suka';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'SIDHA KASOBAGIAN';
+                $ekajalarsi = 'Sidha Kasobagian';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'SUKA PINANGGIH';
+                $ekajalarsi = 'Suka Pinanggih';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'BAGNA MAPASAH';
+                $ekajalarsi = 'Bagna Mapasah';
             }
         } elseif ($no_wuku == 5) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'KAMERTAAN';
+                $ekajalarsi = 'Kamertaan';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'BUAT SEBET';
+                $ekajalarsi = 'Buat Sebet';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'LEWIH BAGIA';
+                $ekajalarsi = 'Lewih Bagia';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'SUKA PINANGGIH';
+                $ekajalarsi = 'Suka Pinanggih';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'BUAT SUKA';
+                $ekajalarsi = 'Buat Suka';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'BUAT SUKA';
+                $ekajalarsi = 'Buat Suka';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'SUKA PINANGGIH';
+                $ekajalarsi = 'Suka Pinanggih';
             }
         } elseif ($no_wuku == 6) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'MANGGIH SUKA';
+                $ekajalarsi = 'Manggih Suka';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'BUAT MERANG';
+                $ekajalarsi = 'Buat Merang';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'SUKA PINANGGIH';
+                $ekajalarsi = 'Suka Pinanggih';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'BUAT ASTAWA';
+                $ekajalarsi = 'Buat Astawa';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'BUAT ASTAWA';
+                $ekajalarsi = 'Buat Astawa';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'BUAT ASTAWA';
+                $ekajalarsi = 'Buat Astawa';
             }
         } elseif ($no_wuku == 7) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'KINASIHANIN AMERTA';
+                $ekajalarsi = 'Kinasihanin Amerta';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'KINASIHANIN AMERTA';
+                $ekajalarsi = 'Kinasihanin Amerta';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'BUAT MERANG';
+                $ekajalarsi = 'Buat Merang';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'LANGGENG KAYOHANAN';
+                $ekajalarsi = 'Langgeng Kayohanan';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'KINASIHANIN AMERTA';
+                $ekajalarsi = 'Kinasihanin Amerta';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'WERDHI PUTRA';
+                $ekajalarsi = 'Werdhi Putra';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'WERDHI PUTRA';
+                $ekajalarsi = 'Werdhi Putra';
             }
         } elseif ($no_wuku == 8) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'BAHU PUTRA';
+                $ekajalarsi = 'Bahu Putra';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'SUKA PINANGGIH';
+                $ekajalarsi = 'Suka Pinanggih';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'SUKA PINANGGIH';
+                $ekajalarsi = 'Suka Pinanggih';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'LEWIH BAGIA';
+                $ekajalarsi = 'Lewih Bagia';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'LEWIH BAGIA';
+                $ekajalarsi = 'Lewih Bagia';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'BUAT SEBET';
+                $ekajalarsi = 'Buat Sebet';
             }
         } elseif ($no_wuku == 9) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'KAMARANAN';
+                $ekajalarsi = 'Kamaranan';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'PATINING AMERTA';
+                $ekajalarsi = 'Patining Amerta';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'KASOBAGIAN';
+                $ekajalarsi = 'Kasobagian';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'LEWIH BAGIA';
+                $ekajalarsi = 'Lewih Bagia';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'SUBAGIA';
+                $ekajalarsi = 'Subagia';
             }
         } elseif ($no_wuku == 10) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'KINASIHANIN JANA';
+                $ekajalarsi = 'Kinasihanin Jana';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'BAGNA MAPASAH';
+                $ekajalarsi = 'Bagna Mapasah';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'MANGGIH SUKA';
+                $ekajalarsi = 'Manggih Suka';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'KINASIHANIN JANA';
+                $ekajalarsi = 'Kinasihanin Jana';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'BAGNA MAPASAH';
+                $ekajalarsi = 'Bagna Mapasah';
             }
         } elseif ($no_wuku == 11) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'LEWIH BAGIA';
+                $ekajalarsi = 'Lewih Bagia';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'SUKA PINANGGIH';
+                $ekajalarsi = 'Suka Pinanggih';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'KINASIHANIN AMERTA';
+                $ekajalarsi = 'Kinasihanin Amerta';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'BUAT SUKA';
+                $ekajalarsi = 'Buat Suka';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'MANGGIH BAGIA';
+                $ekajalarsi = 'Manggih Bagia';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'PATINING AMERTA';
+                $ekajalarsi = 'Patining Amerta';
             }
         } elseif ($no_wuku == 12) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'SUKA RAHAYU';
+                $ekajalarsi = 'Suka Rahayu';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'KINASIHANIN AMERTA';
+                $ekajalarsi = 'Kinasihanin Amerta';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'KINASIHANIN AMERTA';
+                $ekajalarsi = 'Kinasihanin Amerta';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'BUAT SEBET';
+                $ekajalarsi = 'Buat Sebet';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'BUAT SUKA';
+                $ekajalarsi = 'Buat Suka';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'BUAT SEBET';
+                $ekajalarsi = 'Buat Sebet';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'WERDHI PUTRA';
+                $ekajalarsi = 'Werdhi Putra';
             }
         } elseif ($no_wuku == 13) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'BUAT SUKA';
+                $ekajalarsi = 'Buat Suka';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'BUAT SEBET';
+                $ekajalarsi = 'Buat Sebet';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'KINASIHANIN AMERTA';
+                $ekajalarsi = 'Kinasihanin Amerta';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'BUAT SUKA';
+                $ekajalarsi = 'Buat Suka';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'BUAT ASTAWA';
+                $ekajalarsi = 'Buat Astawa';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'DAHAT KINGKING';
+                $ekajalarsi = 'Dahat Kingking';
             }
         } elseif ($no_wuku == 14) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'LANGGENG KAYOHANAN';
+                $ekajalarsi = 'Langgeng Kayohanan';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'LEWIH BAGIA';
+                $ekajalarsi = 'Lewih Bagia';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'WERDHI PUTRA';
+                $ekajalarsi = 'Werdhi Putra';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'BUAT SUKA';
+                $ekajalarsi = 'Buat Suka';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'KINASIHANIN AMERTA';
+                $ekajalarsi = 'Kinasihanin Amerta';
             }
         } elseif ($no_wuku == 15) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'SIDHA KASOBAGIAN';
+                $ekajalarsi = 'Sidha Kasobagian';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'BUAT SUKA';
+                $ekajalarsi = 'Buat Suka';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'BUAT SEBET';
+                $ekajalarsi = 'Buat Sebet';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'BUAT SEBET';
+                $ekajalarsi = 'Buat Sebet';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'KINASIHANIN JANA';
+                $ekajalarsi = 'Kinasihanin Jana';
             }
         } elseif ($no_wuku == 16) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'MANGGIH SUKA';
+                $ekajalarsi = 'Manggih Suka';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'KINASIHANIN JANA';
+                $ekajalarsi = 'Kinasihanin Jana';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'SUKA PINANGGIH';
+                $ekajalarsi = 'Suka Pinanggih';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'BUAT SEBET';
+                $ekajalarsi = 'Buat Sebet';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'WERDHI PUTRA';
+                $ekajalarsi = 'Werdhi Putra';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'SIDHA KASOBAGIAN';
+                $ekajalarsi = 'Sidha Kasobagian';
             }
         } elseif ($no_wuku == 17) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'SUKA PINANGGIH';
+                $ekajalarsi = 'Suka Pinanggih';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'BUAT SUKA';
+                $ekajalarsi = 'Buat Suka';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'PATINING AMERTA';
+                $ekajalarsi = 'Patining Amerta';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'PATINING AMERTA';
+                $ekajalarsi = 'Patining Amerta';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'MANGGIH SUKA';
+                $ekajalarsi = 'Manggih Suka';
             }
         } elseif ($no_wuku == 18) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'BUAT SUKA';
+                $ekajalarsi = 'Buat Suka';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'MANGGIH SUKA';
+                $ekajalarsi = 'Manggih Suka';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'BUAT SUKA';
+                $ekajalarsi = 'Buat Suka';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'BUAT MERANG';
+                $ekajalarsi = 'Buat Merang';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'WERDHI PUTRA';
+                $ekajalarsi = 'Werdhi Putra';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'MANGGIH SUKA';
+                $ekajalarsi = 'Manggih Suka';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'BUAT SUKA';
+                $ekajalarsi = 'Buat Suka';
             }
         } elseif ($no_wuku == 19) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'KAMARANAN';
+                $ekajalarsi = 'Kamaranan';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'KINASIHANIN AMERTA';
+                $ekajalarsi = 'Kinasihanin Amerta';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'KINASIHANIN AMERTA';
+                $ekajalarsi = 'Kinasihanin Amerta';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'KINASIHANIN JANA';
+                $ekajalarsi = 'Kinasihanin Jana';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'PATINING AMERTA';
+                $ekajalarsi = 'Patining Amerta';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'PATINING AMERTA';
+                $ekajalarsi = 'Patining Amerta';
             }
         } elseif ($no_wuku == 20) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'BUAT SEBET';
+                $ekajalarsi = 'Buat Sebet';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'BUAT ASTAWA';
+                $ekajalarsi = 'Buat Astawa';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'BUAT ASTAWA';
+                $ekajalarsi = 'Buat Astawa';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'MANGGIH SUKA';
+                $ekajalarsi = 'Manggih Suka';
             }
         } elseif ($no_wuku == 21) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'SIDHA KASOBAGIAN';
+                $ekajalarsi = 'Sidha Kasobagian';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'LANGGENG KAYOHANAN';
+                $ekajalarsi = 'Langgeng Kayohanan';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'WERDHI SARWA MULE';
+                $ekajalarsi = 'Werdhi Sarwa Mule';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'SUKA PINANGGIH';
+                $ekajalarsi = 'Suka Pinanggih';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'MANGGIH SUKA';
+                $ekajalarsi = 'Manggih Suka';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'DAHAT KINGKING';
+                $ekajalarsi = 'Dahat Kingking';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             }
         } elseif ($no_wuku == 22) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'MANGGIH SUKA';
+                $ekajalarsi = 'Manggih Suka';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'BUAT SEBET';
+                $ekajalarsi = 'Buat Sebet';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'MANGGIH SUKA';
+                $ekajalarsi = 'Manggih Suka';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'BUAT SUKA';
+                $ekajalarsi = 'Buat Suka';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'BUAT KINGKING';
+                $ekajalarsi = 'Buat Kingking';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'LEWIH BAGIA';
+                $ekajalarsi = 'Lewih Bagia';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'PATINING AMERTA';
+                $ekajalarsi = 'Patining Amerta';
             }
         } elseif ($no_wuku == 23) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'BUAT ASTAWA';
+                $ekajalarsi = 'Buat Astawa';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'BUAT SUKA';
+                $ekajalarsi = 'Buat Suka';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'KINASIHANIN JANA';
+                $ekajalarsi = 'Kinasihanin Jana';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'SIDHA KASOBAGIAN';
+                $ekajalarsi = 'Sidha Kasobagian';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'BUAT SUKA';
+                $ekajalarsi = 'Buat Suka';
             }
         } elseif ($no_wuku == 24) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'LEWIH BAGIA';
+                $ekajalarsi = 'Lewih Bagia';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'LEWIH BAGIA';
+                $ekajalarsi = 'Lewih Bagia';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'SUKA PINANGGIH';
+                $ekajalarsi = 'Suka Pinanggih';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'BUAT SUKA';
+                $ekajalarsi = 'Buat Suka';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'DAHAT KINGKING';
+                $ekajalarsi = 'Dahat Kingking';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'SUKA RAHAYU';
+                $ekajalarsi = 'Suka Rahayu';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'BUAT ASTAWA';
+                $ekajalarsi = 'Buat Astawa';
             }
         } elseif ($no_wuku == 25) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'KINASIHANIN AMERTA';
+                $ekajalarsi = 'Kinasihanin Amerta';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'KAMARANAN';
+                $ekajalarsi = 'Kamaranan';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'SUKA RAHAYU';
+                $ekajalarsi = 'Suka Rahayu';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'SUKA RAHAYU';
+                $ekajalarsi = 'Suka Rahayu';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'MANGGIH SUKA';
+                $ekajalarsi = 'Manggih Suka';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'SUKA RAHAYU';
+                $ekajalarsi = 'Suka Rahayu';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'SIDHA KASOBAGIAN';
+                $ekajalarsi = 'Sidha Kasobagian';
             }
         } elseif ($no_wuku == 26) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'BUAT SUKA';
+                $ekajalarsi = 'Buat Suka';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'KINASIHANIN AMERTA';
+                $ekajalarsi = 'Kinasihanin Amerta';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'KINASIHANIN AMERTA';
+                $ekajalarsi = 'Kinasihanin Amerta';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'LANGGENG KAYOHANAN';
+                $ekajalarsi = 'Langgeng Kayohanan';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'PATINING AMERTA';
+                $ekajalarsi = 'Patining Amerta';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'SIDHA KASOBAGIAN';
+                $ekajalarsi = 'Sidha Kasobagian';
             }
         } elseif ($no_wuku == 27) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'BUAT MERANG';
+                $ekajalarsi = 'Buat Merang';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'PATINING AMERTA';
+                $ekajalarsi = 'Patining Amerta';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'BUAT MERANG';
+                $ekajalarsi = 'Buat Merang';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'SIDHA KASOBAGIAN';
+                $ekajalarsi = 'Sidha Kasobagian';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'WERDHI PUTRA';
+                $ekajalarsi = 'Werdhi Putra';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'KINASIHANIN AMERTA';
+                $ekajalarsi = 'Kinasihanin Amerta';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'SUKA PINANGGIH';
+                $ekajalarsi = 'Suka Pinanggih';
             }
         } elseif ($no_wuku == 28) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'PATINING AMERTA';
+                $ekajalarsi = 'Patining Amerta';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'MANGGIH SUKA';
+                $ekajalarsi = 'Manggih Suka';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'MANGGIH SUKA';
+                $ekajalarsi = 'Manggih Suka';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'LEWIH BAGIA';
+                $ekajalarsi = 'Lewih Bagia';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'BUAT ASTAWA';
+                $ekajalarsi = 'Buat Astawa';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'SUKA RAHAYU';
+                $ekajalarsi = 'Suka Rahayu';
             }
         } elseif ($no_wuku == 29) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'BUAT LARA';
+                $ekajalarsi = 'Buat Lara';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'BUAT ASTAWA';
+                $ekajalarsi = 'Buat Astawa';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'SUKA PINANGGIH';
+                $ekajalarsi = 'Suka Pinanggih';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'PATINING AMERTA';
+                $ekajalarsi = 'Patining Amerta';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'SIDHA KASOBAGIAN';
+                $ekajalarsi = 'Sidha Kasobagian';
             }
         } elseif ($no_wuku == 30) {
             if ($saptawara == 1) {
-                $ekajalarsi = 'LANGGENG KAYOHANAN';
+                $ekajalarsi = 'Langgeng Kayohanan';
             } elseif ($saptawara == 2) {
-                $ekajalarsi = 'BUAT SEBET';
+                $ekajalarsi = 'Buat Sebet';
             } elseif ($saptawara == 3) {
-                $ekajalarsi = 'BUAT ASTAWA';
+                $ekajalarsi = 'Buat Astawa';
             } elseif ($saptawara == 4) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 5) {
-                $ekajalarsi = 'BUAT SUKA';
+                $ekajalarsi = 'Buat Suka';
             } elseif ($saptawara == 6) {
-                $ekajalarsi = 'TININGGALING SUKA';
+                $ekajalarsi = 'Tininggaling Suka';
             } elseif ($saptawara == 7) {
-                $ekajalarsi = 'MANGGIH SUKA';
+                $ekajalarsi = 'Manggih Suka';
             }
         }
         

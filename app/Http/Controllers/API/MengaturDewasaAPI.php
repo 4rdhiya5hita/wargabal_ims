@@ -95,6 +95,61 @@ class MengaturDewasaAPI extends Controller
         return response()->json($response, 200);
     }
 
+    public function mengaturDewasaPOST (Request $request)
+    {
+        $api_key = $request->header('x-api-key');
+        $user = User::where('api_key', $api_key)->first();
+        $service_id = 6;
+
+        $validasi_api = new ValidasiAPI();
+        $result = $validasi_api->validasiAPI($user, $service_id);
+
+        if ($result) {
+            return $result;
+        }
+
+        $start = microtime(true);
+        $tanggal_mulai = $request->tanggal_mulai;
+        $tanggal_selesai = $request->tanggal_selesai;
+
+        $validasi_tanggal = new ValidasiTanggal();
+        $response = $validasi_tanggal->validasiTanggal($tanggal_mulai, $tanggal_selesai);
+
+        if ($response instanceof \Illuminate\Http\JsonResponse) {
+            return $response;
+        }
+        list($tanggal_mulai, $tanggal_selesai) = $response;
+
+        $kriteria = $request->kriteria;
+        $makna = $request->has('beserta_keterangan');
+
+        $ala_ayuning_dewasa = Cache::remember('ala_ayuning_dewasa_' . $tanggal_mulai . '_' . $tanggal_selesai . '_' . $kriteria, now()->addDays(31), function () use ($tanggal_mulai, $tanggal_selesai, $makna, $kriteria) {
+            $ala_ayuning_dewasa_cache = [];
+
+            while ($tanggal_mulai <= $tanggal_selesai) {
+                $ala_ayuning_dewasa_cache[] = [
+                    'tanggal' => $tanggal_mulai->toDateString(),
+                    'ala_ayuning_dewasa' => $this->getAlaAyuningDewasa($tanggal_mulai->toDateString(), $makna, $kriteria),
+                ];
+                $tanggal_mulai->addDay();
+            }
+
+            return $ala_ayuning_dewasa_cache;
+        });
+
+        $end = microtime(true);
+        $executionTime = $end - $start;
+        $executionTime = number_format($executionTime, 6);
+
+        $response = [
+            'pesan' => 'Sukses',
+            'data' => $ala_ayuning_dewasa,
+            'waktu_eksekusi' => $executionTime,
+        ];
+
+        return response()->json($response, 200);
+    }
+
     public function getAlaAyuningDewasa($tanggal, $makna, $kriteria)
     {
         // dd($kriteria);
@@ -226,6 +281,7 @@ class MengaturDewasaAPI extends Controller
         // ];
 
         // dd($kriteria);
+        // dd($pengalantaka);
         // Evaluasi ekspresi kondisional menggunakan eval()
         $result = eval("return ($kriteria);");
         // dd($result);

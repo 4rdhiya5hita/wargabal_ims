@@ -45,6 +45,7 @@ class PiodalanAPI extends Controller
         }
         list($tanggal_mulai, $tanggal_selesai) = $response;
 
+        // Cache::forget('piodalan_' . $tanggal_mulai . '_' . $tanggal_selesai);
         $piodalan = Cache::remember('piodalan_' . $tanggal_mulai . '_' . $tanggal_selesai, now()->addDays(31), function () use ($tanggal_mulai, $tanggal_selesai) {
             $piodalan_cache = [];
 
@@ -188,7 +189,10 @@ class PiodalanAPI extends Controller
                 $puraArray = [];
                 foreach ($data_piodalan_by_wuku as $item) {
                     $ambil_pura = $item->name . ' di ' . $item->address;
-                    $puraArray[] = ['nama_pura' => $ambil_pura];
+                    $puraArray[] = [
+                        'id_pura' => $item->id,
+                        'nama_pura' => $ambil_pura
+                    ];
                 }
                 $piodalanLengkap[] = ['hari' => $piodalan, 'hari_raya' => $hariRaya[0], 'sasih' => $namaSasih, 'pura' => $puraArray];
 

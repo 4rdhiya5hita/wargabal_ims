@@ -70,9 +70,13 @@ Route::post('/ubahAcaraDetail', [AcaraAPI::class, 'ubahAcaraDetail']);
 Route::post('/hapusAcaraDetail', [AcaraAPI::class, 'hapusAcaraDetail']);
 
 Route::get('/lihatPura', [AcaraAPI::class, 'lihatPura']);
+Route::get('/lihatPura/{id}', [AcaraAPI::class, 'lihatPuraById']);
 Route::get('/listKeterangan', [KeteranganAPI::class, 'listKeterangan']);
+
 Route::get('/listPengajuanKeterangans', [KeteranganAPI::class, 'listPengajuanKeterangans']);
+Route::get('/listPengajuanKeterangans/{id}', [KeteranganAPI::class, 'listPengajuanKeterangansById']);
 Route::post('/pengajuanKeterangans', [KeteranganAPI::class, 'pengajuanKeterangans']);
+Route::post('/editPengajuanKeterangans', [KeteranganAPI::class, 'editPengajuanKeterangans']);
 
 Route::get('/keteranganHariRaya', [KeteranganAPI::class, 'keteranganHariRaya']);
 Route::get('/keteranganAlaAyuningDewasa', [KeteranganAPI::class, 'keteranganAlaAyuningDewasa']);

@@ -129,7 +129,27 @@ class AcaraAPI extends Controller
         $valid = $this->validasiAcara($api_key);
 
         if ($valid) {
-            $acara = Pura::select('id', 'name', 'address')->get();
+            // $acara = Pura::select('id', 'name', 'address')->get();
+            $acara = Pura::all();
+            return response()->json([
+                'pesan' => 'Sukses',
+                'data' => $acara
+            ]);
+        } else {
+            return response()->json([
+                'pesan' => 'API Key tidak valid',
+            ]);
+        }
+    }
+
+    public function lihatPuraById(Request $request, $id)
+    {
+        $api_key = $request->header('x-api-key');
+        $valid = $this->validasiAcara($api_key);
+
+        if ($valid) {
+            // $acara = Pura::select('id', 'name', 'address')->get();
+            $acara = Pura::find($id);
             return response()->json([
                 'pesan' => 'Sukses',
                 'data' => $acara

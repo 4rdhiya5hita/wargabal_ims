@@ -48,6 +48,44 @@ class KeteranganAPI extends Controller
         return $valid;
     }
 
+    public function listPengajuanKeterangans(Request $request)
+    {
+        $api_key = $request->header('x-api-key');
+        $valid = $this->validasiKeterangan($api_key);
+
+        if ($valid) {
+            $pengajuan = PengajuanKeterangan::all();
+
+            return response()->json([
+                'pesan' => 'Sukses',
+                'data' => $pengajuan
+            ]);
+        } else {
+            return response()->json([
+                'pesan' => 'API Key tidak valid',
+            ]);
+        }
+    }
+
+    public function listPengajuanKeterangansById(Request $request, $id)
+    {
+        $api_key = $request->header('x-api-key');
+        $valid = $this->validasiKeterangan($api_key);
+
+        if ($valid) {
+            $pengajuan = PengajuanKeterangan::where('id', $id)->get();
+
+            return response()->json([
+                'pesan' => 'Sukses',
+                'data' => $pengajuan
+            ]);
+        } else {
+            return response()->json([
+                'pesan' => 'API Key tidak valid',
+            ]);
+        }
+    }
+
     public function pengajuanKeterangans(Request $request)
     {
         $api_key = $request->header('x-api-key');
@@ -55,17 +93,21 @@ class KeteranganAPI extends Controller
 
         if ($valid) {
             $validated = $request->validate([
-                'user_id' => 'required',
-                'param' => 'required',
-                'nama' => 'required',
+                'user_web_id' => 'required',
+                'key_id' => 'required',
+                'key_name' => 'required',
+                'item_id' => 'required',
+                'item_name' => 'required',
                 'keterangan' => 'required'
             ]);
 
             if ($validated) {
                 $save_pengajuan = [
-                    'user_id' => $request->user_id,
-                    'param' => $request->param,
-                    'nama' => $request->nama,
+                    'user_web_id' => $request->user_web_id,
+                    'key_id' => $request->key_id,
+                    'key_name' => $request->key_name,
+                    'item_id' => $request->item_id,
+                    'item_name' => $request->item_name,
                     'keterangan' => $request->keterangan
                 ];
 
@@ -87,18 +129,46 @@ class KeteranganAPI extends Controller
         }
     }
 
-    public function listPengajuanKeterangans(Request $request)
+    public function editPengajuanKeterangans(Request $request)
     {
         $api_key = $request->header('x-api-key');
         $valid = $this->validasiKeterangan($api_key);
+        $id = $request->id;
 
         if ($valid) {
-            $pengajuan = PengajuanKeterangan::all();
+            $list_pengajuan = PengajuanKeterangan::all();
+            $pengajuan = PengajuanKeterangan::find($id);
+
+            if ($pengajuan->status_keterangan != $request->status_keterangan) {
+                if ($request->status_keterangan == 1) {
+                    foreach ($list_pengajuan as $item) {
+                        if ($item->key_id == $pengajuan->key_id && $item->item_id == $pengajuan->item_id && $item->status_keterangan == 1) {
+                            $item->status_keterangan = 2;
+                            $item->save();
+                        }
+                    }
+                }
+                $status_keterangan_berubah = true;
+            } else {
+                $status_keterangan_berubah = false;
+            }
+
+            $pengajuan->status_pengajuan = $request->status_pengajuan;
+            $pengajuan->status_keterangan = $request->status_keterangan;
+            
+            if ($pengajuan->status_pengajuan == $request->status_pengajuan) {
+                $pengajuan->tanggal_validasi = $pengajuan->tanggal_validasi;
+                $pengajuan->save();
+            } else {
+                $pengajuan->tanggal_validasi = $request->tanggal_validasi;
+            }
 
             return response()->json([
                 'pesan' => 'Sukses',
+                'status_keterangan_berubah' => $status_keterangan_berubah,
                 'data' => $pengajuan
             ]);
+
         } else {
             return response()->json([
                 'pesan' => 'API Key tidak valid',
@@ -601,7 +671,11 @@ class KeteranganAPI extends Controller
 
             if ($validated) {
                 $id = $request->id;
-                $keterangan = $request->keterangan;
+                if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
                 $alaAyuningDewasa = AlaAyuningDewasa::find($id);
                 $alaAyuningDewasa->description = $keterangan;
@@ -637,7 +711,11 @@ class KeteranganAPI extends Controller
 
             if ($validated) {
                 $id = $request->id;
-                $keterangan = $request->keterangan;
+                if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
                 $hariRaya = HariRaya::find($id);
                 $hariRaya->description = $keterangan;
@@ -673,7 +751,11 @@ class KeteranganAPI extends Controller
 
             if ($validated) {
                 $id = $request->id;
-                $keterangan = $request->keterangan;
+                if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
                 $ingkel = Ingkel::find($id);
                 $ingkel->keterangan = $keterangan;
@@ -701,7 +783,11 @@ class KeteranganAPI extends Controller
         $api_key = $request->header('x-api-key');
         $valid = $this->validasiKeterangan($api_key);
         $id = $request->id;
-        $keterangan = $request->keterangan;
+        if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
         if ($valid) {
             $jejepan = Jejepan::find($id);
@@ -724,7 +810,11 @@ class KeteranganAPI extends Controller
         $api_key = $request->header('x-api-key');
         $valid = $this->validasiKeterangan($api_key);
         $id = $request->id;
-        $keterangan = $request->keterangan;
+        if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
         if ($valid) {
             $lintang = Lintang::find($id);
@@ -747,7 +837,11 @@ class KeteranganAPI extends Controller
         $api_key = $request->header('x-api-key');
         $valid = $this->validasiKeterangan($api_key);
         $id = $request->id;
-        $keterangan = $request->keterangan;
+        if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
         if ($valid) {
             $neptu = Neptu::find($id);
@@ -770,7 +864,11 @@ class KeteranganAPI extends Controller
         $api_key = $request->header('x-api-key');
         $valid = $this->validasiKeterangan($api_key);
         $id = $request->id;
-        $keterangan = $request->keterangan;
+        if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
         if ($valid) {
             $ekaJalaRsi = EkaJalaRsi::find($id);
@@ -793,7 +891,11 @@ class KeteranganAPI extends Controller
         $api_key = $request->header('x-api-key');
         $valid = $this->validasiKeterangan($api_key);
         $id = $request->id;
-        $keterangan = $request->keterangan;
+        if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
         if ($valid) {
             $watekMadya = WatekMadya::find($id);
@@ -816,7 +918,11 @@ class KeteranganAPI extends Controller
         $api_key = $request->header('x-api-key');
         $valid = $this->validasiKeterangan($api_key);
         $id = $request->id;
-        $keterangan = $request->keterangan;
+        if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
         if ($valid) {
             $watekAlit = WatekAlit::find($id);
@@ -839,7 +945,11 @@ class KeteranganAPI extends Controller
         $api_key = $request->header('x-api-key');
         $valid = $this->validasiKeterangan($api_key);
         $id = $request->id;
-        $keterangan = $request->keterangan;
+        if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
         if ($valid) {
             $rakam = Rakam::find($id);
@@ -862,7 +972,11 @@ class KeteranganAPI extends Controller
         $api_key = $request->header('x-api-key');
         $valid = $this->validasiKeterangan($api_key);
         $id = $request->id;
-        $keterangan = $request->keterangan;
+        if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
         if ($valid) {
             $pratiti = Pratiti::find($id);
@@ -885,7 +999,11 @@ class KeteranganAPI extends Controller
         $api_key = $request->header('x-api-key');
         $valid = $this->validasiKeterangan($api_key);
         $id = $request->id;
-        $keterangan = $request->keterangan;
+        if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
         if ($valid) {
             $pancaSudha = PancaSudha::find($id);
@@ -908,7 +1026,11 @@ class KeteranganAPI extends Controller
         $api_key = $request->header('x-api-key');
         $valid = $this->validasiKeterangan($api_key);
         $id = $request->id;
-        $keterangan = $request->keterangan;
+        if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
         if ($valid) {
             $pangarasan = Pangarasan::find($id);
@@ -931,7 +1053,11 @@ class KeteranganAPI extends Controller
         $api_key = $request->header('x-api-key');
         $valid = $this->validasiKeterangan($api_key);
         $id = $request->id;
-        $keterangan = $request->keterangan;
+        if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
         if ($valid) {
             $zodiak = Zodiak::find($id);
@@ -954,7 +1080,11 @@ class KeteranganAPI extends Controller
         $api_key = $request->header('x-api-key');
         $valid = $this->validasiKeterangan($api_key);
         $id = $request->id;
-        $keterangan = $request->keterangan;
+        if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
         if ($valid) {
             $ekawara = Ekawara::find($id);
@@ -977,7 +1107,11 @@ class KeteranganAPI extends Controller
         $api_key = $request->header('x-api-key');
         $valid = $this->validasiKeterangan($api_key);
         $id = $request->id;
-        $keterangan = $request->keterangan;
+        if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
         if ($valid) {
             $dwiwara = Dwiwara::find($id);
@@ -1000,7 +1134,11 @@ class KeteranganAPI extends Controller
         $api_key = $request->header('x-api-key');
         $valid = $this->validasiKeterangan($api_key);
         $id = $request->id;
-        $keterangan = $request->keterangan;
+        if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
         if ($valid) {
             $triwara = Triwara::find($id);
@@ -1023,7 +1161,11 @@ class KeteranganAPI extends Controller
         $api_key = $request->header('x-api-key');
         $valid = $this->validasiKeterangan($api_key);
         $id = $request->id;
-        $keterangan = $request->keterangan;
+        if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
         if ($valid) {
             $caturwara = Caturwara::find($id);
@@ -1046,7 +1188,11 @@ class KeteranganAPI extends Controller
         $api_key = $request->header('x-api-key');
         $valid = $this->validasiKeterangan($api_key);
         $id = $request->id;
-        $keterangan = $request->keterangan;
+        if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
         if ($valid) {
             $pancawara = Pancawara::find($id);
@@ -1069,7 +1215,11 @@ class KeteranganAPI extends Controller
         $api_key = $request->header('x-api-key');
         $valid = $this->validasiKeterangan($api_key);
         $id = $request->id;
-        $keterangan = $request->keterangan;
+        if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
         if ($valid) {
             $sadwara = Sadwara::find($id);
@@ -1092,7 +1242,11 @@ class KeteranganAPI extends Controller
         $api_key = $request->header('x-api-key');
         $valid = $this->validasiKeterangan($api_key);
         $id = $request->id;
-        $keterangan = $request->keterangan;
+        if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
         if ($valid) {
             $saptawara = Saptawara::find($id);
@@ -1115,7 +1269,11 @@ class KeteranganAPI extends Controller
         $api_key = $request->header('x-api-key');
         $valid = $this->validasiKeterangan($api_key);
         $id = $request->id;
-        $keterangan = $request->keterangan;
+        if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
         if ($valid) {
             $astawara = Astawara::find($id);
@@ -1138,7 +1296,11 @@ class KeteranganAPI extends Controller
         $api_key = $request->header('x-api-key');
         $valid = $this->validasiKeterangan($api_key);
         $id = $request->id;
-        $keterangan = $request->keterangan;
+        if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
         if ($valid) {
             $sangawara = Sangawara::find($id);
@@ -1161,7 +1323,11 @@ class KeteranganAPI extends Controller
         $api_key = $request->header('x-api-key');
         $valid = $this->validasiKeterangan($api_key);
         $id = $request->id;
-        $keterangan = $request->keterangan;
+        if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
         if ($valid) {
             $dasawara = Dasawara::find($id);
@@ -1184,7 +1350,11 @@ class KeteranganAPI extends Controller
         $api_key = $request->header('x-api-key');
         $valid = $this->validasiKeterangan($api_key);
         $id = $request->id;
-        $keterangan = $request->keterangan;
+        if ($request->keterangan == '-') {
+                    $keterangan = null;
+                } else {
+                    $keterangan = $request->keterangan;
+                }
 
         if ($valid) {
             $wuku = Wuku::find($id);

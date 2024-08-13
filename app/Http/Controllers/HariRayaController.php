@@ -34,6 +34,7 @@ class HariRayaController extends Controller
             $hari_raya[] = 'Buda Cemeng Ukir';
         } elseif ($saptawara == 4 && $pancawara == 4 && $wuku == 3) {
             $hari_raya[] = 'Hari Bhatara Rambut Sedana';
+        } elseif ($saptawara == 6 && $pancawara == 1 && $wuku == 3) {
             $hari_raya[] = 'Hari Bhatari Sri';
         } elseif ($saptawara == 3 && $pancawara == 5 && $wuku == 4) {
             $hari_raya[] = 'Anggara Kasih Kulantir';
@@ -83,6 +84,8 @@ class HariRayaController extends Controller
             $hari_raya[] = 'Pujawali Bhatara Wisnu';
         } elseif ($saptawara == 4 && $pancawara == 3 && $wuku == 13) {
             $hari_raya[] = 'Buda Cemeng Langkir';
+        } elseif ($saptawara == 6 && $pancawara == 1 && $wuku == 13) {
+            $hari_raya[] = 'Hari Bhatari Sri';
         } elseif ($saptawara == 3 && $pancawara == 5 && $wuku == 14) {
             $hari_raya[] = 'Anggara Kasih Medangsia';
         
@@ -107,6 +110,8 @@ class HariRayaController extends Controller
             $hari_raya[] = 'Tumpek Kandang';
         } elseif ($saptawara == 4 && $pancawara == 3 && $wuku == 23) {
             $hari_raya[] = 'Buda Cemeng Menail';
+        } elseif ($saptawara == 6 && $pancawara == 1 && $wuku == 23) {
+            $hari_raya[] = 'Hari Bhatari Sri';
         } elseif ($saptawara == 3 && $pancawara == 5 && $wuku == 24) {
             $hari_raya[] = 'Anggara Kasih Perangbakat';
         } elseif ($saptawara == 4 && $pancawara == 5 && $wuku == 26) {
@@ -119,12 +124,12 @@ class HariRayaController extends Controller
             $hari_raya[] = 'Hari Bhatara Rambut Sedana';
         } elseif ($saptawara == 4 && $pancawara == 3 && $wuku == 28) {
             $hari_raya[] = 'Buda Cemeng Klawu';
+        } elseif ($saptawara == 6 && $pancawara == 1 && $wuku == 28) {
+            $hari_raya[] = 'Hari Bhatari Sri';
         } elseif ($saptawara == 3 && $pancawara == 5 && $wuku == 29) {
             $hari_raya[] = 'Anggara Kasih Dukut';
 
             // wuku 30
-        } elseif ($saptawara == 3 && $pancawara == 2 && $wuku == 30) {
-            $hari_raya[] = 'Hari Bhatari Sri';
         } elseif ($saptawara == 6 && $pancawara == 1 && $wuku == 30) {
             $hari_raya[] = 'Hari Paid-Paidan';
         } elseif ($saptawara == 4 && $pancawara == 3 && $wuku == 30) {

@@ -75,7 +75,7 @@ class WukuController extends Controller
         } elseif ($i == 17) {
             $nama = 'Krulut';
         } elseif ($i == 18) {
-            $nama = 'Mrakih';
+            $nama = 'Merakih';
         } elseif ($i == 19) {
             $nama = 'Tambir';
         } elseif ($i == 20) {

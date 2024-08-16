@@ -53,7 +53,7 @@ class AlaAyuningDewasaAPI extends Controller
 
         $makna = $request->has('beserta_keterangan');
 
-        $ala_ayuning_dewasa = Cache::remember('ala_ayuning_dewasa_' . $tanggal_mulai . '_' . $tanggal_selesai, now()->addDays(31), function () use ($tanggal_mulai, $tanggal_selesai, $makna) {
+        $ala_ayuning_dewasa = Cache::remember('ala_ayuning_dewasa_' . $tanggal_mulai . '_' . $tanggal_selesai . '_' . $makna, now()->addDays(31), function () use ($tanggal_mulai, $tanggal_selesai, $makna) {
             $ala_ayuning_dewasa_cache = [];
 
             while ($tanggal_mulai <= $tanggal_selesai) {

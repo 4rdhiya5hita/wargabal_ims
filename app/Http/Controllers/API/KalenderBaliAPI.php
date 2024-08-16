@@ -69,6 +69,7 @@ class KalenderBaliAPI extends Controller
         }
         list($tanggal_mulai, $tanggal_selesai) = $response;
 
+        $filterCache = '';
         $filter = $request->has('filter');
         if ($filter) {
             $filterValue = $request->input('filter');
@@ -86,11 +87,13 @@ class KalenderBaliAPI extends Controller
             $filterArray = array_unique($filterArray);
             
             if ($filterArray) {
-                $allowed_values = ['wewaran', 'wuku', 'ingkel', 'jejepan', 'lintang', 'panca_sudha', 'pangarasan', 'rakam', 'watek_madya', 'watek_alit', 'neptu', 'ekajalarsi', 'zodiak', 'pratiti'];
+                $allowed_values = ['wewaran', 'wuku', 'ingkel', 'jejepan', 'lintang', 'panca_sudha', 'pangarasan', 'rakam', 'watek_madya', 'watek_alit', 'neptu', 'ekajalarsi', 'zodiak', 'pratiti', 'tahun_saka', 'sasih', 'pengalantaka', 'angka_pengalantaka'];
 
                 $filter = array_unique($filterArray);
                 // cek apakah terdapat nilai filter yang sama dengan daftar nilai yang diperbolehkan
                 $filter = array_intersect($filter, $allowed_values);
+
+                $filterCache = implode(',', $filter);
 
                 // Filter nilai yang tidak terdapat di dalam daftar nilai yang diperbolehkan
                 if (count($filter) < count($filterArray)) {
@@ -102,7 +105,8 @@ class KalenderBaliAPI extends Controller
         }
 
         // cache data
-        $kalender = Cache::remember('kalender_' . $tanggal_mulai . '_' . $tanggal_selesai , now()->addDays(31), function () use ($tanggal_mulai, $tanggal_selesai, $filter) {
+        // Cache::forget('kalender_' . $tanggal_mulai . '_' . $tanggal_selesai . '_' . $filterCache);
+        $kalender = Cache::remember('kalender_' . $tanggal_mulai . '_' . $tanggal_selesai . '_' . $filterCache, now()->addDays(31), function () use ($tanggal_mulai, $tanggal_selesai, $filter) {
             $kalender_cache = [];            
 
             while ($tanggal_mulai <= $tanggal_selesai) {
@@ -253,7 +257,7 @@ class KalenderBaliAPI extends Controller
         if ($filter) {
             $metode = array_values($filter);
         } else {
-            $metode = ['wewaran', 'wuku', 'ingkel', 'jejepan', 'lintang', 'panca_sudha', 'pangarasan', 'rakam', 'watek_madya', 'watek_alit', 'neptu', 'ekajalarsi', 'zodiak', 'pratiti'];
+            $metode = ['wewaran', 'wuku', 'ingkel', 'jejepan', 'lintang', 'panca_sudha', 'pangarasan', 'rakam', 'watek_madya', 'watek_alit', 'neptu', 'ekajalarsi', 'zodiak', 'pratiti', 'tahun_saka', 'sasih', 'pengalantaka', 'angka_pengalantaka'];
         }
 
         $filteredArray = array_filter($metode);
@@ -282,11 +286,18 @@ class KalenderBaliAPI extends Controller
 
             // Lakukan iterasi melalui pilihan metode yang dipilih
             foreach ($metode as $value) {
-                array_push($kombinasi_array, ['tahun_saka' => $tahunSaka]);
-                array_push($kombinasi_array, ['sasih' => $namaSasih]);
-
-                array_push($kombinasi_array, ['pengalantaka' => $pengalantaka]);
-                array_push($kombinasi_array, ['angka_pengalantaka' => $penanggal1]);
+                if ($value == 'tahun_saka') {
+                    array_push($kombinasi_array, ['tahun_saka' => $tahunSaka]);
+                }
+                if ($value == 'sasih') {
+                    array_push($kombinasi_array, ['sasih' => $namaSasih]);
+                }
+                if ($value == 'pengalantaka') {
+                    array_push($kombinasi_array, ['pengalantaka' => $pengalantaka]);
+                }
+                if ($value == 'angka_pengalantaka') {
+                    array_push($kombinasi_array, ['angka_pengalantaka' => $penanggal1]);
+                }
 
                 if ($value == 'wuku') {
                     array_push($kombinasi_array, ['wuku' => $namaWuku]);
@@ -368,6 +379,8 @@ class KalenderBaliAPI extends Controller
                 // } elseif ($value == 'Monday') {
                 //     array_push($kombinasi_array, ['hari' => 'Senin']);
                 // }
+
+                // array_push($kombinasi_array, ['angka_wuku' => $hasilAngkaWuku]);
             }
             $kalenderLengkap = array_reduce($kombinasi_array, function ($carry, $item) { // Menggabungkan array multidimensi menjadi satu array
                 return array_merge($carry, $item);

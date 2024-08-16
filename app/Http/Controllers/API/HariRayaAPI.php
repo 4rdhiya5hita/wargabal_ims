@@ -46,7 +46,7 @@ class HariRayaAPI extends Controller
 
         $beserta_keterangan = $request->has('beserta_keterangan');
 
-        $hari_raya = Cache::remember('hari_raya_' . $tanggal_mulai . '_' . $tanggal_selesai , now()->addDays(31), function () use ($tanggal_mulai, $tanggal_selesai, $beserta_keterangan) {
+        $hari_raya = Cache::remember('hari_raya_' . $tanggal_mulai . '_' . $tanggal_selesai . '_' . $beserta_keterangan , now()->addDays(31), function () use ($tanggal_mulai, $tanggal_selesai, $beserta_keterangan) {
             $hari_raya_cache = [];
 
             while ($tanggal_mulai <= $tanggal_selesai) {

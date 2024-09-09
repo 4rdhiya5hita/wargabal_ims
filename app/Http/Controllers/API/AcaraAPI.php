@@ -9,6 +9,7 @@ use App\Models\Piodalan;
 use App\Models\Pura;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AcaraAPI extends Controller
 {

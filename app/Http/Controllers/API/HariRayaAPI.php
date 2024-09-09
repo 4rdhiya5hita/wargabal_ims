@@ -46,6 +46,7 @@ class HariRayaAPI extends Controller
 
         $beserta_keterangan = $request->has('beserta_keterangan');
 
+        // Cache::forget('hari_raya_' . $tanggal_mulai . '_' . $tanggal_selesai . '_' . $beserta_keterangan);
         $hari_raya = Cache::remember('hari_raya_' . $tanggal_mulai . '_' . $tanggal_selesai . '_' . $beserta_keterangan , now()->addDays(31), function () use ($tanggal_mulai, $tanggal_selesai, $beserta_keterangan) {
             $hari_raya_cache = [];
 
@@ -170,9 +171,10 @@ class HariRayaAPI extends Controller
                 foreach ($data_hari_raya as $item) {
                     $ambil_keterangan = $item->description;
                 }
+                $ambil_simbol = $item->symbol_name;
                 // Perjikaan sesuai parameter urlnya
                 if ($beserta_keterangan) {
-                    array_push($hariRayaLengkap, ['nama' => $value, 'keterangan' => $ambil_keterangan]);
+                    array_push($hariRayaLengkap, ['nama' => $value, 'simbol' => $ambil_simbol, 'keterangan' => $ambil_keterangan]);
                 } else {
                     array_push($hariRayaLengkap, ['nama' => $value]);
                 }
@@ -185,9 +187,10 @@ class HariRayaAPI extends Controller
 
                 foreach ($data_hari_raya as $item) {
                     $ambil_keterangan = $item->description;
+                    $ambil_simbol = $item->symbol_name;
                     // Perjikaan sesuai parameter urlnya
                     if ($beserta_keterangan) {
-                        array_push($hariRayaLengkap, ['nama' => $hariRaya[0], 'keterangan' => $ambil_keterangan]);
+                        array_push($hariRayaLengkap, ['nama' => $hariRaya[0], 'simbol' => $ambil_simbol, 'keterangan' => $ambil_keterangan]);
                     } else {
                         array_push($hariRayaLengkap, ['nama' => $hariRaya[0]]);
                     }

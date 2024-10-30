@@ -107,7 +107,7 @@ class KalenderBaliAPI extends Controller
         // cache data
         // Cache::forget('kalender_' . $tanggal_mulai . '_' . $tanggal_selesai . '_' . $filterCache);
         $kalender = Cache::remember('kalender_' . $tanggal_mulai . '_' . $tanggal_selesai . '_' . $filterCache, now()->addDays(31), function () use ($tanggal_mulai, $tanggal_selesai, $filter) {
-            $kalender_cache = [];            
+            $kalender_cache = [];
 
             while ($tanggal_mulai <= $tanggal_selesai) {
                 $kalender_cache[] = [

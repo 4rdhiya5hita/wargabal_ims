@@ -9,6 +9,7 @@ use App\Models\Piodalan;
 use App\Models\Pura;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class AcaraAPI extends Controller
@@ -37,6 +38,9 @@ class AcaraAPI extends Controller
         if ($valid) {
             $data = $request->all();
             $acara = Piodalan::create($data);
+
+            // Cache
+            Cache::forget('acara_piodalan');
             return response()->json([
                 'pesan' => 'Berhasil menambah data acara piodalan',
                 'data' => $acara
@@ -54,7 +58,10 @@ class AcaraAPI extends Controller
         $valid = $this->validasiAcara($api_key);
 
         if ($valid) {
-            $acara = Piodalan::all();
+            // $acara = Piodalan::all();
+            $acara = Cache::remember('acara_piodalan', now()->addDays(31), function () {
+                return Piodalan::all();
+            });
             return response()->json([
                 'pesan' => 'Berhasil mengambil data acara piodalan',
                 'data' => $acara
@@ -73,7 +80,10 @@ class AcaraAPI extends Controller
 
         if ($valid) {
             $data = $request->all();
-            $acara = Piodalan::find($data['id']);
+            // $acara = Piodalan::find($data['id']);
+            $acara = Cache::remember('acara_piodalan' . $data['id'], now()->addDays(31), function () use ($data) {
+                return Piodalan::find($data['id']);
+            });
             return response()->json([
                 'pesan' => 'Berhasil mengambil data acara piodalan',
                 'data' => $acara
@@ -94,6 +104,11 @@ class AcaraAPI extends Controller
             $data = $request->all();
             $acara = Piodalan::find($data['id']);
             $acara->update($data);
+
+            // Cache
+            Cache::forget('acara_piodalan_' . $data['id']);
+            Cache::forget('acara_piodalan');
+            
             return response()->json([
                 'pesan' => 'Berhasil mengubah data acara piodalan',
                 'data' => $acara
@@ -114,6 +129,11 @@ class AcaraAPI extends Controller
             $data = $request->all();
             $acara = Piodalan::find($data['id']);
             $acara->delete();
+
+            // Cache
+            Cache::forget('acara_piodalan_' . $data['id']);
+            Cache::forget('acara_piodalan');
+
             return response()->json([
                 'pesan' => 'Berhasil menghapus data acara piodalan',
             ]);
@@ -131,7 +151,10 @@ class AcaraAPI extends Controller
 
         if ($valid) {
             // $acara = Pura::select('id', 'name', 'address')->get();
-            $acara = Pura::all();
+            // $acara = Pura::all();
+            $acara = Cache::remember('pura', now()->addDays(31), function () {
+                return Pura::all();
+            });
             return response()->json([
                 'pesan' => 'Sukses',
                 'data' => $acara
@@ -150,7 +173,10 @@ class AcaraAPI extends Controller
 
         if ($valid) {
             // $acara = Pura::select('id', 'name', 'address')->get();
-            $acara = Pura::find($id);
+            // $acara = Pura::find($id);
+            $acara = Cache::remember('pura_' . $id, now()->addDays(31), function () use ($id) {
+                return Pura::find($id);
+            });
             return response()->json([
                 'pesan' => 'Sukses',
                 'data' => $acara
@@ -170,6 +196,9 @@ class AcaraAPI extends Controller
         if ($valid) {
             $data = $request->all();
             $acara = Acara::create($data);
+
+            // Cache
+            Cache::forget('acara_detail');
             return response()->json([
                 'pesan' => 'Berhasil menambah data acara detail',
                 'data' => $acara
@@ -187,7 +216,10 @@ class AcaraAPI extends Controller
         $valid = $this->validasiAcara($api_key);
 
         if ($valid) {
-            $acara = Acara::all();
+            // $acara = Acara::all();
+            $acara = Cache::remember('acara_detail', now()->addDays(31), function () {
+                return Acara::all();
+            });
             return response()->json([
                 'pesan' => 'Berhasil mengambil data acara detail',
                 'data' => $acara
@@ -205,7 +237,10 @@ class AcaraAPI extends Controller
         $valid = $this->validasiAcara($api_key);
         
         if ($valid) {
-            $acara = Acara::find($id);
+            // $acara = Acara::find($id);
+            $acara = Cache::remember('acara_detail_' . $id, now()->addDays(31), function () use ($id) {
+                return Acara::find($id);
+            });
             return response()->json([
                 'pesan' => 'Berhasil mengambil data acara detail',
                 'data' => $acara
@@ -226,6 +261,9 @@ class AcaraAPI extends Controller
             $data = $request->all();
             $acara = Acara::find($data['id']);
             $acara->update($data);
+
+            // Cache
+            Cache::forget('acara_detail_' . $data['id']);
             return response()->json([
                 'pesan' => 'Berhasil mengubah data acara detail',
                 'data' => $acara
@@ -246,6 +284,9 @@ class AcaraAPI extends Controller
             $data = $request->all();
             $acara = Acara::find($data['id']);
             $acara->delete();
+
+            // Cache
+            Cache::forget('acara_detail_' . $data['id']);
             return response()->json([
                 'pesan' => 'Berhasil menghapus data acara detail',
             ]);

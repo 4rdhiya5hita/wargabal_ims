@@ -20,7 +20,7 @@ class ValidasiAPI extends Controller
             ];
             return response()->json($response, 200);
         }
-        // dd($user);
+        // dd($user->id);
 
         $subscribed_user = TransactionDetail::where('user_id', $user->id)->first();
         // dd($service_id, $subscribed_user);

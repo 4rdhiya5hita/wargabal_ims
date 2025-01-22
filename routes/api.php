@@ -50,7 +50,7 @@ Route::post('/buatWebhook', [PaymentController::class, 'webhook']);
 
 Route::get('/daftarServis', [TransactionAPI::class, 'daftarServis']);
 
-Route::get('/cariElemenKalenderBali', [KalenderBaliAPI::class, 'cariElemenKalenderBali']);
+Route::get('/cariWariga', [KalenderBaliAPI::class, 'cariElemenKalenderBali']);
 Route::get('/cariAlaAyuningDewasa', [AlaAyuningDewasaAPI::class, 'cariAlaAyuningDewasa']);
 Route::get('/cariOtonan', [OtonanAPI::class, 'cariOtonan']);
 Route::get('/cariHariRaya', [HariRayaAPI::class, 'cariHariRaya']);
@@ -77,6 +77,7 @@ Route::get('/listPengajuanKeterangans', [KeteranganAPI::class, 'listPengajuanKet
 Route::get('/listPengajuanKeterangans/{id}', [KeteranganAPI::class, 'listPengajuanKeterangansById']);
 Route::post('/pengajuanKeterangans', [KeteranganAPI::class, 'pengajuanKeterangans']);
 Route::post('/editPengajuanKeterangans', [KeteranganAPI::class, 'editPengajuanKeterangans']);
+Route::post('/editPengajuanKeterangansByAdmin', [KeteranganAPI::class, 'editPengajuanKeterangansByAdmin']);
 
 Route::get('/keteranganHariRaya', [KeteranganAPI::class, 'keteranganHariRaya']);
 Route::get('/keteranganAlaAyuningDewasa', [KeteranganAPI::class, 'keteranganAlaAyuningDewasa']);

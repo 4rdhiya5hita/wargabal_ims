@@ -176,6 +176,30 @@ class KeteranganAPI extends Controller
         }
     }
 
+    public function editPengajuanKeterangansByAdmin(Request $request)
+    {
+        $api_key = $request->header('x-api-key');
+        $valid = $this->validasiKeterangan($api_key);
+        $id = $request->id;
+
+        if ($valid) {
+            $pengajuan = PengajuanKeterangan::find($id);
+
+            $pengajuan->status_keterangan = 2;
+            $pengajuan->save();
+
+            return response()->json([
+                'pesan' => 'Sukses',
+                'status_keterangan_berubah' => true,
+            ]);
+        } else {
+            return response()->json([
+                'pesan' => 'API Key tidak valid',
+            ]);
+        }
+    }
+
+
     public function keteranganHariRaya(Request $request)
     {
         $api_key = $request->header('x-api-key');

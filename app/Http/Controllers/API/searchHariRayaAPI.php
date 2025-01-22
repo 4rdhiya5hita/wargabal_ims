@@ -419,7 +419,7 @@ class searchHariRayaAPI extends Controller
         // Perjikaan kalau parameter di urlnya ada &lengkap
         // fungsi: mencari detail setiap tanggal pada kalender
 
-        if ($path == '/api/cariElemenKalenderBali') {
+        if ($path == '/api/cariWariga') {
 
             if ($filter) {
                 $metode = array_values($filter);

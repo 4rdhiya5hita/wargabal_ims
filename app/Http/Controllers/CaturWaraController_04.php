@@ -35,7 +35,7 @@ class CaturWaraController_04 extends Controller
         } elseif ($i == 3) {
             $nama = 'Jaya';
         } elseif ($i == 4) {
-            $nama = 'Mandala';
+            $nama = 'Menala';
         }
 
         return $nama;
